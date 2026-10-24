@@ -1,0 +1,313 @@
+\chapter{有限总体与超总体因果推断的衔接}\label{chapter::bridging}
+ \chaptermark{有限总体与超总体因果推断的衔接}
+
+
+ 
+
+
+我们之前重点讨论了随机实验中的有限总体视角。该视角将所有潜在结果视为固定数值。即便这些潜在结果本质上是随机变量，在有限总体视角下我们仍能将其视为已知条件。这种视角的优势在于：
+\begin{enumerate}
+\item
+它侧重于实验设计本身；
+\item
+它对结果生成过程所需的假设条件极少。
+\end{enumerate}
+然而，这种视角常受到批评，被认为仅具备{\it 内部有效性}，未必具备{\it 外部有效性}。两者的非正式定义如下。 
+
+\begin{definition}
+[内部有效性]
+统计分析结果对当前研究样本有效。 
+\end{definition}
+
+
+\begin{definition}
+[外部有效性]
+统计分析结果对超出研究样本范围的更大总体也有效。 
+\end{definition}
+
+
+
+显然，所有实验者都希望自己的实验结果既具备内部有效性又具备外部有效性。由于在有限总体视角下所有统计性质均以现有样本的潜在结果为前提，因此相关结论仅适用于这些观测对象。此时一个自然的问题便浮现出来：有限总体视角下的结论能否推广到更大总体呢？ 
+
+
+
+从潜在结果角度出发，有限总体框架确实存在这样的局限性。不过这也可视为一个哲学层面上的问题。我们所观测到的毕竟是有限总体，任何实验设计与分析所提供的信息均针对这一有限总体。随机化机制仅能在给定个体潜在结果的条件下确保内部有效性。至于结果的外部有效性，则取决于这些个体的抽样方式。倘若该有限总体恰是我们所关心的更大总体的代表性样本，那么实验结果自然也具备外部有效性；反之，基于随机化推断得出的结论则可能不具备推广性。为严谨探讨此问题，我们需要一个包含双重随机性的框架：其一是个体的抽样随机性，其二是干预措施分配的随机性。关于此点的正式探讨可参见\citet{miratrix2018worth}与\citet{abadie2020sampling}的论述。\footnote{\citet{pearl2014external}则从因果图的角度探讨了{\it 可迁移性}问题。}
+  
+  
+  
+  
+对某些统计学家而言，这只是个技术性问题。我们可修改统计框架，假定个体是从超总体中抽样而得。如此一来所有结论便都关于所关注的总体了。这个框架虽看似便捷，却并未真正解决前述问题。下文我将介绍该框架，主要出于两个目的：
+\begin{enumerate}
+\item
+它为随机实验提供了另一种视角；
+\item
+它充当了本书\ref{part::rcts}与\ref{part::observational-studies}两大部分之间的桥梁。
+\end{enumerate}
+后者尤为重要，因为超总体框架能帮助我们针对干预措施非随机分配的观测性研究得出更有价值的结论。 
+
+
+
+
+
+\section{CRE}\label{sec::cre-superpop}
+
+假设从某个超总体中抽样得到
+$$
+\{  Z_i, Y_i(1), Y_i(0),  X_i  \}_{i=1}^n  \iidsim \{  Z, Y(1), Y(0), X \}
+$$
+因此我们可以省略该总体中各量的下标 $i$。稍作记号约定后，我们将总体平均因果效应定义为
+$$
+\tau  = E\{  Y(1)  - Y(0)\}  = E\{  Y(1)  \} -  E\{ Y(0)\} .
+$$
+在超总体框架下，CRE可表述如下。
+
+\begin{definition}
+[超总体框架下的CRE]
+\label{def::cre-superpopulation}
+此时有
+$$
+Z \ind \{  Y(1), Y(0), X \} .
+$$
+\end{definition}
+
+依据定义\ref{def::cre-superpopulation}，平均因果效应可表示为
+\begin{eqnarray}
+\tau &=& E\{  Y(1) \mid Z=1\}  - E\{  Y(0) \mid Z=0 \}   \nonumber  \\
+&=& E( Y \mid Z=1)  - E(  Y \mid Z=0 ),
+\label{eq::cre-identifiable}
+\end{eqnarray}
+即两个条件下结果期望值的差值。公式\eqref{eq::cre-identifiable}的第一行正是利用随机化机制的关键步骤。由于 $\tau  $ 可由观测变量的分布直接导出，因此它属于{\it 非参数可识别}\footnote{在因果推断中，若仅依据观测变量分布即可确定某参数而无需额外参数假设，则称该参数具有非参数可识别性。更正式的讨论见后文定义\ref{def::nonparametric-identification}。}。公式\eqref{eq::cre-identifiable}直接提示了矩估计量 $\hat{\tau}$ 的存在形式——即前述结果均值之差。以 $\bm{Z}$ 为条件后，此即典型的双样本均值比较问题。此时有
+$$
+E(  \hat{\tau} \mid \bm{Z}) = \tau
+$$
+以及
+$$
+\var (  \hat{\tau} \mid \bm{Z}) =   \frac{ \var\{ Y(1) \}}{n_1} + \frac{ \var\{ Y(0) \}}{n_0}.
+$$
+在独立同分布抽样条件下，样本方差是总体方差的无偏估计，因此\citet{Neyman:1923}提出的方差估计器也同样是 $\var (  \hat{\tau} \mid \bm{Z}) $ 的无偏估计。超总体框架下此保守性问题便不复存在。
+
+
+我们亦可探讨协变量调整法。基于OLS分解式（参见章节\ref{appendix::basic-linear-regression}）
+\begin{eqnarray}
+Y(1) &=& \gamma_1 + \beta_1\tran X + \varepsilon(1),\label{eq::ols-decomposition-y1}\\
+Y(0) &=& \gamma_0 + \beta_0\tran X + \varepsilon(0),\label{eq::ols-decomposition-y0}
+\end{eqnarray}
+可得
+\begin{eqnarray*}
+\tau  &=& E\{  Y(1)  - Y(0)\} \\
+&=& \gamma_1  -  \gamma_0 + (\beta_1 - \beta_0)\tran E(X),
+\end{eqnarray*}
+此处因截距项的引入，残差 $  \varepsilon(1)$ 与 $\varepsilon(0)$ 的期望值均为零。我们可分别对处理组与对照组数据实施OLS回归以估计\eqref{eq::ols-decomposition-y1}与\eqref{eq::ols-decomposition-y0}中的系数。设其样本估计量依次为 $\hat{\gamma}_1, \hat{\beta}_1, \hat{\gamma}_0, \hat{\beta}_0$，则经协变量调整后的 $\tau $ 估计量为
+$$
+\hat{\tau}_\text{adj} =  \hat \gamma_1  - \hat  \gamma_0 + (\hat \beta_1 - \hat \beta_0)\tran \bar{X}.
+$$
+若将协变量中心化处理使 $ \bar{X} = 0$，则上述估计量便等同于\citet{lin2013}提出的估计器
+$$
+\hat{\tau}_\textsc{L} = \hat \gamma_1  - \hat  \gamma_0,
+$$
+此值恰为含处理组-协变量交互项的合并回归中 $Z$ 的系数；参见命题\ref{prop::lin-ols}。 
+
+
+
+遗憾的是，在超总体框架下，协变量样本均值$\bar{X} $还具有额外的不确定性，因此 EHW 方差估计量不适用于$\hat{\tau}_\textsc{L}$。\citet{berk2013covariance}、\citet{negi2020revisiting}和\citet{zhao2020caFRT}提出在 EHW 方差估计量中加入修正项
+\begin{equation}\label{eq::lin-ehw-correction}
+(\hat \beta_1 - \hat \beta_0)\tran S_X^2  (\hat \beta_1 - \hat \beta_0)  / n
+\end{equation}
+其中，$\hat \beta_1 - \hat \beta_0$是在计算\citet{lin2013}的估计量时交互项$Z_iX_i$的系数，$S_X^2$是协变量的有限总体协方差矩阵。一种概念上更简单、但计算量更大的办法是用自助法估计方差；参见第\ref{sec::bootstrap}节和习题\ref{hw::variance-bootstrap-superpopulation}。 
+
+
+
+\section{基于CRE的超总体视角模拟实验}
+\label{sec::simulation-CRE-superp}
+
+
+下述\ri{linestimator}函数可计算超总体情形下的\citet{lin2013}估计量、EHW标准误以及基于\eqref{eq::lin-ehw-correction}的修正标准误。 
+\begin{lstlisting}
+library("car")
+linestimator = function(Z, Y, X){
+  ## standardize X
+  X      = scale(X)
+  n      = dim(X)[1]
+  p      = dim(X)[2]
+  
+  ## fully interacted OLS
+  linreg = lm(Y ~ Z*X)
+  est    = coef(linreg)[2]
+  vehw   = hccm(linreg)[2, 2]
+  
+  ## super population correction
+  inter  = coef(linreg)[(p+3):(2*p+2)]
+  vsuper = vehw + sum(inter*(cov(X)%*%inter))/n
+  
+  c(est, sqrt(vehw), sqrt(vsuper))
+}
+\end{lstlisting}
+
+
+下面通过模拟比较 EHW 标准误与修正后的标准误。样本量取$n=500$，进行 2000 次蒙特卡洛重复。潜在结果是协变量的非线性函数，误差项也不服从正态分布。真实平均因果效应为$0.$。
+\begin{lstlisting}
+res = replicate(2000, {
+  n  = 500
+  X  = matrix(rnorm(n*2), n, 2)
+  Y1 = X[, 1] + X[, 1]^2 + runif(n, -0.5, 0.5)
+  Y0 = X[, 2] + X[, 2]^2 + runif(n, -1, 1)
+  Z  = rbinom(n, 1, 0.6)
+  Y  = Z*Y1 + (1-Z)*Y0
+  linestimator(Z, Y, X)
+})
+\end{lstlisting}
+
+
+模拟结果完全印证了理论推测。首先，\citet{lin2013}估计量近乎无偏。其次，EHW标准误均值小于经验标准差，致使95\% 置信区间覆盖率不足。最后，经修正的超总体标准误均值与经验标准差高度吻合，从而准确实现了95\% 置信区间的覆盖率控制。  
+\begin{lstlisting}
+> ## bias
+> mean(res[1, ])
+[1] -0.0001247585
+> ## empirical standard deviation
+> sd(res[1, ])
+[1] 0.1507773
+> ## estimated EHW standard error
+> mean(res[2, ])
+[1] 0.1388657
+> ## coverage based on EHW standard error
+> mean((res[1, ]-1.96*res[2, ])*(res[1, ]+1.96*res[2, ])<=0)
+[1] 0.927
+> ## estimated super population standard error
+> mean(res[3, ])
+[1] 0.1531519
+> ## coverage based on population standard error
+> mean((res[1, ]-1.96*res[3, ])*(res[1, ]+1.96*res[3, ])<=0)
+[1] 0.9525
+\end{lstlisting}
+
+\section{推广到分层随机实验}
+
+第\ref{sec::cre-superpop}节的讨论可以推广到分层随机实验，因为它等价于各层内相互独立的完全随机实验。 
+%The discussion will also extend to the MPE since it is a special case of the SRE. 
+下面的记号与第\ref{chapter::stratification-poststratification}章略有不同。 
+
+
+设
+$$
+\{ Z_i,  Y_i(1), Y_i(0) ,  X_i  \}  \iidsim \{ Z,  Y(1), Y(0), X  \} .
+$$ 
+设定离散型协变量 $ X_i \in \{ 1,\ldots, K\}$，此时SRE可表述如下。
+
+
+\begin{definition}
+[超总体框架下的SRE]\label{def::sre-superpopulation}
+此时有
+$$
+Z\ind\{  Y(1), Y(0) \} \mid   X  .
+$$
+\end{definition}
+
+
+依定义\ref{def::sre-superpopulation}，条件平均因果效应可改写为
+\begin{eqnarray*}
+\tau_{[k]}  &=&  E\{   Y(1) -  Y(0)  \mid X= k \} \\
+&=& E(Y\mid Z=1, X=k) - E(Y\mid Z=0, X=k),
+\end{eqnarray*}
+进而总体平均因果效应可表示为
+\begin{eqnarray*}
+\tau &=&   E\{   Y(1) -  Y(0)   \}  \\
+&=& \sum_{k=1}^K \pr(X = k) E\{   Y(1) -  Y(0)  \mid X = k \} \\
+&=& \sum_{k=1}^K \pr(X  = k) \tau_{[k]} .
+\end{eqnarray*}
+%
+% The covariates $ X_i $'s are fixed with marginal proportions $\pi_{[k]} = \#\{ i:  X_i  = k \} / n$ for  $k=1,\ldots, K$. 
+%The MPE corresponds to the case in which $K=n/2$ and there is only one treated and one control unit with $ X_i  = k$ for all $k=1,\ldots, K$. 
+%The stratum-specific average causal effect is
+%$$
+%\tau_{[k]} = E\{  Y_{[k]}(1) -  Y_{[k]}(0) \} ,
+%$$
+%and the population average causal effect is
+%$$
+%\tau  = \sum_{k=1}^K \pi_{[k]} \tau_{[k]} .
+%$$
+第\ref{sec::cre-superpop}节的讨论在每一层内都成立，因此可以推导出分层随机实验在超总体框架下的对应结论。若每一层的处理单位和对照单位均多于两个，就可以用$\hat{V}_\textsc{S}$作为$\var( \hat{\tau}_\textsc{S} )$的方差估计量。 
+
+
+%Unsurprisingly, the MPE is more subtle since $\hat{V}_\textsc{S}$ is not well defined. With $\{\hat{\tau}_{[1]} , \ldots, \hat{\tau}_{[n/2]} \}$, we can use  
+%$$
+%\hat{V} = \frac{1}{  n/2(n/2-1) } \sum_{k=1}^{n/2} (  \hat{\tau}_{[k]} -  \hat{\tau}_\textsc{S})^2
+%$$
+%to estimate the variance of $\hat{\tau}_\textsc{S}$. Similar to our proof before, we can show that 
+%\begin{eqnarray}
+%\label{eq::super-pop-mpe-var}
+%E(\hat{V}) - \var( \hat{\tau}_\textsc{S} ) =  \frac{1}{  n/2(n/2-1) } \sum_{k=1}^{n/2} ( \tau_{[k]} -  \tau)^2 \geq 0,
+%\end{eqnarray}
+%so $\hat{V} $ is still a conservative variance estimator. Unlike the CRE and SRE, the conservativeness issue does not go away for the MPE even under the superpopulation framework. 
+%  
+%  
+%Sometimes, we may further assume that the covariates are random draws in the SRE and MPE:
+%$$
+%\{Z_i,  Y_i(1), Y_i(0) ,  X_i    \}  \iidsim \{   Z_i,  Y_i(1), Y_i(0) ,  X_i   \}
+%$$
+%with
+%$$
+%Z \ind\{  Y(1), Y(0) \} \mid  x  .
+%$$
+%The population average causal effect simplifies to
+%$$
+%\tau  = E\{  Y(1) -  Y(0) \}
+%=\sum_{k=1}^K  E\{  Y(1) -  Y(0) \mid x = k \} \pr(x  = k).
+%$$
+%The estimators remain unchanged. This framework brings mathematical convenience due to the IID assumption. However, it seems especially awkward in the MPE when the pair indicators are IID which invalidates the motivation for the experimental design itself. We should impose IID assumptions with caution. 
+
+
+后文第\ref{part::observational-studies}部分将给出定义\ref{def::sre-superpopulation}的具体形式。 
+  
+
+ \section{作业习题}
+ 
+\paragraph{完全随机实验中观测结果的 OLS 分解}\label{hw::ols-decompose-cre}
+
+依据\eqref{eq::ols-decomposition-y1}与\eqref{eq::ols-decomposition-y0}，试证观测结果可分解为如下形式
+$$
+Y= \alpha_0 + \alpha_Z  Z +
+\alpha_X \tran X + \alpha_{ZX} \tran X Z + \varepsilon 
+$$
+其中系数关系为
+$$
+\alpha_0 = \gamma_0 ,\quad
+\alpha_Z = \gamma_1 - \gamma_0,\quad
+\alpha_X  =  \beta_0, \quad
+\alpha_{ZX} = \beta_1 - \beta_0
+$$
+且残差项可表为
+$$
+\varepsilon  = Z \varepsilon (1) + (1-Z) \varepsilon (0). 
+$$
+换言之，
+$$
+(\alpha_0, \alpha_Z, \alpha_X , \alpha_{ZX} )
+=\arg\min_{a_0, a_Z, a_X, a_{ZX}   }  E  (  Y - a_0 - a_Z Z - a_X\tran X -a_{ZX} \tran X Z)^2.
+$$ 
+ 
+ 
+\paragraph{超总体框架下\citet{lin2013}估计量的方差估计}\label{hw::variance-bootstrap-superpopulation}
+ 
+在超总体框架下，根据\eqref{eq::ols-decomposition-y1}和\eqref{eq::ols-decomposition-y0}生成模拟数据$\{  X_i, Z_i, Y_i(1), Y_i(0) \}_{i=1}^n$，并令$\beta_1 \neq \beta_0$成立。在每个模拟数据集中计算\citet{lin2013}的估计量，比较真实方差与下列方差估计值：
+\begin{enumerate}
+\item
+EHW稳健型方差估计值；
+\item
+含修正项\eqref{eq::lin-ehw-correction}的改进型EHW方差估计值；
+\item
+协变量初始中心化处理且每次自助法抽样不再重新调整的Bootstrap方差估计值；
+\item
+每次自助法抽样前均重新中心化协变量的Bootstrap方差估计值。
+\end{enumerate}
+
+  
+ 
+% \paragraph{Variance estimation in the MPE}
+% Show \eqref{eq::super-pop-mpe-var} under the super population framework. 
+
+
+\paragraph{推荐阅读}
+
+
+\citet{ding2017bridging}系统探讨了有限总体与超总体两种情境下平均因果效应的推断方法。 
+

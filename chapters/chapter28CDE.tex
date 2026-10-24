@@ -1,0 +1,262 @@
+ 
+\chapter{受控直接效应}
+ \label{chapter::cde}
+
+
+第\ref{chapter::mediation}章中所述的中介分析方法是基于嵌套潜在结果来构建的；从根本上而言，某些嵌套潜在结果在任何实际实验中都无法被观测到。如果我们遵循第\ref{sec::popper-science}章中介绍的波普尔科学哲学观点，那么我们应当仅用实验中可观测的量来定义因果参数。本章将探讨一种处理带有中介变量情况下的因果推断的替代方法：在这种观点下，我们只能定义直接效应，却无法定义间接效应。 
+
+
+
+
+
+\section{受控直接效应的定义}
+
+
+我们将$Z$与$M$视作两个可人为干预的处理因素，并定义当$z=0,1$且$m\in \mathcal{M}$时的潜在结果$Y(z,m)$。基于这些潜在结果，我们可定义下文中的{\it 受控直接效应}(CDE)。
+
+\begin{definition}
+[CDE]
+定义
+$$
+\CDE (m)  = E\{  Y(1,m)  - Y(0,m)\}.
+$$
+\end{definition}
+  
+ 
+根据定义，$\CDE (m) $是在将中间变量固定为$m$时，处理的平均因果效应。参数$\CDE(m)$可以刻画将中介变量固定为$m$时的直接效应，但这一设定无法刻画间接效应。特别地，参数
+$
+E\{  Y(z,1) - Y(z,0)\}
+$
+仅衡量将处理固定为$z.$时中介变量对结果的效应，不能将其视为有意义的间接效应定义。 
+
+
+
+\section{受控直接效应的识别与估计}
+
+
+为了识别$\CDE(m)$，我们需要以下假设：即给定$X$时，$Z$与$M$均受到随机化处理。 
+
+
+\begin{assumption}\label{assume::si-cde}
+序列无偏性要求满足
+$$
+Z\ind Y(z,m) \mid X, \quad M \ind  Y(z,m) \mid (Z,X)
+$$
+或等价地（参见问题\ref{para::sr-jr}），
+$$
+(Z,M) \ind  Y(z,m) \mid X.
+$$
+\end{assumption}
+
+下面着重讨论$Z$和$M$均为二元变量的情形。从数学上看，可以将其视为具有四个处理水平
+$$
+(z,m) \in \{  (0,0), (0,1), (1,0), (1,1) \} .
+$$
+的观察性研究。以下定理推广了二元处理观察性研究的结论，分别通过结果回归、IPW 和双重稳健估计识别
+$$
+\mu_{zm} = E\{  Y(z,m) \}
+$$ 
+
+
+定义
+$$ 
+\mu_{zm}(x) = E(Y\mid Z=z,M=m, X=x) 
+$$
+为在给定处理、中介变量以及协变量条件下的结果均值；定义
+\begin{eqnarray*}
+e_{zm}(x)  &=&  \pr(Z=z,M=m\mid X=x)  \\
+&=& \pr(Z=z\mid X=x) \pr( M=m\mid Z=z, X=x)
+\end{eqnarray*} 
+为给定协变量时$Z$与$M$同时出现的概率。 
+
+\begin{theorem}
+\label{thm::cde-identification}
+在假设\ref{assume::si-cde}成立的前提下，我们有
+$$
+\mu_{zm} = E\{  \mu_{zm}(X) \}
+= E \left\{   \frac{I(Z=z, M=m) Y}{  e_{zm}(X)  }  \right\} .
+$$
+此外，若以$e_{zm}(X, \alpha) $与$\mu_{zm}(X, \beta) $分别作为$e_{zm}(X) $和$\mu_{zm}(X) $的拟合模型，则可得到双重稳健估计式：
+$$
+\mu_{zm}^{\textup{dr}}  = E\{  \mu_{zm}(X, \beta) \} + E \left[   \frac{I(Z=z, M=m) \{ Y - \mu_{zm}(X, \beta)  \}}{  e_{zm}(X, \alpha)  }  \right],
+$$
+只要满足$e_{zm}(X, \alpha) = e_{zm}(X)$或$\mu_{zm}(X, \beta)  = \mu_{zm}(X)$中的任一条件，该估计值即等于$\mu_{zm} $。 
+\end{theorem}
+
+
+
+定理\ref{thm::cde-identification}的证明与标准无混杂观察性研究中的证明类似，习题\ref{para::obs-multi-valued-Z}给出了一般结论。根据结果均值模型，可得到$\mu_{zm}(x)$的估计$\hat{\mu}_{zm}(x) $；根据处理模型，可得到$\pr(Z=z\mid X = x)$的估计$\hat{e}_z(x)$；根据中间变量模型，可得到$\pr(M=m\mid Z=z, X=x)$的估计$\hat{e}_m(z,x)$。于是可用结果回归
+$$
+\hat{\mu}_{zm}^\text{reg} = n^{-1} \sumn  \hat{\mu}_{zm}(X_i),
+$$
+、IPW
+\begin{eqnarray*}
+\hat{\mu}_{zm}^\text{ht} &=& n^{-1}\sumn  \frac{  I(Z_i=z, M_i=m) Y_i  }{  \hat{e}_z(X_i)  \hat{e}_m(z,X_i)  } , \\
+\hat{\mu}_{zm}^\text{haj} &=&  \sumn  \frac{  I(Z_i=z, M_i=m) Y_i  }{  \hat{e}_z(X_i)  \hat{e}_m(z,X_i)  } \Big /  \sumn  \frac{  I(Z_i=z, M_i=m)    }{  \hat{e}_z(X_i)  \hat{e}_m(z,X_i)  }, 
+\end{eqnarray*}
+或增广 IPW
+$$
+\hat{\mu}_{zm}^\text{dr} = \hat{\mu}_{zm}^\text{reg}  +  n^{-1} \sumn  \frac{  I(Z_i=z, M_i=m) \{ Y_i - \hat{\mu}_{zm}(X_i)\}   }{  \hat{e}_z(X_i)  \hat{e}_m(z,X_i)  } .
+$$
+估计$\mu_{zm} $。进一步用$\hat{\mu}_{1m}^* - \hat{\mu}_{0m}^*\ (*=\text{reg}, \text{ht}, \text{haj}, \text{dr} )$估计$\CDE(m)$，并用自助法近似其标准误。 
+
+
+
+
+若我们假定结果为线性模型，则受控直接效应便简化为处理变量的系数。例\ref{eg::cde-linear}将详细说明这一过程。 
+\begin{example}
+\label{eg::cde-linear}
+在假设\ref{assume::si-cde}成立且结果模型为线性的条件下，
+$$
+E(Y\mid Z,M,X) = \theta_0 + \theta_1 Z + \theta_2 M +   \theta_4\tran X,
+$$
+可以证明
+$
+\CDE(m) 
+$
+其值等同于系数$ \theta_1$，这与Baron-Kenny法中定义的自然直接效应相一致。证明过程留作问题\ref{problem::cde-linear}供读者自行验证。 
+\end{example}
+
+
+
+
+
+
+
+\section{讨论}
+
+受控直接效应的定义方式不涉及任何嵌套或预先假设的潜在反事实结果，其识别过程也无需“跨世界反事实独立性”假设。参数$\CDE(m)$可反映中介变量保持为$m$时处理的直接效应；然而它无法反映间接效应。表\ref{table::causal-intermediate-frameworks}总结了各类涉及中介变量的因果分析框架。 
+ 
+\begin{table}
+\centering 
+\caption{涉及中介变量的各类因果分析框架}\label{table::causal-intermediate-frameworks}
+\begin{tabular}{cccc}
+\hline 
+章节 & 框架 & 直接效应 & 间接效应   \\
+\hline 
+\ref{chapter::principal-stratification} & 主分层法 & $\tau(1,1),\ \tau(0,0)$ & ?  \\
+\ref{chapter::mediation} & 中介分析法 & $\NDE$ & $\NIE$  \\
+\ref{chapter::cde}& 控制直接效应 & $\CDE(m)$ & ?  \\
+\hline 
+\end{tabular}
+\end{table} 
+ 
+中介分析法能将总效应分解为自然直接效应与间接效应，但它需要嵌套潜在结果及跨世界独立性假设；主分层法与受控直接效应法虽无法定义间接效应，却无需上述假设。另外，主分层法并不要求$M$一定位于从处理到结果的因果路径上；不过其识别与估计过程涉及混合分布的分离，这在统计学上属难度较高的任务。 
+
+
+
+  
+  \section{作业习题}
+
+\paragraph{$\CDE$与$\NDE$}\label{problem::cde-nde}
+
+试证明：在“跨世界独立性”假设成立时，即对所有$z,z'$与$m$均有
+$
+Y(z,m) \ind M(z') \mid X
+$
+此时条件受控直接效应$\CDE(m\mid x) = E\{  Y(1,m)  - Y(0,m)\mid X=x\}$与条件自然直接效应$\NDE(x) = E\{   Y(1,M_0) - Y(0, M_0) \mid X=x  \}$满足如下关系：
+$$
+\NDE(x) = \sum_m \CDE(m\mid x) \pr(M_0 = m\mid X=x)
+$$
+此处$M$为离散型变量。若上述独立性假设不成立，该关系是否仍普遍成立？ 
+  
+  
+  
+  \paragraph{含多值处理的观察研究}\label{para::obs-multi-valued-Z}
+  
+定理\ref{thm::cde-identification}其实是如下关于“含多值处理的无混杂观察研究”一般结论的一个特例\citep{imai2004causal, cattaneo2010efficient}。下文给出该一般问题的描述及相关定理。 
+
+
+
+考虑一项观察性研究，其中处理$Z \in \{ 1, \ldots, K \}$有多个取值，协变量为$X$，结果为$Y$。单位$i$有$K$个潜在结果$Y_i(1), \ldots, Y_i(K)$，分别对应$K$个处理水平。一般地，可以通过潜在结果的对比定义因果效应：
+$$
+\tau_C  = \sum_{k=1}^K C_k   E\{  Y(k) \}
+$$
+其中$  \sum_{k=1}^K C_k  = 0$。最常用的两两比较为
+$$
+\tau_{k,k'} = E\{   Y(k) - Y(k') \}.
+$$
+因此，关键是在以下可忽略性和重叠性假设下，利用$(Z_i,  X_i, Y_i)_{i=1}^n$的独立同分布数据识别并估计潜在结果的均值$\mu_k  =  E\{  Y(k) \}$。
+
+
+
+\begin{assumption}
+\label{assume::ignorability-multi-valued-Z}
+$Z\ind \{ Y (1), \ldots, Y (K) \} \mid X$，且对于$k=1,\ldots, K.$有$\pr(Z = k \mid X) > 0$。
+\end{assumption}
+
+
+
+定义广义倾向得分
+$$
+e_k(X) = \pr(Z = k \mid X), 
+$$
+以及条件结果均值
+$$
+\mu_k(X) = E(   Y \mid Z=k,  X )
+$$
+其中$k=1, \ldots, K.$。有如下定理。
+
+\begin{theorem}
+\label{thm::treatment-multi-valued-Z}
+在假设\ref{assume::ignorability-multi-valued-Z}成立的前提下，有
+$$
+\mu_{k} = E\{  \mu_{k}(X) \}
+= E \left\{   \frac{I(Z = k) Y}{  e_{k}(X)  }  \right\} .
+$$
+另外，若以$e_{k}(X, \alpha) $与$\mu_{k}(X, \beta) $作为$e_{k}(X) $与$\mu_{k}(X) $的拟合模型，可得双重稳健估计式：
+$$
+\mu_{k}^{\textup{dr}}  = E\{  \mu_{k}(X, \beta) \} + E \left[   \frac{I(Z=k) \{ Y - \mu_{k}(X, \beta)  \}}{  e_{k}(X, \alpha)  }  \right],
+$$
+当满足$e_{k}(X, \alpha) = e_{k}(X)$或$\mu_{k}(X, \beta)  = \mu_{k}(X)$时，此估计值即等于$\mu_{k} $。 
+\end{theorem}
+
+
+请证明定理\ref{thm::treatment-multi-valued-Z}。
+
+
+注：若将定理\ref{thm::cde-identification}中的$(Z,M)$视为具有四个水平的处理，则定理\ref{thm::cde-identification}就是定理\ref{thm::treatment-multi-valued-Z}的特例。$  \CDE (m) $是$\tau_C $的特例。 
+
+
+  
+  \paragraph{线性结果模型下的$\CDE$}\label{problem::cde-linear}
+  
+  试证明：在假设\ref{assume::si-cde}成立情况下，若满足
+$E(Y\mid Z, M, X ) = \theta_0 + \theta_1 Z + \theta_2 M +   \theta_4\tran X$，
+则对所有$m$均有
+$$
+  \CDE (m) = \theta_1
+  $$
+；若满足
+$E(Y\mid Z, M, X ) = \theta_0 + \theta_1 Z + \theta_2 M + \theta_3 ZM +    \theta_4\tran X$，
+则
+$$
+\CDE(m) =   \theta_1 + \theta_3 m. 
+  $$
+  
+  
+    \paragraph{逻辑回归结果模型下的$\CDE$}\label{problem::cde-logit}
+  
+  试证明：对于二值结果变量，在假设\ref{assume::si-cde}成立前提下，若
+$$
+  \logit \{ \pr(Y = 1\mid Z, M, X ) \} = \theta_0 + \theta_1 Z + \theta_2 M +   \theta_4\tran X ,
+  $$ 
+则
+$$
+  \CDE (m) = E\{ \expit( \theta_0 + \theta_1  + \theta_2 m +   \theta_4\tran X ) - \expit( \theta_0    + \theta_2 m +   \theta_4\tran X ) \} ; 
+  $$
+若
+$$
+  \logit \{ \pr(Y = 1\mid Z, M, X ) \} = \theta_0 + \theta_1 Z + \theta_2 M + \theta_3 ZM +    \theta_4\tran X,
+  $$ 
+则
+$$
+\CDE(m) =  E\{ \expit( \theta_0 + \theta_1  + \theta_2 m  +\theta_3 m +   \theta_4\tran X ) - \expit( \theta_0    + \theta_2 m +   \theta_4\tran X ) \}.
+  $$
+  
+  
+  
+  \paragraph{推荐阅读} 
+
+\citet{nguyen2020clarifying}对第\ref{chapter::mediation}章与第\ref{chapter::cde}章的相关内容进行了清晰易懂的综述。 
+

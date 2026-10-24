@@ -1,0 +1,262 @@
+
+\chapter{关于从有限总体中进行简单随机抽样的若干有用引理}
+\chaptermark{简单随机抽样} 
+ \label{chapter::SRS-appendix}
+
+\section{引理}
+ 
+简单随机抽样是标准抽样调查教材中的基础内容\citep[e.g.,][]{cochran1953}。下文我将回顾一些关于简单随机抽样的结果，这些结果对于第\ref{ch::frt-cre}章与第\ref{chapter::neyman-cr}章中基于设计的因果推断研究颇具用处。我将依据入样指示变量的分布来定义简单随机抽样。 
+
+
+\begin{definition}
+[简单随机抽样]\label{definition-srs}
+一个大小为 $n_1$ 的简单随机样本是从由 $i=1,\ldots, n$ 编号的 $n$ 个单位所构成的有限总体中选取的一个子集。  
+设 $\bm{Z} = (Z_1, \ldots, Z_n)$ 为这 $n$ 个单位的入样指示变量：若第 $i$ 个单位被选入样本，则 $Z_i=1$；否则 $Z_i=0$。  
+向量 $\bm{Z}$ 可以呈现 $\binom{n}{n_1}$ 种不同的排列形式，这些排列均由 $n_1$ 个 1 和 $n_0$ 个 0 构成，且每种排列出现的概率均相等。
+\end{definition}
+
+根据定义\ref{definition-srs}，简单随机抽样是{\it 不放回抽样}的一种特殊形式，因为它不允许重复抽取同一单位。下面的引理\ref{lemma::randomization}总结了入样指示变量的前两个矩。 
+
+ 
+
+\begin{lemma}
+\label{lemma::randomization}
+在简单随机抽样的情况下，我们有  
+$$
+E ( Z_i )  = \frac{n_1}{ n}, \quad 
+\var(Z_i) = \frac{  n_1 n_0 }{n^2}, \quad 
+\cov(Z_i, Z_j) = - \frac{n_1 n_0 } { n^2 (n-1)  }.
+$$  
+用更简洁的形式表示，则有  
+$$
+E(\bm{Z}) = \frac{n_1}{n} \bm{1}_n,\quad
+\cov(\bm{Z}) = \frac{n_1n_0}{n(n-1)} \bm{P}_n,
+$$  
+其中 $ \bm{1}_n$ 是一个由 $1$ 构成的 $n$ 维向量，而 $\bm{P}_n = \bm{I}_n  - n^{-1} \bm{1}_n \bm{1}_n\tran $ 则是与 $ \bm{1}_n.$ 正交的 $n\times n$ 投影矩阵。
+\end{lemma}
+
+
+
+
+设 $\{ c_1, \ldots, c_n\} $ 为一个有限总体，其均值为 $ \bar{c}  = \sumn c_i/n$，方差为
+$$
+S_c^2 = (n-1)^{-1} \sumn (c_i -  \bar{c} )^2;
+$$
+再设 $\{  d_1, \ldots, d_n \} $ 为另一个有限总体，其均值为 $ \bar{d}   = \sumn d_i/n$，方差为
+$$
+S_d^2 =  (n-1)^{-1}   \sumn (d_i -  \bar{d}  )^2;
+$$
+这两个总体的协方差为
+$$
+S_{cd} =  (n-1)^{-1}   \sumn (c_i -  \bar{c} ) (d_i -  \bar{d}  ).
+$$
+在简单随机抽样的条件下，样本均值为
+$$
+ \hat{\bar{c}}  =  n_1^{-1} \sumn Z_i c_i,\quad 
+ \hat{\bar{d}}   = n_1^{-1} \sumn Z_i d_i;
+$$
+样本方差为
+$$
+ \hat{S}_c^2   = (n_1 - 1)^{-1} \sumn Z_i (c_i -  \hat{\bar{c}} )^2,\quad 
+ \hat{S}_d^2   = (n_1 - 1)^{-1}   \sumn Z_i (d_i -  \hat{\bar{d}}  )^2;
+$$
+样本协方差为
+$$
+ \hat{S}_{cd}   = (n_1 - 1)^{-1}  \sumn Z_i (c_i -  \hat{\bar{c}} ) (d_i -  \hat{\bar{d}}  ). 
+$$
+
+下文的引理\ref{lemma::samplemean}给出了样本均值$ \hat{\bar{c}} $与$ \hat{\bar{d}}  $的各阶矩。 
+
+\begin{lemma}
+\label{lemma::samplemean}
+在简单随机抽样条件下，样本均值是无偏估计量，能够很好地估计总体均值：
+$$
+E( \hat{\bar{c}} ) =  \bar{c} ,\quad
+E( \hat{\bar{d}}  ) =  \bar{d}  .
+$$
+其方差与协方差分别为
+\begin{eqnarray*}
+\var\left(   \hat{\bar{c}} \right) = \frac{ n_0}{n n_1  }  S_c^2 ,\quad 
+\var\left(   \hat{\bar{d}}  \right) = \frac{ n_0}{n n_1  }  S_d^2, \quad 
+\cov\left(  \hat{\bar{c}}  ,   \hat{\bar{d}}  \right) = \frac{ n_0}{n n_1 } S_{cd}. 
+\end{eqnarray*}
+\end{lemma}
+
+引理\ref{lemma::samplemean}中的方差公式包含系数$  n_0 / (n n_1 )  = 1/n_1 \times (1-n_1/n)$，它与IID抽样时的$1/n_1$不同，见引理\ref{lemma::samplemean}。额外的项$1-n_1/n = n_0/n$称为{\it 有限总体校正}因子。 
+
+
+下文的引理\ref{lemma::variance-unbiased}说明了样本方差与协方差在估计总体对应参数时的无偏性。 
+ 
+\begin{lemma}\label{lemma::variance-unbiased}
+在简单随机抽样条件下，样本方差与协方差是其对应总体参数的无偏估计：
+$$
+E( \hat{S}_c^2  ) = S_c^2,\quad 
+E( \hat{S}_d^2  ) = S_d^2,\quad
+E( \hat{S}_{cd} ) = S_{cd}  .
+$$
+\end{lemma}
+
+
+一个重要的实际问题是如何基于简单随机样本对 $ \bar{c} $ 进行推断。这就需要更精确地描述其无偏估计量 $ \hat{\bar{c}} $ 的分布特征。由于有限总体 $\{  c_1, \ldots, c_n \}$ 本身是未知的，因此 $ \hat{\bar{c}} $ 在有限样本下的精确分布也就无法确定。下述有限总体中心极限定理则基于 $ \hat{\bar{c}} $ 的前两个矩来描述其渐近分布。 
+
+\begin{lemma}[有限总体中心极限定理]
+\label{lemma::finite-population-clt}
+在简单随机抽样的条件下，当 $n\rightarrow \infty$ 时，若
+$$
+  \frac{ \max_{1\leq i \leq n}  (c_i -  \bar{c}  )^2 }{ \min(n_1, n_0)  S_c^2  } \rightarrow 0,
+$$
+那么
+$$
+\frac{  \hat{\bar{c}}  -  \bar{c}  }{   \sqrt{  \frac{ n_0}{n n_1  }  S_c^2}    } \rightarrow \textsc{N}(0,1)
+$$
+依分布收敛，并且
+$
+ \hat{S}_c^2   / S_c^2   \rightarrow 1
+$
+依概率收敛。 
+\end{lemma}
+
+引理 \ref{lemma::finite-population-clt} 证明了针对 $ \bar{c} $ 的 Wald型 $1-\alpha$ 置信区间的合理性：
+$$
+ \hat{\bar{c}}  \pm z_{1-\alpha/2}  \sqrt{  \frac{ n_0}{n n_1  }   \hat{S}_c^2  } 
+$$
+此处 $z_{1-\alpha/2} $ 表示标准正态随机变量的 $1-\alpha/2$ 分位数。 
+
+\section{证明}
+
+
+
+
+\begin{myproof}{引理}{\ref{lemma::randomization}}
+由对称性可知，各个$Z_i$的均值相同，因此
+$$
+n_1 = \sumn Z_i = E\left (  \sumn Z_i  \right  )  = n E(Z_i)
+\Longrightarrow  E(Z_i) = n_1/n .
+$$
+%implies that $E(Z_i) = n_1/n$. 
+由于 $Z_i$ 是一个伯努利随机变量，其方差为  
+$$
+\var(Z_i) = \frac{n_1}{ n} \left(1 - \frac{n_1}{n} \right) = \frac{n_1 n_0}{n^2}.
+$$  
+再次利用对称性可知，各个 $Z_i$ 的方差均相同，且各对 $(Z_i, Z_j)$ 的协方差也相同，因此  
+$$
+0 = \var\left(   \sumn Z_i \right)   = n   \var(Z_i) + n(n-1) \cov(Z_i, Z_j)
+$$  
+这也就意味着  
+$$
+\cov(Z_i, Z_j) = - \frac{n_1 n_0 } { n^2 (n-1)  }  \quad (i\neq j).
+$$
+\end{myproof}
+
+
+
+
+ 
+
+\begin{myproof}{引理}{\ref{lemma::samplemean}}
+样本均值的无偏性可由线性性质推导得出。例如，
+$$
+E( \hat{\bar{c}} ) = E\left(   \frac{1}{n_1} \sumn Z_i c_i \right) =   \frac{1}{n_1} \sumn E(Z_i) c_i =  \bar{c} .
+$$
+
+样本均值的协方差为
+\begin{eqnarray*}
+&&\cov( \hat{\bar{c}} ,  \hat{\bar{d}}  ) \\
+&=& \cov\left\{      \frac{1}{n_1} \sumn Z_i (c_i -  \bar{c}  ) ,   \frac{1}{n_1} \sumn Z_i (d_i -  \bar{d}   )\right\} \\
+&=& \frac{1}{n_1^2} \left[ \sumn \var(Z_i) (c_i -  \bar{c}  ) (d_i -  \bar{d}   ) + 
+\sum_{i\neq j} \cov(Z_i, Z_j) (c_i -  \bar{c}  )(d_j -  \bar{d}   ) 
+\right] \\
+&=& \frac{1}{n_1^2} \left[ \frac{n_1 n_0}{n^2} \sumn   (c_i -  \bar{c}  )(d_i -  \bar{d}   )
+-\frac{n_1 n_0 } { n^2 (n-1)  }
+\sum_{i\neq j}  (c_i -  \bar{c}  )(d_j -  \bar{d}   ) 
+\right] .
+\end{eqnarray*}
+由于
+$$
+0 =   \sumn   (c_i -  \bar{c}  )  \sumn   (d_i -  \bar{d}   )  
+= 
+\sumn   (c_i -  \bar{c}  )(d_i -  \bar{d}   )   + 
+\sum_{i\neq j}  (c_i -  \bar{c}  )(d_j -  \bar{d}   ) ,
+$$
+样本均值的协方差可简化为
+\begin{eqnarray*}
+&&\cov( \hat{\bar{c}} ,  \hat{\bar{d}} )  \\
+&=& \frac{1}{n_1^2} \left[ \frac{n_1 n_0}{n^2} \sumn   (c_i -  \bar{c}  ) (d_i -  \bar{d}   ) 
++\frac{n_1 n_0 } { n^2 (n-1)  }
+\sumn   (c_i -  \bar{c}  ) (d_i -  \bar{d}  ) 
+\right]  \\
+&=& \frac{n_0}{nn_1} S_{cd}.
+\end{eqnarray*}
+方差公式不过是令 $ \hat{\bar{c}}  =  \hat{\bar{d}}  $ 时的特例而已。 
+\end{myproof}
+
+
+
+
+\begin{myproof}{引理}{\ref{lemma::variance-unbiased}} 
+我们仅证明样本协方差项，因为样本方差的公式可视为其特例。
+我们有以下分解式：
+\begin{eqnarray*}
+(n_1 - 1)  \hat{S}_{cd}  &=& \sumn Z_i  (c_i -  \hat{\bar{c}} ) (d_i -  \hat{\bar{d}}  ) \\
+&=& \sumn Z_i \{    (c_i -  \bar{c}  ) - (  \hat{\bar{c}}   -  \bar{c} )  \}  \{    (d_i -  \bar{d}   ) - (  \hat{\bar{d}}    -  \bar{d}  )  \}\\
+&=&\sumn Z_i    (c_i -  \bar{c}  ) (d_i -  \bar{d}   )  -  n_1(  \hat{\bar{c}}   -  \bar{c} )   (  \hat{\bar{d}}    -  \bar{d}  ).
+\end{eqnarray*}
+对等式两边取期望值，可得
+\begin{eqnarray*}
+E\{ (n_1 - 1)  \hat{S}_{cd}  \} &=&   \sumn E(Z_i)    (c_i -  \bar{c}  )  (d_i -  \bar{d}   )   -  n_1 E\{ (  \hat{\bar{c}}   -  \bar{c} )   (  \hat{\bar{d}}    -  \bar{d}  ) \} \\
+&=& \frac{n_1}{n}  \sumn     (c_i -  \bar{c}  ) (d_i -  \bar{d}   ) - n_1 \frac{n_0}{nn_1} S_{cd} \\
+&=& S_{cd} \left\{   \frac{n_1(n-1)}{n} - \frac{n_0}{n} \right\} \\
+&=& (n_1 - 1) S_{cd},
+\end{eqnarray*}
+最后，将等式两边同除以 $n_1-1$ 即可得出结论。 
+\end{myproof}
+
+
+
+
+
+\begin{myproof}{引理}{\ref{lemma::finite-population-clt}}
+\citet{hajek1960limiting}给出了简单随机抽样情形下中心极限定理的证明，而\citet{lehmann2006nonparametrics}则给出了该证明的一个更易理解版本。\citet{li2017general}对引理\ref{lemma::finite-population-clt}中所述的中心极限定理进行了修正，并证明了样本方差的一致性。鉴于其中涉及的技术复杂性，此处不再赘述证明过程。 
+\end{myproof}
+
+
+
+\section{关于文献的评论}
+
+
+自\citet{neyman1934two, neyman1935statistical}的开创性研究以来，调查抽样与实验设计便一直紧密相连。\citet{li2017general}与\citet{mukerjee2018using}也在这两个领域之间建立了诸多理论联系。 
+
+
+
+\section{作业习题}
+
+\paragraph{不放回抽样与超几何分布}
+\label{problem::srs-hypergeometric}
+
+
+考虑引理\ref{lemma::samplemean}的一个特殊情况，其中 $c_i$ 均为二元变量。假设其中值为1的个数总计为 $T$，则值为0的个数总计为 $n-T$。令 $t = \sumn Z_i c_i$ 表示在样本量为 $n_1$ 的样本中值为1的总数。 
+
+请求出$t$的分布、均值和方差。 
+
+备注：$t$服从超几何分布。  
+
+
+
+\paragraph{引理\ref{lemma::samplemean}}的向量形式
+\label{para::srs-vector-form}
+
+
+假设 $c_i$ 均为向量，并定义
+$$
+S_c^2 = (n-1)^{-1} \sumn (c_i  - \bar{c})(c_i -  \bar{c}) \tran ,\quad
+\hat S_c^2 = (n_1-1)^{-1} \sumn Z_i (c_i  - \hat{\bar{c}})(c_i - \hat{\bar{c}}) \tran .
+$$
+证明：
+$$
+E(\hat{\bar{c}}) = \bar c,\quad
+\cov( \hat{\bar{c}} ) = \frac{n_0}{ nn_1} S_c^2,\quad
+E(\hat S_c^2 ) = S_c^2 .
+$$
+
+
+

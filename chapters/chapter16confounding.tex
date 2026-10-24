@@ -1,0 +1,393 @@
+
+\chapter{观察性研究中存在未混杂假设时的困难}
+ \label{chapter::difficulties-observational-studies}
+ 
+ 
+本书的\ref{part::observational-studies}部分探讨了在两个假设之下利用观察性研究进行因果推断的方法：未混杂假设与重叠假设。这两个假设均属于较强的假设，实践中往往难以满足。本章将着重讨论未混杂假设的困难之处。随后的\ref{chapter::evalue}--\ref{sec::rosenbaum-sensitivity-analysis}各章将介绍在存在未测量混杂因素的情况下，观察性研究中进行敏感性分析的各种策略。\ref{chapter::overlap}章则将探讨重叠假设的困难。 
+ 
+ 
+ 
+
+\section{因果图的基本概念}
+
+
+\citet{pearl1995causal}率先引入了因果图这一概念，将其作为实证研究中进行因果推断的有力工具。\citet{pearl2000causality}则撰写了关于因果图的教科书。在此，我也将因果图视作一种直观描述变量间因果关系的工具。 
+
+例如，考虑以下因果图$$
+\xymatrix{
+ & X \ar[ld]\ar[rd] \\
+Z\ar[rr] &&Y 
+}
+$$研究$Z$对$Y$的因果效应时，可以将它解读为如下数据生成过程：$$
+\left\{ 
+\begin{aligned}
+      X & \sim F_X(x), \\
+      Z  &=   f_Z(X, \varepsilon_Z) , \\
+      Y(z) &=  f_Y(X, z, \varepsilon_Y(z)) ,
+\end{aligned}
+\right. 
+$$其中对$z=0,1$均有$\varepsilon_Z \ind \varepsilon_Y(z)$。在这里，协变量$X$来自分布$F_X(x)$，处理分配是$X$和随机误差项$\varepsilon_Z$的函数，潜在结果$ Y(z) $是$X$、$z$和随机误差项$\varepsilon_Y(z)$的函数。由这些方程容易看出$Z\ind Y(z) \mid X$，即无混杂性假设成立。 
+
+
+若因果图为$$
+\xymatrix{
+ X \ar[d]\ar[rrd] & & U\ar[d]\ar[lld] \\
+Z\ar[rr] &&Y 
+}
+$$可将其解读为如下数据生成过程：$$
+\left\{ 
+\begin{aligned}
+       X & \sim F_X(x), \\
+       U& \sim F_U(u), \\ 
+      Z  &=   f_Z(X, U,  \varepsilon_Z) , \\
+      Y(z) &=  f_Y(X, U, z, \varepsilon_Y(z)) ,
+\end{aligned}
+\right. 
+$$其中对$z=0,1$均有$\varepsilon_Z \ind \varepsilon_Y(z)$。由方程容易看出$Z\ind Y(z) \mid (X,U)$，但$Z\nind Y(z) \mid X$，即以$(X,U)$为条件时无混杂性成立，而仅以$X$为条件时不成立。此时，$U$是一个未测量混杂因素。图中的$U$因此称为未测量混杂因素。 
+
+
+
+
+
+
+\section{评估未混杂假设的方法}
+
+
+无混杂性假设$$
+Z\ind Y(1) \mid X, \quad 
+Z\ind Y(0) \mid X
+$$蕴含\begin{eqnarray*}
+\pr\{ Y(1)\mid  Z=1, X \}  &=& \pr\{ Y(1)\mid  Z=0, X \} , \\
+\pr\{ Y(0)\mid  Z=1, X \} &=& \pr\{ Y(0)\mid  Z=0, X \} . 
+\end{eqnarray*}因此，它实质上要求反事实分布$\pr\{ Y(1)\mid  Z=0, X \}$等于观测分布$\pr\{ Y(1)\mid  Z=1, X \}$，且反事实分布$\pr\{ Y(0)\mid  Z=1, X \} $等于观测分布$\pr\{ Y(0)\mid  Z=0, X \}$。由于反事实分布不能直接从数据中识别，在没有额外假设时，无混杂性在根本上不可检验。下面讨论评估无混杂性假设的两种策略。这里的“评估”弱于“检验”：前者指支持或削弱初始分析的补充分析，后者指正式的统计检验。 
+
+
+
+\subsection{利用负对照结果}
+
+
+ 
+
+设$Y^\textup{n}$是与$Y$相似的结果，理想情况下具有与$Y$相同的混杂结构。若相信$Z\ind Y(z)\mid X$，一般也倾向于相信$Z\ind Y^\textup{n} (z)\mid X$。此外，事先已知$Z$对$Y^\textup{n}$的效应：$$
+\tau(Z\rightarrow Y^\textup{n} )
+= 
+E\{  Y^\textup{n}(1) - Y^\textup{n}(0) \} .
+$$一个重要例子是$\tau(Z\rightarrow Y^\textup{n} ) = 0$。满足这些要求的因果图如下：
+
+$$
+\xymatrix{
+ & X \ar[ld]\ar[rd] \ar[rr] & & Y^\textup{n}  \\
+Z\ar[rr] &&Y 
+}
+$$
+
+
+
+\begin{example}
+\citet{Cornfield::1959}基于观察性研究探讨了吸烟与肺癌之间的因果关系。尽管他们控制了诸多重要背景变量，但仍可能存在某些未测量的混杂因素影响观测结果。为强化因果关系的证据，他们同时报告了吸烟对车祸发生率的影响——该值在生物学预期范围内应接近零。由此可见，即便无法排除未测量混杂因素的存在，基于负对照结果的辅助分析依然能强化“吸烟导致肺癌”这一结论的可靠性。 
+\end{example}
+
+\begin{example}
+\citet{imbens2015causal}建议将滞后结果用作负对照结果。在大多数情形下，认为滞后结果与当前结果具有相似的混杂结构是合理的。由于滞后结果发生在处理之前，处理对它的平均因果效应必为$0$。不过应谨慎使用这一建议，因为在大多数研究中，我们会直接将滞后结果作为一个已观测混杂因素进行调整。 
+
+从某种意义上说，第\ref{chapter::pscore-key}章中的协变量平衡检查是使用负对照的一个特例。与将滞后结果用作负对照的问题相似，这些协变量通常已包含在无混杂性假设中。因此，协变量平衡检查未通过，实际上否定的是倾向得分模型的设定，而非无混杂性假设本身。 
+\end{example}
+
+\begin{example}
+针对老年人的观察性研究发现，在调整已测量协变量后，接种流感疫苗显著降低随后流感季的肺炎或流感住院风险及全因死亡风险。\citet{jackson2006evidence}怀疑这一效应幅度过大，于是对负对照结果进行了补充分析。疫苗通常从秋季开始接种，而流感传播在冬季之前往往很少。根据生物学知识，疫苗效应应在流感季最明显。但\citet{jackson2006evidence}发现在流感季之前效应反而更大，提示观察到的效应来自未测量混杂。 
+\end{example}
+
+在上述案例中，\citet{jackson2006evidence}的研究最具说服力：流感相关结果在流感季前后应具有相似的混杂特征。相比之下，\citet{Cornfield::1959}的证据稍弱：吸烟与车祸之间和吸烟与肺癌之间的因果机制存在显著差异。事实上，\citet{Fisher::1957}曾指出吸烟与肺癌的关系可能源于某种未被观测的遗传因素（参见\ref{chapter::evalue}章）。这种因素虽能同时影响吸烟行为与肺癌发病率，却不太可能显著影响车祸发生率。  
+
+
+\citet{lipsitch2010negative}是近期关于负对照结果研究的代表文献；而\citet{rosenbaum1989role}则探讨了已知效应在因果推断中的作用。 
+
+ 
+
+\subsection{利用负对照暴露}
+
+ 
+
+
+负对照暴露与负对照结果相互对应。设$Z^\textup{n}$是与$Z$相似的处理变量，并具有与$Z$相同的混杂结构。若相信$Z \ind Y  (z) \mid X$，通常也倾向于相信$
+Z^\textup{n}\ind Y  (z) \mid X.
+$。此外，事先已知$Z^\textup{n}$对$Y $的效应$$
+\tau(Z^\textup{n}\rightarrow Y  )
+= 
+E\{  Y(1^\textup{n}) - Y (0^\textup{n}) \}.
+$$一个重要例子是$\tau(Z^\textup{n}\rightarrow Y  ) = 0.$。满足这些要求的因果图如下：
+
+
+$$
+\xymatrix{
+Z^\textup{n} & & X \ar[ll] \ar[ld]\ar[rd] \\
+&Z  \ar[rr] && Y 
+}
+$$
+
+
+
+
+\begin{example}
+\citet{sanderson2017negative}提供了诸多应用负对照暴露的实例：通过比较孕期母体与父亲接触因素各自对子代结局的影响，从而判断子宫内暴露的效应。该文献综述了多项关于父母吸烟、BMI分别对子代发育影响的研究。在此类情境下，母体效应值理论上应大于父亲效应值。 
+\end{example}
+
+
+
+\subsection{总结}
+
+
+若无额外假设，未混杂假设本质上无法被检验。尽管观察性研究中的负对照结果或负对照无法直接验证该假设，但将其用于辅助分析却能强化因果推断的可信度。然而实施此类分析并非易事：它往往需要更多数据，更重要的是需深入理解因果机制方能选择合适的负对照指标。 
+
+ 
+ 
+
+
+\section{过度调整引发的问题}
+\label{sec::pearl-bias}
+
+此前讨论的许多因果效应估计方法都依赖无混杂性假设：$$
+Z\ind \{ Y(1), Y(0) \} \mid X .
+$$这个假设以$X$为条件，因此必须选对$X$，以确保所需的条件独立性。\citet{rosenbaum2002design}认为，没有理由避免调整描述受试者处理前情况的变量。类似地，\citet{rubin2007design}认为，通常假设的条件越充分，就越容易接受。两者都主张控制所有已观测的处理前协变量。\citet{vanderweele2011new}将其称为{\it 处理前准则}。Pearl不同意这一建议，并给出了下面两个反例。 
+
+
+\subsection{M型偏差}
+\label{section::m-bias}
+
+M偏差出现在以下具有M形结构的因果图中：$$
+\xymatrix{
+U_1 \ar[dd]\ar[dr] &&U_2 \ar[dd]\ar[dl] \\
+&X& \\
+Z   && Y 
+}
+$$
+
+由图可读出数据生成过程：$$
+\left\{ 
+\begin{aligned}
+&U_1 \ind U_2 ,\\
+&X = f_X(U_1, U_2, \varepsilon_X),\\
+&Z=   f_Z(U_1,  \varepsilon_Z) , \\
+&Y=      Y(z) =  f_Y(U_2, \varepsilon_Y) ,
+\end{aligned}
+\right. 
+$$其中$(\varepsilon_X, \varepsilon_Z, \varepsilon_Y) $是相互独立的随机误差项。上述图中的$X$已观测，而$U_1$和$U_2$未观测。改变$Z$的值完全不会改变$Y$的值，因此$Z$对$Y$的真实因果效应必为$0$。由数据生成方程可知$Z\ind Y$，因而$Z$与$Y$的关联为$0$；特别地，$$
+\tau_\textsc{PF} = E(Y\mid Z=1) - E(Y\mid Z=0) = 0.
+$$这意味着，不调整协变量$X$的简单估计量对真实参数是无偏的。 
+
+然而，以$X$为条件后，$U_1\nind  U_2 \mid X$，进而一般有$Z\nind Y\mid X$以及$$
+\int \{  E(Y\mid Z=1, X=x) - E(Y\mid Z=0, X=x) \} f(x) \diff x \neq 0
+$$为获得直观理解，考虑正态线性模型\footnote{这与二元$Z$的讨论并不完全契合，但可简化推导。\citet{ding2015adjust}对二元$Z$下更自然的模型作了详细讨论。}：$$
+\left\{ 
+\begin{aligned}
+&X = a U_1 + b U_2 +  \varepsilon_X,\\
+&Z=   cU_1 +  \varepsilon_Z , \\
+&Y=      Y(z) =  dU_2 +  \varepsilon_Y ,
+\end{aligned}
+\right. 
+$$其中$(U_1, U_2, \varepsilon_X, \varepsilon_Z, \varepsilon_Y)  \iidsim \N01$。我们有$$
+\cov(Z,Y) = \cov(  cU_1 +  \varepsilon_Z,  dU_2 +  \varepsilon_Y) = 0,
+$$但根据习题\ref{hw::partial-correlation}的结果，给定$X$时$Z$与$Y$的偏相关系数为\footnote{符号$\propto$读作“正比于”，使我们可以省略一些不重要的常数。}\begin{eqnarray*}
+\rho_{ZY\mid X} &=& \frac{   \rho_{ZY} - \rho_{ZX} \rho_{YX}  }{  \sqrt{  1-\rho_{ZX}^2 }  \sqrt{1- \rho_{YX}^2  }  }   
+\\
+&\propto &  - \rho_{ZX} \rho_{YX}  \\
+&\propto &  - \cov(Z, X) \cov(Y, X)  \\
+&=&  - abcd,
+\end{eqnarray*}即沿$Z$至$Y$路径上各系数的乘积。因此，未调整的估计量无偏，而调整后的估计量具有正比于$abcd$的偏差。 
+
+
+ 
+ 
+如下简单示例可演示M型偏差：
+
+\begin{lstlisting}
+> ## M bias with large sample size
+> n  = 10^6
+> U1 = rnorm(n)
+> U2 = rnorm(n)
+> X  = U1 + U2 + rnorm(n)
+> Y  = U2 + rnorm(n)
+> ## with a continuous treatment Z
+> Z  = U1 + rnorm(n)
+> round(summary(lm(Y ~ Z))$coef[2, 1], 3)
+[1] 0
+> round(summary(lm(Y ~ Z + X))$coef[2, 1], 3)
+[1] -0.2
+> 
+> ## with a binary treatment Z
+> Z  = (Z >= 0)
+> round(summary(lm(Y ~ Z))$coef[2, 1], 3)
+[1] 0.002
+> round(summary(lm(Y ~ Z + X))$coef[2, 1], 3)
+[1] -0.42
+\end{lstlisting}
+
+
+
+\subsection{Z型偏差}
+\label{sec::z-bias}
+
+ 
+
+考虑以下因果图$$
+\xymatrix{
+&&&U \ar[dl]_b \ar[dr]^c \\
+X \ar[rr]^a &&Z\ar[rr]^\tau   && Y 
+}
+$$其数据生成过程为\footnote{这里同样用线性模型生成连续$Z$以简化推导。\citet{ding2017instrumental}将理论推广到更一般的因果模型，特别是二元$Z$的情形。}$$
+\left\{ 
+\begin{aligned}
+&Z=   aX + bU +   \varepsilon_Z , \\
+&Y(z)=   \tau z + cU +  \varepsilon_Y ,
+\end{aligned}
+\right. 
+$$其中$(U, X, \varepsilon_Z, \varepsilon_Y) $独立同分布于$ \N01$。在此过程中，$X\ind U,$$X\nind Z$，且$X$仅通过$Z$影响$Y$。  
+
+ 
+未调整的估计量为\begin{eqnarray*}
+\tau_\textup{unadj} &=& \frac{ \cov(Z, Y)  }{  \var(Z) }  \\
+&=& \frac{ \cov(Z, \tau Z + cU)  }{ \var(Z) }  \\
+&=& \tau + \frac{c \cov(aX + bU, U)  }{  \var(Z) }  \\
+&=& \tau + \frac{c b }{  a^2 + b^2 + 1} ,
+\end{eqnarray*}其偏差为$bc/(a^2 + b^2 + 1)$。将$Y$对$(Z,X)$进行OLS回归得到的调整估计量满足$$
+\left\{ 
+\begin{aligned}
+E\{  Z(Y- \tau_\textup{adj} Z  - \alpha X  )  \} &= 0,\\
+E\{  X(Y - \tau_\textup{adj} Z - \alpha X)  \} &= 0.
+\end{aligned}
+\right. 
+$$解这个关于$(\tau_\textup{adj}, \alpha)$的线性方程组，得到$  \tau_\textup{adj}$的表达式：\begin{equation}
+\label{eq::zbias-result}
+  \tau_\textup{adj}  = \tau +  \frac{    bc }{   b^2+1 },
+\end{equation}其偏差为$bc/(b^2+1)$。求解关于$(\tau_\textup{adj}, \alpha)$的方程组的具体步骤留作习题\ref{hw::z-bias-formula}。 
+
+由此可见未调整估计量的偏差小于调整后结果。更值得注意者：当$X$与$Z$关联越强（$a$值越大），调整后偏差反而越大。 
+
+
+数学推导并不十分困难，但这种偏差似乎颇为反直觉。直观解释如下：处理是$X$、$U$及其他随机误差的函数。给定$X$后，它便仅是$U$和其他随机误差的函数。因此，以$X$为条件会降低$Z$的随机性，更关键的是，会增大未测量混杂因素$U$在决定$Z$时的相对作用。于是，以$X$为条件会放大$U$造成的混杂偏差。这个理想化例子说明了对某些协变量过度调整的危险。 
+
+
+
+ \citet{heckman2004using}在模拟研究中观察到这一现象；\citet[][technical report in 2006]{wooldridge2009should}在线性模型中验证了它；\citet{pearl2010class, pearl2011invited}用因果图作出解释；\citet{ding2017instrumental}提供了更一般的理论和直观解释。它被称为Z偏差，是因为Pearl的原始论文用符号$Z$表示这里的变量$X$。但本书始终用$Z$表示处理变量。在本书第\ref{part::instrumentalvariables}部分中，满足本小节因果图条件的$X$称为工具变量。因此，这种偏差也称为{\it 工具变量偏差}。 
+
+
+
+如下示例能直观演示Z型偏差：
+\begin{lstlisting}
+> ## Z bias with large sample size
+> n  = 10^6
+> X = rnorm(n)
+> U = rnorm(n)
+> Z = X + U + rnorm(n)
+> Y = U + rnorm(n)
+> 
+> round(summary(lm(Y ~ Z))$coef[2, 1], 3)
+[1] 0.333
+> round(summary(lm(Y ~ Z + X))$coef[2, 1], 3)
+[1] 0.501
+> 
+> ## stronger association between X and Z
+> Z = 2*X + U + rnorm(n)
+> round(summary(lm(Y ~ Z))$coef[2, 1], 3)
+[1] 0.167
+> round(summary(lm(Y ~ Z + X))$coef[2, 1], 3)
+[1] 0.501
+> 
+> ## even stronger association between X and Z
+> Z = 10*X + U + rnorm(n)
+> round(summary(lm(Y ~ Z))$coef[2, 1], 3)
+[1] 0.01
+> round(summary(lm(Y ~ Z + X))$coef[2, 1], 3)
+[1] 0.5
+\end{lstlisting} 
+
+
+\subsection{观察性研究中该调整哪些协变量？}
+
+
+真实的数据生成过程可能十分复杂，我们无法确知。不过，下面的因果图有助于厘清许多概念。它已经排除了第\ref{section::m-bias}节讨论的$M$偏差：$$
+\xymatrix{
+ &&X_R&& \\
+X_Z \ar[ddr] && X \ar[ddl] \ar[ddr]&& X_Y \ar[ddl] \\
+ &\\
+ &Z \ar[rr] \ar[ddr] &&Y \ar[ddl]& \\
+ & \\
+ &&X_I&&
+}
+$$图中各协变量具有不同特征： 
+\begin{enumerate}
+\item
+$X$同时影响处理和结果。以$X$为条件可以确保无混杂性，因此应控制$X$。
+\item
+$X_R$为纯随机噪声因素，不影响处理与结果。纳入此类变量虽不致偏差估计，却会增加有限样本下的变异度。
+\item
+$X_Z$是仅通过处理影响结果的工具变量。在上图中，将其纳入分析不会使估计有偏，但会增大估计的变异性。然而，存在未测量混杂时，将其纳入分析会放大偏差，如第\ref{sec::z-bias}节所示。 
+\item
+$X_Y$仅影响结果而与处理无关。不调整条件下未混杂假设仍成立。因其具预测结果之效，纳入分析常可提升估计精度。
+\item
+$X_I$受处理与结果共同影响，属处理后变量而非处理前协变量。若目标是推断处理效应则不应纳入。关于处理后变量的因果推断问题将在\ref{part::post-treatmentvariable}部分详述。 
+\end{enumerate}
+
+
+
+若认可上述因果结构，则至少需调整$X$以消除偏差；若可能，还应纳入$X_Y$以降低变异度。 
+
+
+ 
+ 
+ 
+\section{作业习题}
+
+
+\paragraph{Z型偏差公式推导细节}\label{hw::z-bias-formula}
+请验证公式\eqref{eq::zbias-result}的正确性。
+ 
+
+\paragraph{Cochran公式与遗漏变量偏差公式}
+\label{hw::cochran+ovb}
+
+
+
+David Cox爵士将以下结果称为{\it Cochran公式}\citep{cochran1938omission, cox2007generalization}，计量经济学家则称其为{\it 遗漏变量偏差公式}\citep{angrist2008mostly}。\citet{fisher1925statistical}已给出其中一个特例。它也对应于第\ref{appendix::fwl-theorem}章中的Frisch–Waugh–Lovell定理。  
+
+该公式分两个版本。下述向量均为列向量： 
+
+\begin{enumerate}
+[(1)]
+\item
+（总体版本）设$(y_i, x_{1i}, x_{2i})_{i=1}^n$独立同分布，其中$y_i$为标量，$x_{i1}$为$K$维向量，$x_{i2}$为$L$维向量。 
+
+对这些随机变量作如下OLS分解：\begin{eqnarray}
+y_i &=& \beta_1 \tran x_{i1} + \beta_2  \tran x_{2i} + \varepsilon_i , \label{eq::long}\\
+y_i&=&\gamma  \tran x_{i1} + e_i, \label{eq::short}\\
+x_{i2} &=& \delta  \tran x_{i1} + v_i . \label{eq::inter}
+\end{eqnarray}式\eqref{eq::long}称为长回归，式\eqref{eq::short}称为短回归。在式\eqref{eq::inter}中，$\delta$是矩阵，因为这里是将一个向量对另一个向量回归。也可以将\eqref{eq::inter}看作分别将$x_{i2}$的各个分量对$x_{i1}$回归。 
+
+试证：$\gamma = \beta_1 + \delta \beta_2.$
+
+
+\item
+（样本版本）设给定$n\times 1$向量$Y$、$n\times K$矩阵$X_1$及$n\times L$矩阵$X_2$。此处不涉及概率分布，纯属线性代数问题。 
+
+可得如下最小二乘拟合结果：
+\begin{eqnarray*}
+Y &=& X_1 \hat{\beta}_1 + X_2 \hat{\beta}_2+ \hat{\varepsilon},\\
+Y &=& X_1 \hat{\gamma} + \hat{e} ,\\
+X_2 &=& X_1 \hat{\delta} + \hat{v},
+\end{eqnarray*}
+其中$\hat{\varepsilon},  \hat{e}, \hat{v}$分别为残差向量。最后式表示$X_2$各列对$X_1$的回归，故残差矩阵$\hat{v}$为$n\times L$形式。
+
+试证：$\hat{\gamma} = \hat{\beta}_1 +  \hat{\delta} \hat{\beta}_2$.
+
+\end{enumerate}
+
+ 
+注：乘积项$\delta \beta_2$与$\hat{\delta} \hat{\beta}_2$常分别被称为总体与样本层面的“遗漏变量偏差”。 
+ 
+ 
+ \paragraph{推荐阅读} 
+ 
+\citet{imbens2020potential}系统综述并对比了潜在结果理论与因果图在因果推断中的作用。 
+
+
+

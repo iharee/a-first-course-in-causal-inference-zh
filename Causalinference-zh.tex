@@ -1,0 +1,254 @@
+% 中文译稿入口；在本目录运行 ./build.sh。
+\documentclass[krantz1]{krantz}
+\usepackage[UTF8,scheme=plain,fontset=fandol]{ctex}
+\usepackage{fixltx2e,fix-cm}
+\usepackage{amssymb, bbm, bm, mathtools}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\graphicspath{{./}}
+\usepackage{color, rotating}
+%\usepackage{subfigure}
+\usepackage{subcaption}
+\usepackage{makeidx}
+\usepackage{multicol}
+\usepackage[all,import]{xy}
+\usepackage{natbib} % ASA citation style
+%\bibpunct{(}{)}{;}{a}{}{,} % ASA citation style
+\usepackage{hyperref}
+\usepackage{etoolbox}
+\hypersetup{hidelinks,pdftitle={因果推断入门},pdfauthor={Peng Ding},bookmarksnumbered=true}
+\renewcommand{\contentsname}{目录}
+\renewcommand{\bibname}{参考文献}
+\renewcommand{\indexname}{索引}
+\renewcommand{\figurename}{图}
+\renewcommand{\tablename}{表}
+\renewcommand{\partname}{部分}
+\renewcommand{\chaptername}{章}
+\renewcommand{\appendixname}{附录}
+\patchcmd{\tableofcontents}{\markboth{Contents}{Contents}}{\markboth{目录}{目录}}{}{}
+\patchcmd{\thebibliography}{\chapter*{\bibname}}{\chapter*{\bibname}\addcontentsline{toc}{chapter}{\bibname}}{}{}
+
+
+\definecolor{mygray}{gray}{0.6}
+\usepackage{listings}
+
+ 
+ 
+\lstset{language=R,
+    basicstyle=\small\ttfamily,
+%    numbers=left, stepnumber=5,
+%    stringstyle=\color{mygray},
+%    otherkeywords={0,1,2,3,4,5,6,7,8,9},
+%    morekeywords={TRUE,FALSE},
+%    deletekeywords={data,frame,length,as,character},
+%    keywordstyle=\color{blue},
+showstringspaces=false, 
+    commentstyle=\color{mygray},
+}
+
+\lstnewenvironment{rc}[1][]{\lstset{language=R}}{}
+\newcommand{\ri}[1]{\lstinline{#1}}   
+
+\lstset{language=R}             
+
+
+\renewcommand{\theparagraph}{\arabic{chapter}.\arabic{paragraph}}
+\setcounter{secnumdepth}{5}
+\newenvironment{myproof}[2] {\noindent {\bfseries {#1} {#2} 的证明：}}{\hfill$\square$}
+\newenvironment{mysolution}[1]{\vspace{0.1in} \noindent {\bfseries 习题 {#1} 的解答：}}{\hfill$\square$}
+
+
+\newtheorem{lemma}{引理}
+\newtheorem{proposition}{命题}
+\newtheorem{assumption}{假设}
+\newtheorem{remark}{注}
+\newtheorem{condition}{条件}
+\newtheorem{corollary}{推论}
+ 
+
+\newcommand{\pkg}[1]{{\fontseries{b}\selectfont #1}}
+\def\letas{\mathrel{\mathop{=}\limits^{\triangle}}}
+\def\ind{\begin{picture}(9,8)
+         \put(0,0){\line(1,0){9}}
+         \put(3,0){\line(0,1){8}}
+         \put(6,0){\line(0,1){8}}
+         \end{picture}
+        }
+\def\nind{\begin{picture}(9,8)
+         \put(0,0){\line(1,0){9}}
+         \put(3,0){\line(0,1){8}}
+         \put(6,0){\line(0,1){8}}
+         \put(1,0){{\it /}}
+         \end{picture}
+    }
+
+\def\AVar{\text{AsyVar}}
+\def\var{\textup{var}}
+\def\cov{\textup{cov}}
+\def\sumn{\sum_{i=1}^n}
+\def\summ{\sum_{j=1}^m}
+\def\convergeas{\stackrel{a.s.}{\longrightarrow}}
+\def\converged{\stackrel{\textup{d}}{\longrightarrow}}
+\def\iidsim{\stackrel{\textup{IID}}{\sim}}
+\def\indsim{\stackrel{ind}{\sim}}
+\def\pr{\textup{pr}}
+\def\RD{\textsc{rd}}
+\def\RR{\textsc{rr}}
+\def\OR{\textsc{or}}
+\def\true{\textup{true}}
+\def\obs{\textup{obs}}
+\def\G{\text{Gamma}}
+\def\d{\textnormal{d}}
+\def\N01{\textsc{N}(0,1)}
+\def\HF{H_{0\textsc{f}}}
+\def\HN{H_{0\textsc{n}}}
+\newcommand*{\tran }{^{\mkern-1.5mu\mathsf{T}}}
+\def\asim{\stackrel{\cdot}{\sim}}
+\def\diff{\textup{d}}
+\def\at{\textup{a}}
+\def\nt{\textup{n}}
+\def\cp{\textup{c}}
+\def\df{\textup{d}}
+\def\logit{\textup{logit}}
+\def\expit{\textup{expit}}
+\def\L{\ell}
+\def\U{u}
+\def\CDE{\textsc{cde}}
+\def\NDE{\textsc{nde}}
+\def\NIE{\textsc{nie}}  
+\def\se{\textup{se}}  
+\def\frt{\textsc{frt}}
+
+
+
+\frenchspacing
+\tolerance=5000
+
+\makeindex
+
+\include{frontmatter/preamble} %place custom commands and macros here
+
+\begin{document}
+
+\frontmatter
+
+\title{因果推断入门}
+\author{Peng Ding}
+
+\maketitle
+
+\include{frontmatter/translation-notice}
+
+\include{frontmatter/dedication}
+%\cleardoublepage
+%\setcounter{page}{7} %previous pages will be reserved for frontmatter to be added in later.
+\tableofcontents
+%\include{frontmatter/foreword}
+\include{frontmatter/preface}
+%\listoffigures
+%\listoftables
+\include{frontmatter/acronyms}
+\include{frontmatter/notation}
+
+
+\mainmatter
+
+
+
+
+
+\makeatletter
+\@addtoreset{assumption}{chapter}
+\@addtoreset{example}{chapter}
+\@addtoreset{lemma}{chapter}
+\@addtoreset{remark}{chapter}
+\@addtoreset{theorem}{chapter}
+\@addtoreset{corollary}{chapter}
+\@addtoreset{proposition}{chapter}
+\@addtoreset{definition}{chapter}
+\makeatother
+
+\renewcommand {\theexample} {\thechapter.\arabic{example}}
+\renewcommand {\theassumption} {\thechapter.\arabic{assumption}}
+\renewcommand {\thelemma} {\thechapter.\arabic{lemma}}
+\renewcommand {\thetheorem} {\thechapter.\arabic{theorem}}
+\renewcommand {\theremark} {\thechapter.\arabic{remark}}
+\renewcommand {\thecondition} {\thechapter.\arabic{condition}}
+\renewcommand {\thecorollary} {\thechapter.\arabic{corollary}}
+\renewcommand {\theproposition} {\thechapter.\arabic{proposition}}
+\renewcommand {\thedefinition} {\thechapter.\arabic{definition}}
+
+ 
+ 
+ 
+\part{导论}\label{part::introduction}
+ \include{chapters/chapter01introduction}
+  \include{chapters/chapter02potentialoutcomes}
+ 
+\part{随机实验}\label{part::rcts}
+  \include{chapters/chapter03CREFRT}
+  \include{chapters/chapter04CRENeyman}
+\include{chapters/chapter05SRE}
+ \include{chapters/chapter06ReMReg}  
+ \include{chapters/chapter07MPE}  
+ \include{chapters/chapter08unification}   
+    \include{chapters/chapter09bridge}  
+   
+   
+ 
+\part{观察性研究}\label{part::observational-studies}
+  \include{chapters/chapter10observationalstudies}  
+ \include{chapters/chapter11pscore}  
+ \include{chapters/chapter12doublyrobust}  
+  \include{chapters/chapter13ATT}  
+    \include{chapters/chapter14pscoreregression}  
+  \include{chapters/chapter15matching}  
+  
+\part{观察性研究的困难与挑战}\label{part::challenges-os}  
+  
+  \include{chapters/chapter16confounding}  
+  \include{chapters/chapter17Evalue}  
+  \include{chapters/chapter18sensitivityACE}  
+    \include{chapters/chapter19Gamma}  
+    \include{chapters/chapter20OverlapRDD}      
+     
+
+\part{工具变量}\label{part::instrumentalvariables}
+  \include{chapters/chapter21CACE}  
+   \include{chapters/chapter22IVinequalities}   
+    \include{chapters/chapter23TSLS}        
+    \include{chapters/chapter24FRDD}   
+        \include{chapters/chapter25mendelianrandomization}   
+
+ 
+
+\part{涉及处理后变量的因果机制}\label{part::post-treatmentvariable}
+ 
+  \include{chapters/chapter26principalstratification}
+    \include{chapters/chapter27mediation}    
+      \include{chapters/chapter28CDE}   
+      \include{chapters/chapter29time}  
+
+
+
+\appendix 
+\part{附录}
+
+%\setcounter{chapter}{0}
+%\renewcommand{\thechapter}{A\arabic{chapter}}
+%\renewcommand{\theparagraph}{A\arabic{chapter}.\arabic{paragraph}}
+
+\renewcommand{\theparagraph}{\Alph{chapter}.\arabic{paragraph}}
+\include{chapters/appendix_basicstatistics}  
+\include{chapters/appendix_linearmodel}
+\include{chapters/appendix_surveysampling}
+
+
+
+
+\backmatter
+\input{Causalinference.bbl}
+
+\printindex
+
+\end{document}

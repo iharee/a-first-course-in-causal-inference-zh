@@ -1,0 +1,66 @@
+\chapter*{符号说明}
+
+
+我在本书中采用了以下常规记号。
+
+
+\subsection*{数学}
+
+\begin{tabular}{ll}
+\hline 
+$\binom{n}{m}$ & “从$n$个元素中选出$m$个”的组合数，其值为$\frac{n!}{m!(n-m)!}$。 \\
+$\sum$ & 求和运算，例如：$\sumn a_i = a_1 + \cdots + a_n$ \\
+$I(\cdot)$ & 指示函数，即：若事件$A$发生则$I(A)=1$，否则为0。\\
+$\#$ & 计算集合中单位的数量\\
+$\approx$ & 大致相等 \\
+$\propto$ & 与某值成正比（忽略一些不重要的常数后）。 \\
+$\text{logit}$ &  $\text{logit}(x) = \log \frac{x}{1-x}$ \\
+$\expit$ & $\expit(x) =   \frac{e^x}{1+e^x} =  (1 + e^{-x})^{-1}$ \\
+\hline 
+\end{tabular}
+
+\subsection*{基本概率与统计学}
+
+\begin{tabular}{ll}
+\hline 
+$\pr(\cdot)$ & 概率 \\
+$E(\cdot)$ & 随机变量的期望值\\
+$\var(\cdot)$ & 随机变量的方差 \\
+$\cov(\cdot)$ & 随机变量之间的协方差\\
+$\asim$ & “$A \asim B$”表示$A$与$B$具有相同的渐近分布。\\
+$\rho_{YX}$ & $Y$与$X$之间的皮尔逊相关系数 \\
+$R^2_{YX}$ & $Y$与$X$之间的平方多重相关系数 \\
+\hline 
+\end{tabular}
+
+
+\subsection*{随机变量}
+
+\begin{tabular}{ll}
+\hline 
+伯努利分布$(p)$ & 概率为 $p$ 的伯努利分布\\
+二项分布$(n,p)$& 进行$n$次试验且成功概率为$p$的二项分布\\
+$\textsc{N}(\mu, \sigma^2)$ & 均值为$\mu$、方差为$\sigma^2$的正态分布\\
+$t_\nu$ & 自由度为$\nu$的$t$分布 \\
+$\chi^2_\nu$ & 自由度为$\nu$的卡方分布\\
+$z_{1-\alpha/2}$ & $\N01$分布的$1-\alpha/2$分位数，例如$z_{0.975}=1.96$。\\
+\hline 
+\end{tabular}
+
+
+\subsection*{因果推断}
+
+\begin{tabular}{ll}
+\hline 
+ $Y_i(1), Y_i(0)$ & 单位$i$在处理与对照条件下的潜在结果\\
+$\tau$ & 有限总体平均因果效应 $\tau = n^{-1}\sumn \{Y_i(1)-Y_i(0)\}$ \\
+$\tau$ & 超总体平均因果效应 $\tau = E \{Y(1)-Y(0)\}$\\
+$\mu_1(X)$ & 结果模型 $\mu_1(X) = E(Y\mid Z=1, X)$\\
+$\mu_0(X)$ & 结果模型 $\mu_0(X) = E(Y\mid Z=0, X)$\\
+$e(X)$ & 倾向得分 $e(X) = \pr(Z=1\mid X)$ \\
+$\tau_\cp$ & 依从者的平均因果效应 $ \tau_\cp = E\{ Y(1) - Y(0)\mid U=\cp \} $ \\
+$U$ & 未测量混杂因素 \\
+$U$ & 潜在的依从状态 $U=(D(1), D(0))$ \\
+$Y(z,M_{z'})$ & 嵌套式潜在结果（用于中介分析）\\
+ \hline 
+\end{tabular}

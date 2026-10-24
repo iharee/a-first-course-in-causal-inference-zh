@@ -1,0 +1,2034 @@
+\begin{thebibliography}{}
+
+\bibitem[Abadie et~al., 2020]{abadie2020sampling}
+Abadie, A., Athey, S., Imbens, G.~W., and Wooldridge, J.~M. (2020).
+\newblock Sampling-based versus design-based uncertainty in regression
+  analysis.
+\newblock {\em Econometrica}, 88:265--296.
+
+\bibitem[Abadie and Imbens, 2006]{abadie2006large}
+Abadie, A. and Imbens, G.~W. (2006).
+\newblock Large sample properties of matching estimators for average treatment
+  effects.
+\newblock {\em Econometrica}, 74:235--267.
+
+\bibitem[Abadie and Imbens, 2008]{abadie2008failure}
+Abadie, A. and Imbens, G.~W. (2008).
+\newblock On the failure of the bootstrap for matching estimators.
+\newblock {\em Econometrica}, 76:1537--1557.
+
+\bibitem[Abadie and Imbens, 2011]{abadie2011bias}
+Abadie, A. and Imbens, G.~W. (2011).
+\newblock Bias-corrected matching estimators for average treatment effects.
+\newblock {\em Journal of Business and Economic Statistics}, 29:1--11.
+
+\bibitem[Abadie and Imbens, 2016]{abadie2016matching}
+Abadie, A. and Imbens, G.~W. (2016).
+\newblock Matching on the estimated propensity score.
+\newblock {\em Econometrica}, 84:781--807.
+
+\bibitem[Alwin and Hauser, 1975]{alwin1975decomposition}
+Alwin, D.~F. and Hauser, R.~M. (1975).
+\newblock The decomposition of effects in path analysis.
+\newblock {\em American Sociological Review}, 40:37--47.
+
+\bibitem[Amarante et~al., 2016]{amarante2016cash}
+Amarante, V., Manacorda, M., Miguel, E., and Vigorito, A. (2016).
+\newblock Do cash transfers improve birth outcomes? evidence from matched vital
+  statistics, program, and social security data.
+\newblock {\em American Economic Journal: Economic Policy}, 8:1--43.
+
+\bibitem[Anderson and Rubin, 1950]{anderson1950asymptotic}
+Anderson, T.~W. and Rubin, H. (1950).
+\newblock The asymptotic properties of estimates of the parameters of a single
+  equation in a complete system of stochastic equations.
+\newblock {\em Annals of Mathematical Statistics}, 21:570--582.
+
+\bibitem[Angrist et~al., 2009]{angrist2009incentives}
+Angrist, J., Lang, D., and Oreopoulos, P. (2009).
+\newblock Incentives and services for college achievement: Evidence from a
+  randomized trial.
+\newblock {\em American Economic Journal: Applied Economics}, 1:136--163.
+
+\bibitem[Angrist and Lavy, 2009]{angrist2009effects}
+Angrist, J. and Lavy, V. (2009).
+\newblock The effects of high stakes high school achievement awards: Evidence
+  from a randomized trial.
+\newblock {\em American Economic Review}, 99:1384--1414.
+
+\bibitem[Angrist, 1990]{angrist1990lifetime}
+Angrist, J.~D. (1990).
+\newblock {Lifetime earnings and the Vietnam era draft lottery: evidence from
+  social security administrative records}.
+\newblock {\em American Economic Review}, 80:313--336.
+
+\bibitem[Angrist, 1998]{angrist1998estimating}
+Angrist, J.~D. (1998).
+\newblock Estimating the labor market impact of voluntary military service
+  using social security data on military applicants.
+\newblock {\em Econometrica}, 66:249--288.
+
+\bibitem[Angrist, 2022]{angrist2022empirical}
+Angrist, J.~D. (2022).
+\newblock Empirical strategies in economics: Illuminating the path from cause
+  to effect.
+\newblock {\em Econometrica}, 90:2509--2539.
+
+\bibitem[Angrist and Evans, 1998]{angrist1998children}
+Angrist, J.~D. and Evans, W.~N. (1998).
+\newblock Children and their parents' labor supply: Evidence from exogenous
+  variation in family size.
+\newblock {\em American Economic Review}, 88:450--477.
+
+\bibitem[Angrist and Imbens, 1995]{angrist1995two}
+Angrist, J.~D. and Imbens, G.~W. (1995).
+\newblock Two-stage least squares estimation of average causal effects in
+  models with variable treatment intensity.
+\newblock {\em Journal of the American Statistical Association}, 90:431--442.
+
+\bibitem[Angrist et~al., 1996]{angrist1996identification}
+Angrist, J.~D., Imbens, G.~W., and Rubin, D.~B. (1996).
+\newblock Identification of causal effects using instrumental variables (with
+  discussion).
+\newblock {\em Journal of the American Statistical Association}, 91:444--455.
+
+\bibitem[Angrist and Krueger, 1991]{angrist1991does}
+Angrist, J.~D. and Krueger, A.~B. (1991).
+\newblock Does compulsory school attendance affect schooling and earnings?
+\newblock {\em Quarterly Journal of Economics}, 106:979--1014.
+
+\bibitem[Angrist and Pischke, 2008]{angrist2008mostly}
+Angrist, J.~D. and Pischke, J.-S. (2008).
+\newblock {\em Mostly Harmless Econometrics: An Empiricist's Companion}.
+\newblock Princeton: Princeton University Press.
+
+\bibitem[Angrist and Pischke, 2014]{angrist2014mastering}
+Angrist, J.~D. and Pischke, J.-S. (2014).
+\newblock {\em Mastering'Metrics: The Path from Cause to Effect}.
+\newblock Princeton: Princeton University Press.
+
+\bibitem[Aronow et~al., 2014]{aronow2014sharp}
+Aronow, P.~M., Green, D.~P., and Lee, D. K.~K. (2014).
+\newblock Sharp bounds on the variance in randomized experiments.
+\newblock {\em Annals of Statistics}, 42:850--871.
+
+\bibitem[Asher and Novosad, 2020]{asher2020rural}
+Asher, S. and Novosad, P. (2020).
+\newblock Rural roads and local economic development.
+\newblock {\em American Economic Review}, 110:797--823.
+
+\bibitem[Baker and Lindeman, 1994]{baker1994paired}
+Baker, S.~G. and Lindeman, K.~S. (1994).
+\newblock The paired availability design: a proposal for evaluating epidural
+  analgesia during labor.
+\newblock {\em Statistics in Medicine}, 13:2269--2278.
+
+\bibitem[Balke and Pearl, 1997]{balke1997bounds}
+Balke, A. and Pearl, J. (1997).
+\newblock Bounds on treatment effects from studies with imperfect compliance.
+\newblock {\em Journal of the American Statistical Association}, 92:1171--1176.
+
+\bibitem[Ball et~al., 1973]{ball1973reading}
+Ball, S., Bogatz, G., Rubin, D., and Beaton, A. (1973).
+\newblock Reading with television: An evaluation of the electric company. a
+  report to the children's television workshop. volumes 1 and 2.
+
+\bibitem[Bang and Robins, 2005]{bang2005doubly}
+Bang, H. and Robins, J.~M. (2005).
+\newblock Doubly robust estimation in missing data and causal inference models.
+\newblock {\em Biometrics}, 61:962--973.
+
+\bibitem[Barnard, 1947]{barnard1947significance}
+Barnard, G.~A. (1947).
+\newblock Significance tests for $2 \times 2$ tables.
+\newblock {\em Biometrika}, 34:123--138.
+
+\bibitem[Baron and Kenny, 1986]{baron1986moderator}
+Baron, R.~M. and Kenny, D.~A. (1986).
+\newblock The moderator-mediator variable distinction in social psychological
+  research: Conceptual, strategic, and statistical considerations.
+\newblock {\em Journal of Personality and Social Psychology}, 51:1173--1182.
+
+\bibitem[Basmann, 1957]{basmann1957generalized}
+Basmann, R.~L. (1957).
+\newblock A generalized classical method of linear estimation of coefficients
+  in a structural equation.
+\newblock {\em Econometrica}, 25:77--83.
+
+\bibitem[Bazzano et~al., 2003]{bazzano2003relationship}
+Bazzano, L.~A., He, J., Muntner, P., Vupputuri, S., and Whelton, P.~K. (2003).
+\newblock {Relationship between cigarette smoking and novel risk factors for
+  cardiovascular disease in the United States}.
+\newblock {\em Annals of Internal Medicine}, 138:891--897.
+
+\bibitem[Berk et~al., 2013]{berk2013covariance}
+Berk, R., Pitkin, E., Brown, L., Buja, A., George, E., and Zhao, L. (2013).
+\newblock Covariance adjustments for the analysis of randomized field
+  experiments.
+\newblock {\em Evaluation Review}, 37:170--196.
+
+\bibitem[Bertrand and Mullainathan, 2004]{bertrand2004emily}
+Bertrand, M. and Mullainathan, S. (2004).
+\newblock {Are Emily and Greg more employable than Lakisha and Jamal? A field
+  experiment on labor market discrimination}.
+\newblock {\em American Economic Review}, 94:991--1013.
+
+\bibitem[Bickel et~al., 1975]{bickel1975sex}
+Bickel, P.~J., Hammel, E.~A., and O'Connell, J.~W. (1975).
+\newblock {Sex bias in graduate admissions: Data from Berkeley}.
+\newblock {\em Science}, 187:398--404.
+
+\bibitem[Bickel et~al., 1993]{bickel1993efficient}
+Bickel, P.~J., Klaassen, C. A.~J., Ritov, Y., and Wellner, J.~A. (1993).
+\newblock {\em Efficient and Adaptive Estimation for Semiparametric Models}.
+\newblock Baltimore: Johns Hopkins University Press.
+
+\bibitem[Bind and Rubin, 2020]{bind2020possible}
+Bind, M.-A.~C. and Rubin, D.~B. (2020).
+\newblock When possible, report a fisher-exact p value and display its
+  underlying null randomization distribution.
+\newblock {\em Proceedings of the National Academy of Sciences of the United
+  States of America}, 117:19151--19158.
+
+\bibitem[Blackwell, 2013]{blackwell2013framework}
+Blackwell, M. (2013).
+\newblock A framework for dynamic causal inference in political science.
+\newblock {\em American Journal of Political Science}, 57:504--520.
+
+\bibitem[Bloniarz et~al., 2016]{bloniarz2015lasso}
+Bloniarz, A., Liu, H., Zhang, C.~H., Sekhon, J., and Yu, B. (2016).
+\newblock Lasso adjustments of treatment effect estimates in randomized
+  experiments.
+\newblock {\em Proceedings of the National Academy of Sciences of the United
+  States of America}, 113:7383--7390.
+
+\bibitem[Bloom, 1984]{bloom1984accounting}
+Bloom, H.~S. (1984).
+\newblock Accounting for no-shows in experimental evaluation designs.
+\newblock {\em Evaluation Review}, 8:225--246.
+
+\bibitem[Bor et~al., 2014]{bor2014regression}
+Bor, J., Moscoe, E., Mutevedzi, P., Newell, M.-L., and B{\"a}rnighausen, T.
+  (2014).
+\newblock Regression discontinuity designs in epidemiology: causal inference
+  without randomized trials.
+\newblock {\em Epidemiology}, 25:729.
+
+\bibitem[Bowden et~al., 2015]{bowden2015mendelian}
+Bowden, J., Davey~Smith, G., and Burgess, S. (2015).
+\newblock {Mendelian randomization with invalid instruments: effect estimation
+  and bias detection through Egger regression}.
+\newblock {\em International Journal of Epidemiology}, 44:512--525.
+
+\bibitem[Bowden et~al., 2018]{bowden2018improving}
+Bowden, J., Spiller, W., Del Greco~M, F., Sheehan, N., Thompson, J., Minelli,
+  C., and Davey~Smith, G. (2018).
+\newblock Improving the visualization, interpretation and analysis of
+  two-sample summary data mendelian randomization via the radial plot and
+  radial regression.
+\newblock {\em International Journal of Epidemiology}, 47:1264--1278.
+
+\bibitem[Box, 1979]{box1979robustness}
+Box, G. E.~P. (1979).
+\newblock Robustness in the strategy of scientific model building.
+\newblock In Launer, R.~L. and Wilkinson, G.~N., editors, {\em Robustness in
+  Statistics}, pages 201--236. New York: Academic Press, Inc.
+
+\bibitem[Box et~al., 1978]{box1978statistics}
+Box, G. E.~P., Hunter, W.~H., and Hunter, S. (1978).
+\newblock {\em Statistics for Experimenters: An Introduction to Design, Data
+  Analysis, and Model Building}.
+\newblock New York: John Wiley and Sons.
+
+\bibitem[Bradford~Hill, 1965]{hill1965environment}
+Bradford~Hill, A. (1965).
+\newblock The environment and disease: association or causation?
+\newblock {\em Proceedings of the Royal Society of Medicine}, 58:295--300.
+
+\bibitem[Bradford~Hill, 2020]{hill2020environment}
+Bradford~Hill, A. (2020).
+\newblock The environment and disease: association or causation? (with
+  discussion).
+\newblock {\em Observational Studies}, 6:1--65.
+
+\bibitem[Bruhn and McKenzie, 2009]{bruhn2009pursuit}
+Bruhn, M. and McKenzie, D. (2009).
+\newblock In pursuit of balance: Randomization in practice in development field
+  experiments.
+\newblock {\em American Economic Journal: Applied Economics}, 1:200--232.
+
+\bibitem[Brumback, 2022]{brumback2022fundamentals}
+Brumback, B.~A. (2022).
+\newblock {\em Fundamentals of Causal Inference: With R}.
+\newblock New York: Chapman \& Hall.
+
+\bibitem[Butler, 1969]{butler1969test}
+Butler, C.~C. (1969).
+\newblock A test for symmetry using the sample distribution function.
+\newblock {\em Annals of Mathematical Statistics}, 40:2209--2210.
+
+\bibitem[Cao et~al., 2009]{cao2009improving}
+Cao, W., Tsiatis, A.~A., and Davidian, M. (2009).
+\newblock Improving efficiency and robustness of the doubly robust estimator
+  for a population mean with incomplete data.
+\newblock {\em Biometrika}, 96:723--734.
+
+\bibitem[Card, 1993]{card1993using}
+Card, D. (1993).
+\newblock Using geographic variation in college proximity to estimate the
+  return to schooling.
+\newblock Technical report, National Bureau of Economic Research.
+
+\bibitem[Carpenter and Dobkin, 2009]{carpenter2009effect}
+Carpenter, C. and Dobkin, C. (2009).
+\newblock The effect of alcohol consumption on mortality: regression
+  discontinuity evidence from the minimum drinking age.
+\newblock {\em American Economic Journal: Applied Economics}, 1:164--182.
+
+\bibitem[Cattaneo, 2010]{cattaneo2010efficient}
+Cattaneo, M.~D. (2010).
+\newblock Efficient semiparametric estimation of multi-valued treatment effects
+  under ignorability.
+\newblock {\em Journal of Econometrics}, 155:138--154.
+
+\bibitem[Cattaneo et~al., 2015]{cattaneo2015randomization}
+Cattaneo, M.~D., Frandsen, B.~R., and Titiunik, R. (2015).
+\newblock {Randomization inference in the regression discontinuity design: An
+  application to party advantages in the US Senate}.
+\newblock {\em Journal of Causal Inference}, 3:1--24.
+
+\bibitem[Chan et~al., 2016]{chan2016globally}
+Chan, K. C.~G., Yam, S. C.~P., and Zhang, Z. (2016).
+\newblock Globally efficient non-parametric inference of average treatment
+  effects by empirical balancing calibration weighting.
+\newblock {\em Journal of the Royal Statistical Society: Series B (Statistical
+  Methodology)}, 78:673--700.
+
+\bibitem[Charig et~al., 1986]{charig1986comparison}
+Charig, C.~R., Webb, D.~R., Payne, S.~R., and Wickham, J.~E. (1986).
+\newblock Comparison of treatment of renal calculi by open surgery,
+  percutaneous nephrolithotomy, and extracorporeal shockwave lithotripsy.
+\newblock {\em British Medical Journal}, 292:879--882.
+
+\bibitem[Chen et~al., 2007]{chen2007criteria}
+Chen, H., Geng, Z., and Jia, J. (2007).
+\newblock Criteria for surrogate end points.
+\newblock {\em Journal of the Royal Statistical Society: Series B (Statistical
+  Methodology)}, 69:919--932.
+
+\bibitem[Cheng and Small, 2006]{cheng2006bounds}
+Cheng, J. and Small, D.~S. (2006).
+\newblock Bounds on causal effects in three-arm trials with non-compliance.
+\newblock {\em Journal of the Royal Statistical Society: Series B (Statistical
+  Methodology)}, 68:815--836.
+
+\bibitem[Chernozhukov et~al., 2018]{chernozhukov2018double}
+Chernozhukov, V., Chetverikov, D., Demirer, M., Duflo, E., Hansen, C., Newey,
+  W., and Robins, J. (2018).
+\newblock Double/debiased machine learning for treatment and structural
+  parameters.
+\newblock {\em Econometrics Journal}, 21:C1--C68.
+
+\bibitem[Chong et~al., 2016]{chong2016iron}
+Chong, A., Cohen, I., Field, E., Nakasone, E., and Torero, M. (2016).
+\newblock Iron deficiency and schooling attainment in peru.
+\newblock {\em American Economic Journal: Applied Economics}, 8:222--55.
+
+\bibitem[Chung and Romano, 2013]{Romano13}
+Chung, E. and Romano, J. (2013).
+\newblock Exact and asymptotically robust permutation tests.
+\newblock {\em Annals of Statistics}, 41:484--507.
+
+\bibitem[Cochran, 1938]{cochran1938omission}
+Cochran, W.~G. (1938).
+\newblock The omission or addition of an independent variate in multiple linear
+  regression.
+\newblock {\em Supplement to the Journal of the Royal Statistical Society},
+  5:171--176.
+
+\bibitem[Cochran, 1953]{cochran1953}
+Cochran, W.~G. (1953).
+\newblock {\em Sampling Techniques}.
+\newblock New York: Wiley.
+
+\bibitem[Cochran, 1957]{cochran1957analysis}
+Cochran, W.~G. (1957).
+\newblock Analysis of covariance: its nature and uses.
+\newblock {\em Biometrics}, 13:261--281.
+
+\bibitem[Cochran, 1965]{cochran1965planning}
+Cochran, W.~G. (1965).
+\newblock The planning of observational studies of human populations (with
+  discussion).
+\newblock {\em Journal of the Royal Statistical Society: Series A (General)},
+  128:234--266.
+
+\bibitem[Cochran, 1968]{cochran1968effectiveness}
+Cochran, W.~G. (1968).
+\newblock The effectiveness of adjustment by subclassification in removing bias
+  in observational studies.
+\newblock {\em Biometrics}, 24:295--313.
+
+\bibitem[Cochran, 2015]{cochran2015}
+Cochran, W.~G. (2015).
+\newblock Observational studies.
+\newblock {\em Observational Studies}, 1:126--136.
+
+\bibitem[Cochran and Rubin, 1973]{cochran1973controlling}
+Cochran, W.~G. and Rubin, D.~B. (1973).
+\newblock Controlling bias in observational studies: A review.
+\newblock {\em Sankhy{\=a}}, 35:417--446.
+
+\bibitem[Cornfield et~al., 1959]{Cornfield::1959}
+Cornfield, J., Haenszel, W., Hammond, E.~C., Lilienfeld, A.~M., Shimkin, M.~B.,
+  and Wynder, E.~L. (1959).
+\newblock Smoking and lung cancer: recent evidence and a discussion of some
+  questions.
+\newblock {\em Journal of the National Cancer Institute}, 22:173--203.
+
+\bibitem[Cox, 1982]{cox:1982}
+Cox, D.~R. (1982).
+\newblock Randomization and concomitant variables in the design of experiments.
+\newblock In G.~Kallianpur, P. R.~K. and Ghosh, J.~K., editors, {\em Statistics
+  and Probability: Essays in Honor of C. R. Rao}, pages 197--202.
+  North-Holland, Amsterdam.
+
+\bibitem[Cox, 2007]{cox2007generalization}
+Cox, D.~R. (2007).
+\newblock {On a generalization of a result of W. G. Cochran}.
+\newblock {\em Biometrika}, 94:755--759.
+
+\bibitem[Crump et~al., 2009]{crump2009dealing}
+Crump, R.~K., Hotz, V.~J., Imbens, G.~W., and Mitnik, O.~A. (2009).
+\newblock Dealing with limited overlap in estimation of average treatment
+  effects.
+\newblock {\em Biometrika}, 96:187--199.
+
+\bibitem[Cunningham, 2021]{cunningham2021causal}
+Cunningham, S. (2021).
+\newblock {\em Causal Inference: The Mixtape}.
+\newblock New Haven: Yale University Press.
+
+\bibitem[Cuzick et~al., 1997]{cuzick1997adjusting}
+Cuzick, J., Edwards, R., and Segnan, N. (1997).
+\newblock Adjusting for non-compliance and contamination in randomized clinical
+  trials.
+\newblock {\em Statistics in Medicine}, 16:1017--1029.
+
+\bibitem[D'Amour et~al., 2021]{d2017overlap}
+D'Amour, A., Ding, P., Feller, A., Lei, L., and Sekhon, J. (2021).
+\newblock Overlap in observational studies with high-dimensional covariates.
+\newblock {\em Journal of Econometrics}, 221:644--654.
+
+\bibitem[Dasgupta et~al., 2015]{dasgupta2014causal}
+Dasgupta, T., Pillai, N.~S., and Rubin, D.~B. (2015).
+\newblock {Causal inference from $2^K$ factorial designs by using potential
+  outcomes}.
+\newblock {\em Journal of the Royal Statistical Society: Series B (Statistical
+  Methodology)}, 77:727--753.
+
+\bibitem[Davey~Smith and Ebrahim, 2003]{davey2003mendelian}
+Davey~Smith, G. and Ebrahim, S. (2003).
+\newblock {``Mendelian randomization'': can genetic epidemiology contribute to
+  understanding environmental determinants of disease?}
+\newblock {\em International Journal of Epidemiology}, 32:1--22.
+
+\bibitem[Davison and Hinkley, 1997]{davison1997bootstrap}
+Davison, A.~C. and Hinkley, D.~V. (1997).
+\newblock {\em Bootstrap Methods and Their Application}.
+\newblock Cambridge: Cambridge University Press.
+
+\bibitem[Dawid, 1979]{dawid1979conditional}
+Dawid, A.~P. (1979).
+\newblock Conditional independence in statistical theory.
+\newblock {\em Journal of the Royal Statistical Society: Series B
+  (Methodological)}, 41:1--15.
+
+\bibitem[Dawid, 2000]{dawid2000causal}
+Dawid, A.~P. (2000).
+\newblock Causal inference without counterfactuals (with discussion).
+\newblock {\em Journal of the American Statistical Association}, 95:407--424.
+
+\bibitem[Dehejia and Wahba, 1999]{dehejia1999causal}
+Dehejia, R.~H. and Wahba, S. (1999).
+\newblock Causal effects in nonexperimental studies: Reevaluating the
+  evaluation of training programs.
+\newblock {\em Journal of the American statistical Association}, 94:1053--1062.
+
+\bibitem[Ding, 2016]{Ding:2014}
+Ding, P. (2016).
+\newblock A paradox from randomization-based causal inference (with
+  discussion).
+\newblock {\em Statistical Science}, 32:331--345.
+
+\bibitem[Ding, 2021]{ding2021frisch}
+Ding, P. (2021).
+\newblock {The Frisch--Waugh--Lovell theorem for standard errors}.
+\newblock {\em Statistics and Probability Letters}, 168:108945.
+
+\bibitem[Ding and Dasgupta, 2016]{Ding:2015}
+Ding, P. and Dasgupta, T. (2016).
+\newblock A potential tale of two by two tables from completely randomized
+  experiments.
+\newblock {\em Journal of American Statistical Association}, 111:157--168.
+
+\bibitem[Ding and Dasgupta, 2017]{ding2017randomization}
+Ding, P. and Dasgupta, T. (2017).
+\newblock A randomization-based perspective on analysis of variance: a test
+  statistic robust to treatment effect heterogeneity.
+\newblock {\em Biometrika}, 105:45--56.
+
+\bibitem[Ding et~al., 2016]{ding2015randomization}
+Ding, P., Feller, A., and Miratrix, L. (2016).
+\newblock Randomization inference for treatment effect variation.
+\newblock {\em Journal of the Royal Statistical Society: Series B (Statistical
+  Methodology)}, 78:655--671.
+
+\bibitem[Ding et~al., 2019]{ding2019decomposing}
+Ding, P., Feller, A., and Miratrix, L. (2019).
+\newblock Decomposing treatment effect variation.
+\newblock {\em Journal of the American Statistical Association}, 114:304--317.
+
+\bibitem[Ding et~al., 2011]{ding2011identifiability}
+Ding, P., Geng, Z., Yan, W., and Zhou, X.-H. (2011).
+\newblock Identifiability and estimation of causal effects by principal
+  stratification with outcomes truncated by death.
+\newblock {\em Journal of the American Statistical Association},
+  106:1578--1591.
+
+\bibitem[Ding and Li, 2018]{ding2018causal}
+Ding, P. and Li, F. (2018).
+\newblock Causal inference: A missing data perspective.
+\newblock {\em Statistical Science}, 33:214--237.
+
+\bibitem[Ding et~al., 2017a]{ding2017bridging}
+Ding, P., Li, X., and Miratrix, L.~W. (2017a).
+\newblock Bridging finite and super population causal inference.
+\newblock {\em Journal of Causal Inference}, 5:20160027.
+
+\bibitem[Ding and Lu, 2017]{ding2017principal}
+Ding, P. and Lu, J. (2017).
+\newblock Principal stratification analysis using principal scores.
+\newblock {\em Journal of the Royal Statistical Society: Series B (Statistical
+  Methodology)}, 79:757--777.
+
+\bibitem[Ding and Miratrix, 2015]{ding2015adjust}
+Ding, P. and Miratrix, L.~W. (2015).
+\newblock {To adjust or not to adjust? Sensitivity analysis of M-bias and
+  butterfly-bias}.
+\newblock {\em Journal of Causal Inference}, 3:41--57.
+
+\bibitem[Ding and VanderWeele, 2014]{ding2014generalized}
+Ding, P. and VanderWeele, T.~J. (2014).
+\newblock {Generalized Cornfield conditions for the risk difference}.
+\newblock {\em Biometrika}, 101:971--977.
+
+\bibitem[Ding and VanderWeele, 2016]{ding2016sensitivity}
+Ding, P. and VanderWeele, T.~J. (2016).
+\newblock Sensitivity analysis without assumptions.
+\newblock {\em Epidemiology}, 27:368--377.
+
+\bibitem[Ding and Vanderweele, 2016]{ding2016sharp}
+Ding, P. and Vanderweele, T.~J. (2016).
+\newblock Sharp sensitivity bounds for mediation under unmeasured
+  mediator-outcome confounding.
+\newblock {\em Biometrika}, 103:483--490.
+
+\bibitem[Ding et~al., 2017b]{ding2017instrumental}
+Ding, P., VanderWeele, T.~J., and Robins, J.~M. (2017b).
+\newblock Instrumental variables as bias amplifiers with general outcome and
+  confounding.
+\newblock {\em Biometrika}, 104:291--302.
+
+\bibitem[Doll and Hill, 1950]{doll1950smoking}
+Doll, R. and Hill, A.~B. (1950).
+\newblock Smoking and carcinoma of the lung.
+\newblock {\em British Medical Journal}, 2:739.
+
+\bibitem[Dorn, 1953]{dorn1953philosophy}
+Dorn, H.~F. (1953).
+\newblock Philosophy of inferences from retrospective studies.
+\newblock {\em American Journal of Public Health and the Nations Health},
+  43:677--683.
+
+\bibitem[Durrett, 2019]{durrett2019probability}
+Durrett, R. (2019).
+\newblock {\em Probability: Theory and Examples}.
+\newblock Cambridge: Cambridge University Press.
+
+\bibitem[Efron, 1979]{Efron_1979}
+Efron, B. (1979).
+\newblock Bootstrap methods: Another look at the jackknife.
+\newblock {\em The Annals of Statistics}, 7:1--26.
+
+\bibitem[Efron and Feldman, 1991]{efron1991compliance}
+Efron, B. and Feldman, D. (1991).
+\newblock Compliance as an explanatory variable in clinical trials (with
+  discussion).
+\newblock {\em Journal of the American Statistical Association}, 86:9--17.
+
+\bibitem[Eicker, 1967]{eicker1967limit}
+Eicker, F. (1967).
+\newblock Limit theorems for regressions with unequal and dependent errors.
+\newblock In {\em Proceedings of the Fifth Berkeley Symposium on Mathematical
+  Statistics and Probability}, volume~1, pages 59--82. Berkeley, CA: University
+  of California Press.
+
+\bibitem[Fan and Gijbels, 1996]{fan2018local}
+Fan, J. and Gijbels, I. (1996).
+\newblock {\em Local Polynomial Modelling and Its Applications}.
+\newblock New York: Chapman and Hall/CRC.
+
+\bibitem[Fieller, 1954]{fieller1954some}
+Fieller, E.~C. (1954).
+\newblock Some problems in interval estimation.
+\newblock {\em Journal of the Royal Statistical Society: Series B
+  (Methodological)}, 16:175--185.
+
+\bibitem[Firth and Bennett, 1998]{firth1998robust}
+Firth, D. and Bennett, K.~E. (1998).
+\newblock Robust models in probability sampling (with discussion).
+\newblock {\em Journal of the Royal Statistical Society: Series B (Statistical
+  Methodology)}, 60:3--21.
+
+\bibitem[Fisher, 1925]{fisher1925statistical}
+Fisher, R.~A. (1925).
+\newblock {\em Statistical Methods for Research Workers}.
+\newblock Edinburgh by Oliver and Boyd, 1st edition.
+
+\bibitem[Fisher, 1935]{Fisher:1935}
+Fisher, R.~A. (1935).
+\newblock {\em The {D}esign of {E}xperiments}.
+\newblock Edinburgh, London: Oliver and Boyd, 1st edition.
+
+\bibitem[Fisher, 1957]{Fisher::1957}
+Fisher, R.~A. (1957).
+\newblock Dangers of cigarette smoking [letter].
+\newblock {\em British Medical Journal}, 2:297--298.
+
+\bibitem[Fogarty, 2018a]{fogarty2018mitigating}
+Fogarty, C.~B. (2018a).
+\newblock On mitigating the analytical limitations of finely stratified
+  experiments.
+\newblock {\em Journal of the Royal Statistical Society. Series B (Statistical
+  Methodology)}, 80:1035--1056.
+
+\bibitem[Fogarty, 2018b]{fogarty2018regression}
+Fogarty, C.~B. (2018b).
+\newblock Regression assisted inference for the average treatment effect in
+  paired experiments.
+\newblock {\em Biometrika}, 105:994--1000.
+
+\bibitem[Follmann, 2000]{follmann2000effect}
+Follmann, D.~A. (2000).
+\newblock On the effect of treatment among would-be treatment compliers: An
+  analysis of the multiple risk factor intervention trial.
+\newblock {\em Journal of the American Statistical Association}, 95:1101--1109.
+
+\bibitem[Forastiere et~al., 2018]{forastiere2018principal}
+Forastiere, L., Mattei, A., and Ding, P. (2018).
+\newblock Principal ignorability in mediation analysis: through and beyond
+  sequential ignorability.
+\newblock {\em Biometrika}, 105:979--986.
+
+\bibitem[Frangakis and Rubin, 2002]{frangakis2002principal}
+Frangakis, C.~E. and Rubin, D.~B. (2002).
+\newblock Principal stratification in causal inference.
+\newblock {\em Biometrics}, 58:21--29.
+
+\bibitem[Freedman, 2008a]{freedman2008regression_a}
+Freedman, D.~A. (2008a).
+\newblock On regression adjustments in experiments with several treatments.
+\newblock {\em Annals of Applied Statistics}, 2:176--196.
+
+\bibitem[Freedman, 2008b]{freedman2008regression_b}
+Freedman, D.~A. (2008b).
+\newblock On regression adjustments to experimental data.
+\newblock {\em Advances in Applied Mathematics}, 40:180--193.
+
+\bibitem[Freedman, 2008c]{freedman2008randomization}
+Freedman, D.~A. (2008c).
+\newblock Randomization does not justify logistic regression.
+\newblock {\em Statistical Science}, 23:237--249.
+
+\bibitem[Freedman and Berk, 2008]{freedman2008weighting}
+Freedman, D.~A. and Berk, R.~A. (2008).
+\newblock Weighting regressions by propensity scores.
+\newblock {\em Evaluation Review}, 32:392--409.
+
+\bibitem[Frumento et~al., 2012]{frumento2012evaluating}
+Frumento, P., Mealli, F., Pacini, B., and Rubin, D.~B. (2012).
+\newblock Evaluating the effect of training on wages in the presence of
+  noncompliance, nonemployment, and missing outcome data.
+\newblock {\em Journal of the American Statistical Association}, 107:450--466.
+
+\bibitem[Funk et~al., 2011]{funk2011doubly}
+Funk, M.~J., Westreich, D., Wiesen, C., St{\"u}rmer, T., Brookhart, M.~A., and
+  Davidian, M. (2011).
+\newblock Doubly robust estimation of causal effects.
+\newblock {\em American Journal of Epidemiology}, 173:761--767.
+
+\bibitem[Gastwirth et~al., 1998]{gastwirth1998cornfield}
+Gastwirth, J.~L., KRIEGER, A.~M., and ROSENBAUM, P.~R. (1998).
+\newblock Cornfield's inequality.
+\newblock In Armitage, P. and Colton, T., editors, {\em Encyclopedia of
+  Biostatistics}. New York: Wiley.
+
+\bibitem[Gerber and Green, 2012]{gerber2012field}
+Gerber, A.~S. and Green, D.~P. (2012).
+\newblock {\em Field Experiments: Design, Analysis, and Interpretation}.
+\newblock WW Norton.
+
+\bibitem[Gerber et~al., 2008]{gerber2008social}
+Gerber, A.~S., Green, D.~P., and Larimer, C.~W. (2008).
+\newblock Social pressure and voter turnout: Evidence from a large-scale field
+  experiment.
+\newblock {\em American Political Science Review}, 102:33--48.
+
+\bibitem[Gilbert and Hudgens, 2008]{gilbert2008evaluating}
+Gilbert, P.~B. and Hudgens, M.~G. (2008).
+\newblock Evaluating candidate principal surrogate endpoints.
+\newblock {\em Biometrics}, 64:1146--1154.
+
+\bibitem[Gould, 1998]{gould1998multi}
+Gould, A.~L. (1998).
+\newblock Multi-centre trial analysis revisited.
+\newblock {\em Statistics in Medicine}, 17:1779--1797.
+
+\bibitem[Greevy et~al., 2004]{greevy2004optimal}
+Greevy, R., Lu, B., Silber, J.~H., and Rosenbaum, P. (2004).
+\newblock Optimal multivariate matching before randomization.
+\newblock {\em Biostatistics}, 5:263--275.
+
+\bibitem[Guo and Basse, 2023]{guo2020generalized}
+Guo, K. and Basse, G. (2023).
+\newblock The generalized {Oaxaca--Blinder} estimator.
+\newblock {\em Journal of American Statistical Association}, 118:524--536.
+
+\bibitem[Guo and Rothenh{\"a}usler, 2022]{guo2022statistical}
+Guo, K. and Rothenh{\"a}usler, D. (2022).
+\newblock On the statistical role of inexact matching in observational studies.
+\newblock {\em Biometrika}.
+
+\bibitem[Hahn, 1998]{hahn1998role}
+Hahn, J. (1998).
+\newblock On the role of the propensity score in efficient semiparametric
+  estimation of average treatment effects.
+\newblock {\em Econometrica}, 66:315--331.
+
+\bibitem[Hahn et~al., 2001]{hahn2001identification}
+Hahn, J., Todd, P., and Van~der Klaauw, W. (2001).
+\newblock Identification and estimation of treatment effects with a
+  regression-discontinuity design.
+\newblock {\em Econometrica}, 69:201--209.
+
+\bibitem[Hahn et~al., 2020]{hahn2020bayesian}
+Hahn, P.~R., Murray, J.~S., and Carvalho, C.~M. (2020).
+\newblock Bayesian regression tree models for causal inference: regularization,
+  confounding, and heterogeneous effects.
+\newblock {\em Bayesian Analysis}, 15:965--1056.
+
+\bibitem[Hainmueller, 2012]{hainmueller2012entropy}
+Hainmueller, J. (2012).
+\newblock Entropy balancing for causal effects: A multivariate reweighting
+  method to produce balanced samples in observational studies.
+\newblock {\em Political Analysis}, 20:25--46.
+
+\bibitem[H{\'a}jek, 1960]{hajek1960limiting}
+H{\'a}jek, J. (1960).
+\newblock Limiting distributions in simple random sampling from a finite
+  population.
+\newblock {\em Publications of the Mathematics Institute of the Hungarian
+  Academy of Science}, 5:361--74.
+
+\bibitem[H{\'a}jek, 1971]{hajek1971comment}
+H{\'a}jek, J. (1971).
+\newblock Comment on ``an essay on the logical foundations of survey sampling,
+  part one''.
+\newblock {\em The foundations of survey sampling}, 236.
+
+\bibitem[Hammond and Horn, 1958]{Hammond::1968}
+Hammond, E.~C. and Horn, D. (1958).
+\newblock Smoking and death rates: report on forty four months of follow-up of
+  $187,783$ men.
+\newblock {\em Journal of the American Medicial Association}, 166:1159--1172,
+  1294--1308.
+
+\bibitem[Hansen, 1982]{hansen1982large}
+Hansen, L.~P. (1982).
+\newblock Large sample properties of generalized method of moments estimators.
+\newblock {\em Econometrica}, 50:1029--1054.
+
+\bibitem[Hartley et~al., 1969]{hartley1969variance}
+Hartley, H.~O., Rao, J. N.~K., and Kiefer, G. (1969).
+\newblock Variance estimation with one unit per stratum.
+\newblock {\em Journal of the American Statistical Association}, 64:841--851.
+
+\bibitem[Hausman, 1978]{hausman1978specification}
+Hausman, J.~A. (1978).
+\newblock Specification tests in econometrics.
+\newblock {\em Econometrica}, 46:1251--1271.
+
+\bibitem[Hearst et~al., 1986]{hearst1986delayed}
+Hearst, N., Newman, T.~B., and Hulley, S.~B. (1986).
+\newblock Delayed effects of the military draft on mortality.
+\newblock {\em New England Journal of Medicine}, 314:620--624.
+
+\bibitem[Heckman and Navarro-Lozano, 2004]{heckman2004using}
+Heckman, J. and Navarro-Lozano, S. (2004).
+\newblock Using matching, instrumental variables, and control functions to
+  estimate economic choice models.
+\newblock {\em Review of Economics and Statistics}, 86:30--57.
+
+\bibitem[Heckman, 1979]{heckman1979sample}
+Heckman, J.~J. (1979).
+\newblock Sample selection bias as a specification error.
+\newblock {\em Econometrica}, 47:153--161.
+
+\bibitem[Hennessy et~al., 2016]{hennessy2016conditional}
+Hennessy, J., Dasgupta, T., Miratrix, L., Pattanayak, C., and Sarkar, P.
+  (2016).
+\newblock A conditional randomization test to account for covariate imbalance
+  in randomized experiments.
+\newblock {\em Journal of Causal Inference}, 4:61--80.
+
+\bibitem[Hern{\'a}n et~al., 2000]{hernan2000marginal}
+Hern{\'a}n, M.~{\'A}., Brumback, B., and Robins, J.~M. (2000).
+\newblock Marginal structural models to estimate the causal effect of
+  zidovudine on the survival of hiv-positive men.
+\newblock {\em Epidemiology}, 11:561--570.
+
+\bibitem[Hern{\'a}n and Robins, 2020]{hernan2020causal}
+Hern{\'a}n, M.~A. and Robins, J.~M. (2020).
+\newblock {\em Causal Inference: What If}.
+\newblock Boca Raton: Chapman \& Hall/CRC.
+
+\bibitem[Hill et~al., 2002]{hill2002differential}
+Hill, J., Waldfogel, J., and Brooks-Gunn, J. (2002).
+\newblock Differential effects of high-quality child care.
+\newblock {\em Journal of Policy Analysis and Management}, 21:601--627.
+
+\bibitem[Hill, 2011]{hill2011bayesian}
+Hill, J.~L. (2011).
+\newblock Bayesian nonparametric modeling for causal inference.
+\newblock {\em Journal of Computational and Graphical Statistics}, 20:217--240.
+
+\bibitem[Hirano and Imbens, 2001]{hirano2001estimation}
+Hirano, K. and Imbens, G.~W. (2001).
+\newblock Estimation of causal effects using propensity score weighting: An
+  application to data on right heart catheterization.
+\newblock {\em Health Services and Outcomes Research Methodology}, 2:259--278.
+
+\bibitem[Hirano et~al., 2000]{hirano2000assessing}
+Hirano, K., Imbens, G.~W., Rubin, D.~B., and Zhou, X.~H. (2000).
+\newblock Assessing the effect of an influenza vaccine in an encouragement
+  design.
+\newblock {\em Biostatistics}, 1:69--88.
+
+\bibitem[Ho et~al., 2007]{ho2007matching}
+Ho, D.~E., Imai, K., King, G., and Stuart, E.~A. (2007).
+\newblock Matching as nonparametric preprocessing for reducing model dependence
+  in parametric causal inference.
+\newblock {\em Political Analysis}, 15:199--236.
+
+\bibitem[Ho et~al., 2011]{ho2011matchit}
+Ho, D.~E., Imai, K., King, G., and Stuart, E.~A. (2011).
+\newblock Matchit: nonparametric preprocessing for parametric causal inference.
+\newblock {\em Journal of Statistical Software}, 42:1--28.
+
+\bibitem[Hodges and Lehmann, 1962]{hodges1962rank}
+Hodges, J.~L. and Lehmann, E.~L. (1962).
+\newblock Rank methods for combination of independent experiments in analysis
+  of variance.
+\newblock {\em Annals of Mathematical Statistics}, 33:482--497.
+
+\bibitem[Holland, 1986]{holland1986statistics}
+Holland, P.~W. (1986).
+\newblock Statistics and causal inference (with discussion).
+\newblock {\em Journal of the American statistical Association}, 81:945--960.
+
+\bibitem[Hong and Raudenbush, 2008]{hong2008causal}
+Hong, G. and Raudenbush, S.~W. (2008).
+\newblock Causal inference for time-varying instructional treatments.
+\newblock {\em Journal of Educational and Behavioral Statistics}, 33:333--362.
+
+\bibitem[Horvitz and Thompson, 1952]{horvitz1952generalization}
+Horvitz, D.~G. and Thompson, D.~J. (1952).
+\newblock A generalization of sampling without replacement from a finite
+  universe.
+\newblock {\em Journal of the American statistical Association}, 47:663--685.
+
+\bibitem[Huber, 2023]{huber2023causal}
+Huber, M. (2023).
+\newblock {\em Causal analysis: Impact evaluation and Causal Machine Learning
+  with applications in R}.
+\newblock Cambridge: MIT Press.
+
+\bibitem[Huber, 1967]{huber::1967}
+Huber, P.~J. (1967).
+\newblock The behavior of maximum likelihood estimates under nonstandard
+  conditions.
+\newblock In Cam, L. M.~L. and Neyman, J., editors, {\em Proceedings of the
+  Fifth Berkeley Symposium on Mathematical Statistics and Probability},
+  volume~1, pages 221--233. Berkeley, California: University of California
+  Press.
+
+\bibitem[Hudgens and Halloran, 2008]{hudgens2008toward}
+Hudgens, M.~G. and Halloran, M.~E. (2008).
+\newblock Toward causal inference with interference.
+\newblock {\em Journal of the American Statistical Association}, 103:832--842.
+
+\bibitem[Huntington-Klein, 2022]{huntington2022effect}
+Huntington-Klein, N. (2022).
+\newblock {\em The effect: An introduction to research design and causality}.
+\newblock New York: Chapman \& Hall.
+
+\bibitem[Hyman, 1955]{hyman1955survey}
+Hyman, H.~H. (1955).
+\newblock {\em Survey Design and Analysis: Principles, Cases, and Procedures}.
+\newblock Glencoe, IL: Free Press.
+
+\bibitem[Imai, 2008a]{imai2008sharp}
+Imai, K. (2008a).
+\newblock Sharp bounds on the causal effects in randomized experiments with
+  ``truncation-by-death''.
+\newblock {\em Statistics and Probability Letters}, 78:144--149.
+
+\bibitem[Imai, 2008b]{imai2008variance}
+Imai, K. (2008b).
+\newblock Variance identification and efficiency analysis in randomized
+  experiments under the matched-pair design.
+\newblock {\em Statistics in Medicine}, 27:4857--4873.
+
+\bibitem[Imai et~al., 2010]{Imai::2010}
+Imai, K., Keele, L., and Yamamoto, T. (2010).
+\newblock Identification, inference and sensitivity analysis for causal
+  mediation effects.
+\newblock {\em Statistical Science}, 25:51--71.
+
+\bibitem[Imai and Van~Dyk, 2004]{imai2004causal}
+Imai, K. and Van~Dyk, D.~A. (2004).
+\newblock Causal inference with general treatment regimes: Generalizing the
+  propensity score.
+\newblock {\em Journal of the American Statistical Association}, 99:854--866.
+
+\bibitem[Imbens, 2020]{imbens2020potential}
+Imbens, G. (2020).
+\newblock Potential outcome and directed acyclic graph approaches to causality:
+  Relevance for empirical practice in economics.
+\newblock {\em Journal of Economic Literature}, 58:1129--1179.
+
+\bibitem[Imbens, 2003]{imbens2003sensitivity}
+Imbens, G.~W. (2003).
+\newblock Sensitivity to exogeneity assumptions in program evaluation.
+\newblock {\em American Economic Review}, 93:126--132.
+
+\bibitem[Imbens, 2004]{imbens2004nonparametric}
+Imbens, G.~W. (2004).
+\newblock Nonparametric estimation of average treatment effects under
+  exogeneity: A review.
+\newblock {\em Review of Economics and Statistics}, 86:4--29.
+
+\bibitem[Imbens, 2014]{imbens2014instrumental}
+Imbens, G.~W. (2014).
+\newblock Instrumental variables: An econometrician's perspective.
+\newblock {\em Statistical Science}, 29:323--358.
+
+\bibitem[Imbens, 2015]{imbens2015matching}
+Imbens, G.~W. (2015).
+\newblock Matching methods in practice: Three examples.
+\newblock {\em Journal of Human Resources}, 50:373--419.
+
+\bibitem[Imbens and Angrist, 1994]{imbens1994identification}
+Imbens, G.~W. and Angrist, J.~D. (1994).
+\newblock Identification and estimation of local average treatment effects.
+\newblock {\em Econometrica}, 62:467--475.
+
+\bibitem[Imbens and Lemieux, 2008]{imbens2008regression}
+Imbens, G.~W. and Lemieux, T. (2008).
+\newblock Regression discontinuity designs: A guide to practice.
+\newblock {\em Journal of Econometrics}, 142:615--635.
+
+\bibitem[Imbens and Manski, 2004]{imbens2004confidence}
+Imbens, G.~W. and Manski, C.~F. (2004).
+\newblock Confidence intervals for partially identified parameters.
+\newblock {\em Econometrica}, 72:1845--1857.
+
+\bibitem[Imbens and Rubin, 1997]{imbens1997estimating}
+Imbens, G.~W. and Rubin, D.~B. (1997).
+\newblock Estimating outcome distributions for compliers in instrumental
+  variables models.
+\newblock {\em Review of Economic Studies}, 64:555--574.
+
+\bibitem[Imbens and Rubin, 2015]{imbens2015causal}
+Imbens, G.~W. and Rubin, D.~B. (2015).
+\newblock {\em Causal Inference for Statistics, Social, and Biomedical
+  Sciences: An Introduction}.
+\newblock Cambridge: Cambridge University Press.
+
+\bibitem[Investigators et~al., 2014]{improve2014endovascular}
+Investigators, I.~T. et~al. (2014).
+\newblock Endovascular or open repair strategy for ruptured abdominal aortic
+  aneurysm: 30 day outcomes from improve randomised trial.
+\newblock {\em British Medical Journal}, 348:f7661.
+
+\bibitem[Ioannidis et~al., 2019]{ioannidis2019limitations}
+Ioannidis, J. P.~A., Tan, Y.~J., and Blum, M.~R. (2019).
+\newblock {Limitations and misinterpretations of E-values for sensitivity
+  analyses of observational studies}.
+\newblock {\em Annals of Internal Medicine}, 170:108--111.
+
+\bibitem[Jackson et~al., 2006]{jackson2006evidence}
+Jackson, L.~A., Jackson, M.~L., Nelson, J.~C., Neuzil, K.~M., and Weiss, N.~S.
+  (2006).
+\newblock Evidence of bias in estimates of influenza vaccine effectiveness in
+  seniors.
+\newblock {\em International Journal of Epidemiology}, 35:337--344.
+
+\bibitem[Janssen, 1997]{Janssen97}
+Janssen, A. (1997).
+\newblock {Studentized permutation tests for non-iid hypotheses and the
+  generalized Behrens-Fisher problem}.
+\newblock {\em Statistics and Probability Letters}, 36:9--21.
+
+\bibitem[Jiang and Ding, 2020]{jiang2020measurement}
+Jiang, Z. and Ding, P. (2020).
+\newblock Measurement errors in the binary instrumental variable model.
+\newblock {\em Biometrika}, 107:238--245.
+
+\bibitem[Jiang and Ding, 2021]{jiang2020identification}
+Jiang, Z. and Ding, P. (2021).
+\newblock Identification of causal effects within principal strata using
+  auxiliary variables.
+\newblock {\em Statistical Science}, 36:493--508.
+
+\bibitem[Jiang et~al., 2016]{jiang2016principal}
+Jiang, Z., Ding, P., and Geng, Z. (2016).
+\newblock Principal causal effect identification and surrogate end point
+  evaluation by multiple trials.
+\newblock {\em Journal of the Royal Statistical Society: Series B (Statistical
+  Methodology)}, 78:829--848.
+
+\bibitem[Jiang et~al., 2022]{jiang2020multiply}
+Jiang, Z., Yang, S., and Ding, P. (2022).
+\newblock Multiply robust estimation of causal effects under principal
+  ignorability.
+\newblock {\em Journal of the Royal Statistical Society - Series B (Statistical
+  Methodology)}, 84:1423--1445.
+
+\bibitem[Jin and Rubin, 2008]{jin2008principal}
+Jin, H. and Rubin, D.~B. (2008).
+\newblock Principal stratification for causal inference with extended partial
+  compliance.
+\newblock {\em Journal of the American Statistical Association}, 103:101--111.
+
+\bibitem[Jo and Stuart, 2009]{jo2009use}
+Jo, B. and Stuart, E.~A. (2009).
+\newblock On the use of propensity scores in principal causal effect
+  estimation.
+\newblock {\em Statistics in Medicine}, 28:2857--2875.
+
+\bibitem[Jo et~al., 2011]{jo2011use}
+Jo, B., Stuart, E.~A., MacKinnon, D.~P., and Vinokur, A.~D. (2011).
+\newblock The use of propensity scores in mediation analysis.
+\newblock {\em Multivariate Behavioral Research}, 46:425--452.
+
+\bibitem[Judd and Kenny, 1981]{Judd::1981}
+Judd, C.~M. and Kenny, D.~A. (1981).
+\newblock Process analysis estimating mediation in treatment evaluations.
+\newblock {\em Evaluation Review}, 5:602--619.
+
+\bibitem[Kang and Schafer, 2007]{kang2007demystifying}
+Kang, J. D.~Y. and Schafer, J.~L. (2007).
+\newblock Demystifying double robustness: A comparison of alternative
+  strategies for estimating a population mean from incomplete data.
+\newblock {\em Statistical Science}, 22:523--539.
+
+\bibitem[Katan, 1986]{katan1986apoupoprotein}
+Katan, M.~B. (1986).
+\newblock {Apoupoprotein E isoforms, serum cholesterol, and cancer}.
+\newblock {\em Lancet}, 327:507--508.
+
+\bibitem[King and Zeng, 2006]{king2006dangers}
+King, G. and Zeng, L. (2006).
+\newblock The dangers of extreme counterfactuals.
+\newblock {\em Political Analysis}, 14:131--159.
+
+\bibitem[Kitagawa, 2015]{kitagawa2015test}
+Kitagawa, T. (2015).
+\newblock A test for instrument validity.
+\newblock {\em Econometrica}, 83:2043--2063.
+
+\bibitem[Koenker and Xiao, 2002]{koenker2002inference}
+Koenker, R. and Xiao, Z. (2002).
+\newblock Inference on the quantile regression process.
+\newblock {\em Econometrica}, 70:1583--1612.
+
+\bibitem[K{\"u}nzel et~al., 2019]{kunzel2019metalearners}
+K{\"u}nzel, S.~R., Sekhon, J.~S., Bickel, P.~J., and Yu, B. (2019).
+\newblock Metalearners for estimating heterogeneous treatment effects using
+  machine learning.
+\newblock {\em Proceedings of the National Academy of Sciences of the United
+  States of America}, 116:4156--4165.
+
+\bibitem[Kurth et~al., 2005]{kurth2005results}
+Kurth, T., Walker, A.~M., Glynn, R.~J., Chan, K.~A., Gaziano, J.~M., Berger,
+  K., and Robins, J.~M. (2005).
+\newblock Results of multivariable logistic regression, propensity matching,
+  propensity adjustment, and propensity-based weighting under conditions of
+  nonuniform effect.
+\newblock {\em American Journal of Epidemiology}, 163:262--270.
+
+\bibitem[LaLonde, 1986]{lalonde1986evaluating}
+LaLonde, R.~J. (1986).
+\newblock Evaluating the econometric evaluations of training programs with
+  experimental data.
+\newblock {\em American Economic Review}, 76:604--620.
+
+\bibitem[Leamer, 1978]{leamer1978specification}
+Leamer, E. (1978).
+\newblock {\em Specification Searches: Ad Hoc Inference with Nonexperimental
+  Data}.
+\newblock John Wiley and Sons.
+
+\bibitem[Lee, 2008]{lee2008randomized}
+Lee, D.~S. (2008).
+\newblock {Randomized experiments from non-random selection in US House
+  elections}.
+\newblock {\em Journal of Econometrics}, 142:675--697.
+
+\bibitem[Lee, 2009]{lee2009training}
+Lee, D.~S. (2009).
+\newblock Training, wages, and sample selection: Estimating sharp bounds on
+  treatment effects.
+\newblock {\em Review of Economic Studies}, 76:1071--1102.
+
+\bibitem[Lee and Lemieux, 2010]{lee2010regression}
+Lee, D.~S. and Lemieux, T. (2010).
+\newblock Regression discontinuity designs in economics.
+\newblock {\em Journal of Economic Literature}, 48:281--355.
+
+\bibitem[Lee, 2018]{lee2018simple}
+Lee, M.-J. (2018).
+\newblock Simple least squares estimator for treatment effects using propensity
+  score residuals.
+\newblock {\em Biometrika}, 105:149--164.
+
+\bibitem[Lee, 2011]{lee2011bounding}
+Lee, W.-C. (2011).
+\newblock Bounding the bias of unmeasured factors with confounding and
+  effect-modifying potentials.
+\newblock {\em Statistics in Medicine}, 30:1007--1017.
+
+\bibitem[Lehmann, 1975]{lehmann2006nonparametrics}
+Lehmann, E.~L. (1975).
+\newblock {\em Nonparametrics: Statistical Methods Based on Ranks}.
+\newblock California: Holden-Day, Inc.
+
+\bibitem[Lei and Ding, 2021]{lei2018regression}
+Lei, L. and Ding, P. (2021).
+\newblock Regression adjustment in completely randomized experiments with a
+  diverging number of covariates.
+\newblock {\em Biometrika}, 108:815--828.
+
+\bibitem[Lewis, 1973]{lewis1973causation}
+Lewis, D. (1973).
+\newblock Causation.
+\newblock {\em Journal of Philosophy}, 70:556--567.
+
+\bibitem[Li et~al., 2023]{li2023bayesian}
+Li, F., Ding, P., and Mealli, F. (2023).
+\newblock Bayesian causal inference: a critical review.
+\newblock {\em Philosophical Transactions of the Royal Society A},
+  381:20220153.
+
+\bibitem[Li et~al., 2015]{li2015evaluating}
+Li, F., Mattei, A., and Mealli, F. (2015).
+\newblock Evaluating the causal effect of university grants on student dropout:
+  evidence from a regression discontinuity design using principal
+  stratification.
+\newblock {\em Annals of Applied Statistics}, 9:1906--1931.
+
+\bibitem[Li et~al., 2018a]{li2018balancing}
+Li, F., Morgan, K.~L., and Zaslavsky, A.~M. (2018a).
+\newblock Balancing covariates via propensity score weighting.
+\newblock {\em Journal of the American Statistical Association}, 113:390--400.
+
+\bibitem[Li et~al., 2019]{li2019addressing}
+Li, F., Thomas, L.~E., and Li, F. (2019).
+\newblock Addressing extreme propensity scores via the overlap weights.
+\newblock {\em American Journal of Epidemiology}, 188:250--257.
+
+\bibitem[Li and Ding, 2016]{li2016exact}
+Li, X. and Ding, P. (2016).
+\newblock Exact confidence intervals for the average causal effect on a binary
+  outcome.
+\newblock {\em Statistics in Medicine}, 35:957--960.
+
+\bibitem[Li and Ding, 2017]{li2017general}
+Li, X. and Ding, P. (2017).
+\newblock General forms of finite population central limit theorems with
+  applications to causal inference.
+\newblock {\em Journal of the American Statistical Association},
+  112:1759--1769.
+
+\bibitem[Li and Ding, 2020]{li2019rerandomization}
+Li, X. and Ding, P. (2020).
+\newblock Rerandomization and regression adjustment.
+\newblock {\em Journal of the Royal Statistical Society, Series B (Statistical
+  Methodology)}, 82:241--268.
+
+\bibitem[Li et~al., 2018b]{li2018asymptotic}
+Li, X., Ding, P., and Rubin, D.~B. (2018b).
+\newblock Asymptotic theory of rerandomization in treatment-control
+  experiments.
+\newblock {\em Proceedings of the National Academy of Sciences of the United
+  States of America}, 115:9157--9162.
+
+\bibitem[Lin, 2013]{lin2013}
+Lin, W. (2013).
+\newblock {Agnostic notes on regression adjustments to experimental data:
+  Reexamining Freedman's critique}.
+\newblock {\em Annals of Applied Statistics}, 7:295--318.
+
+\bibitem[Lin et~al., 2023]{lin2023estimation}
+Lin, Z., Ding, P., and Han, F. (2023).
+\newblock Estimation based on nearest neighbor matching: from density ratio to
+  average treatment effect.
+\newblock {\em Econometrica}.
+
+\bibitem[Lind, 1753]{lind1753treatise}
+Lind, J. (1753).
+\newblock A treatise of the scurvy.
+\newblock {\em Three Parts. Containing an Inquiry into the Nature, Causes and
+  Cure, of that Disease. Together with a Critical and Chronological View of
+  what has been Published on the Subject}.
+
+\bibitem[Lipsitch et~al., 2010]{lipsitch2010negative}
+Lipsitch, M., Tchetgen~Tchetgen, E., and Cohen, T. (2010).
+\newblock Negative controls: a tool for detecting confounding and bias in
+  observational studies.
+\newblock {\em Epidemiology}, 21:383--388.
+
+\bibitem[Little and An, 2004]{little2004robust}
+Little, R. and An, H. (2004).
+\newblock Robust likelihood-based analysis of multivariate data with missing
+  values.
+\newblock {\em Statistica Sinica}, 14:949--968.
+
+\bibitem[Liu and Yang, 2020]{liu2020regression}
+Liu, H. and Yang, Y. (2020).
+\newblock Regression-adjusted average treatment effect estimates in stratified
+  randomized experiments.
+\newblock {\em Biometrika}, 107:935--948.
+
+\bibitem[Long and Ervin, 2000]{long2000using}
+Long, J.~S. and Ervin, L.~H. (2000).
+\newblock Using heteroscedasticity consistent standard errors in the linear
+  regression model.
+\newblock {\em American Statistician}, 54:217--224.
+
+\bibitem[Lu and Ding, 2023]{luding2023flexible}
+Lu, S. and Ding, P. (2023).
+\newblock Flexible sensitivity analysis for causal inference in observational
+  studies subject to unmeasured confounding.
+\newblock {\em https://arxiv.org/abs/2305.17643}.
+
+\bibitem[Lumley et~al., 2011]{lumley2011connections}
+Lumley, T., Shaw, P.~A., and Dai, J.~Y. (2011).
+\newblock Connections between survey calibration estimators and semiparametric
+  models for incomplete data.
+\newblock {\em International Statistical Review}, 79:200--220.
+
+\bibitem[Lunceford and Davidian, 2004]{lunceford2004stratification}
+Lunceford, J.~K. and Davidian, M. (2004).
+\newblock Stratification and weighting via the propensity score in estimation
+  of causal treatment effects: a comparative study.
+\newblock {\em Statistics in Medicine}, 23:2937--2960.
+
+\bibitem[Luo et~al., 2021]{luo2021leveraging}
+Luo, X., Dasgupta, T., Xie, M., and Liu, R.~Y. (2021).
+\newblock Leveraging the fisher randomization test using confidence
+  distributions: Inference, combination and fusion learning.
+\newblock {\em Journal of the Royal Statistical Society: Series B (Statistical
+  Methodology)}, 83:777--797.
+
+\bibitem[Manski, 1990]{manski1990nonparametric}
+Manski, C.~F. (1990).
+\newblock Nonparametric bounds on treatment effects.
+\newblock {\em American Economic Review}, 2:319--323.
+
+\bibitem[Manski, 2003]{manski2003partial}
+Manski, C.~F. (2003).
+\newblock {\em Partial Identification of Probability Distributions}.
+\newblock New York: Springer.
+
+\bibitem[Mattei et~al., 2013]{mattei2013exploiting}
+Mattei, A., Li, F., and Mealli, F. (2013).
+\newblock Exploiting multiple outcomes in bayesian principal stratification
+  analysis with application to the evaluation of a job training program.
+\newblock {\em Annals of Applied Statistics}, 7:2336--2360.
+
+\bibitem[McCrary, 2008]{mccrary2008manipulation}
+McCrary, J. (2008).
+\newblock Manipulation of the running variable in the regression discontinuity
+  design: A density test.
+\newblock {\em Journal of Econometrics}, 142:698--714.
+
+\bibitem[McDonald et~al., 1992]{mcdonald1992effects}
+McDonald, C.~J., Hui, S.~L., and Tierney, W.~M. (1992).
+\newblock Effects of computer reminders for influenza vaccination on morbidity
+  during influenza epidemics.
+\newblock {\em MD Computing: Computers in Medical Practice}, 9:304--312.
+
+\bibitem[McGrath et~al., 2021]{mcgrath2021revisiting}
+McGrath, S., Young, J.~G., and Hern{\'a}n, M.~A. (2021).
+\newblock Revisiting the g-null paradox.
+\newblock {\em Epidemiology}, 33:114--120.
+
+\bibitem[Mealli and Pacini, 2013]{mealli2013using}
+Mealli, F. and Pacini, B. (2013).
+\newblock Using secondary outcomes to sharpen inference in randomized
+  experiments with noncompliance.
+\newblock {\em Journal of the American Statistical Association},
+  108:1120--1131.
+
+\bibitem[Meinert et~al., 1970]{meinert1970study}
+Meinert, C.~L., Knatterud, G.~L., Prout, T.~E., and Klimt, C.~R. (1970).
+\newblock A study of the effects of hypoglycemic agents on vascular
+  complications in patients with adult-onset diabetes. ii. mortality results.
+\newblock {\em Diabetes}, 19:Suppl--789.
+
+\bibitem[Mercatanti and Li, 2014]{mercatanti2014debit}
+Mercatanti, A. and Li, F. (2014).
+\newblock Do debit cards increase household spending? evidence from a
+  semiparametric causal analysis of a survey.
+\newblock {\em Annals of Applied Statistics}, 8:2485--2508.
+
+\bibitem[Ming and Rosenbaum, 2000]{ming2000substantial}
+Ming, K. and Rosenbaum, P.~R. (2000).
+\newblock Substantial gains in bias reduction from matching with a variable
+  number of controls.
+\newblock {\em Biometrics}, 56:118--124.
+
+\bibitem[Ming and Rosenbaum, 2001]{ming2001note}
+Ming, K. and Rosenbaum, P.~R. (2001).
+\newblock A note on optimal matching with variable controls using the
+  assignment algorithm.
+\newblock {\em Journal of Computational and Graphical Statistics}, 10:455--463.
+
+\bibitem[Miratrix et~al., 2018]{miratrix2018worth}
+Miratrix, L.~W., Sekhon, J.~S., Theodoridis, A.~G., and Campos, L.~F. (2018).
+\newblock Worth weighting? how to think about and use weights in survey
+  experiments.
+\newblock {\em Political Analysis}, 26:275--291.
+
+\bibitem[Miratrix et~al., 2013]{miratrix:2013}
+Miratrix, L.~W., Sekhon, J.~S., and Yu, B. (2013).
+\newblock Adjusting treatment effect estimates by post-stratification in
+  randomized experiments.
+\newblock {\em Journal of the Royal Statistical Society: Series B (Statistical
+  Methodology)}, 75:369--396.
+
+\bibitem[Morgan and Rubin, 2012]{morgan2012rerandomization}
+Morgan, K.~L. and Rubin, D.~B. (2012).
+\newblock Rerandomization to improve covariate balance in experiments.
+\newblock {\em Annals of Statistics}, 40:1263--1282.
+
+\bibitem[Morgan and Winship, 2015]{morgan2015counterfactuals}
+Morgan, S.~L. and Winship, C. (2015).
+\newblock {\em Counterfactuals and Causal Inference}.
+\newblock Cambridge: Cambridge University Press.
+
+\bibitem[Mukerjee et~al., 2018]{mukerjee2018using}
+Mukerjee, R., Dasgupta, T., and Rubin, D.~B. (2018).
+\newblock Using standard tools from finite population sampling to improve
+  causal inference for complex experiments.
+\newblock {\em Journal of the American Statistical Association}, 113:868--881.
+
+\bibitem[Naimi et~al., 2017]{naimi2017introduction}
+Naimi, A.~I., Cole, S.~R., and Kennedy, E.~H. (2017).
+\newblock An introduction to g methods.
+\newblock {\em International Journal of Epidemiology}, 46:756--762.
+
+\bibitem[Negi and Wooldridge, 2021]{negi2020revisiting}
+Negi, A. and Wooldridge, J.~M. (2021).
+\newblock Revisiting regression adjustment in experiments with heterogeneous
+  treatment effects.
+\newblock {\em Econometric Reviews}, 40:504--534.
+
+\bibitem[Neyman, 1923]{Neyman:1923}
+Neyman, J. (1923).
+\newblock On the application of probability theory to agricultural experiments.
+  essay on principles (with discussion). section 9 (translated). reprinted ed.
+\newblock {\em Statistical Science}, 5:465--472.
+
+\bibitem[Neyman, 1934]{neyman1934two}
+Neyman, J. (1934).
+\newblock On the two different aspects of the representative method: the method
+  of stratified sampling and the method of purposive selection (with
+  discussion).
+\newblock {\em Journal of the Royal Statistical Society}, 97:558--625.
+
+\bibitem[Neyman, 1935]{neyman1935statistical}
+Neyman, J. (1935).
+\newblock Statistical problems in agricultural experimentation (with
+  discussion).
+\newblock {\em Supplement to the Journal of the Royal Statistical Society},
+  2:107--180.
+
+\bibitem[Nguyen et~al., 2021]{nguyen2020clarifying}
+Nguyen, T.~Q., Schmid, I., Ogburn, E.~L., and Stuart, E.~A. (2021).
+\newblock Clarifying causal mediation analysis for the applied researcher:
+  Effect identification via three assumptions and five potential outcomes.
+\newblock {\em Psychological Methods}, 26:255--271.
+
+\bibitem[Otsu and Rai, 2017]{otsu2017bootstrap}
+Otsu, T. and Rai, Y. (2017).
+\newblock Bootstrap inference of matching estimators for average treatment
+  effects.
+\newblock {\em Journal of the American Statistical Association},
+  112:1720--1732.
+
+\bibitem[Pearl, 1995]{pearl1995causal}
+Pearl, J. (1995).
+\newblock Causal diagrams for empirical research (with discussion).
+\newblock {\em Biometrika}, 82:669--688.
+
+\bibitem[Pearl, 2000]{pearl2000causality}
+Pearl, J. (2000).
+\newblock {\em Causality: Models, Reasoning and Inference}.
+\newblock Cambridge: Cambridge University Press.
+
+\bibitem[Pearl, 2001]{Pearl::2001}
+Pearl, J. (2001).
+\newblock Direct and indirect effects.
+\newblock In Breese, J.~S. and Koller, D., editors, {\em Proceedings of the
+  17th Conference on Uncertainty in Artificial Intelligence}, pages 411--420.
+  pp. 411--420. San Francisco: Morgan Kaufmann Publishers Inc.
+
+\bibitem[Pearl, 2010a]{pearl2010class}
+Pearl, J. (2010a).
+\newblock On a class of bias-amplifying variables that endanger effect
+  estimates.
+\newblock In Grunwald, P. and Spirtes, P., editors, {\em Proceedings of the
+  Twenty-Sixth Conference on Uncertainty in Artificial Intelligence (UAI
+  2010)}, Corvallis, OR: 425--432. Association for Uncetainty in Artificial
+  Intelligence.
+
+\bibitem[Pearl, 2010b]{pearl2010brief}
+Pearl, J. (2010b).
+\newblock On the consistency rule in causal inference: axiom, definition,
+  assumption, or theorem?
+\newblock {\em Epidemiology}, 21:872--875.
+
+\bibitem[Pearl, 2011]{pearl2011invited}
+Pearl, J. (2011).
+\newblock Invited commentary: {U}nderstanding bias amplification.
+\newblock {\em American Journal of Epidemiology}, 174:1223--1227.
+
+\bibitem[Pearl, 2018]{pearl2018does}
+Pearl, J. (2018).
+\newblock {Does obesity shorten life? Or is it the soda? On non-manipulable
+  causes}.
+\newblock {\em Journal of Causal Inference}, 6:20182001.
+
+\bibitem[Pearl and Bareinboim, 2014]{pearl2014external}
+Pearl, J. and Bareinboim, E. (2014).
+\newblock External validity: From do-calculus to transportability across
+  populations.
+\newblock {\em Statistical Science}, 29:579--595.
+
+\bibitem[Pearl and Mackenzie, 2018]{pearl2018book}
+Pearl, J. and Mackenzie, D. (2018).
+\newblock {\em The Book of Why: The New Science of Cause and Effect}.
+\newblock Basic Books.
+
+\bibitem[Permutt and Hebel, 1989]{permutt1989simultaneous}
+Permutt, T. and Hebel, J.~R. (1989).
+\newblock Simultaneous-equation estimation in a clinical trial of the effect of
+  smoking on birth weight.
+\newblock {\em Biometrics}, 45:619--622.
+
+\bibitem[Phipson and Smyth, 2010]{phipson2010permutation}
+Phipson, B. and Smyth, G.~K. (2010).
+\newblock Permutation p-values should never be zero: calculating exact p-values
+  when permutations are randomly drawn.
+\newblock {\em Statistical Applications in Genetics and Molecular Biology},
+  9:Article39.
+
+\bibitem[Pimentel et~al., 2015]{pimentel2015variable}
+Pimentel, S.~D., Yoon, F., and Keele, L. (2015).
+\newblock {Variable-ratio matching with fine balance in a study of the Peer
+  Health Exchange}.
+\newblock {\em Statistics in Medicine}, 34:4070--4082.
+
+\bibitem[Poole, 2010]{poole2010origin}
+Poole, C. (2010).
+\newblock On the origin of risk relativism.
+\newblock {\em Epidemiology}, 21:3--9.
+
+\bibitem[Popper, 1963]{popper1963conjectures}
+Popper, K. (1963).
+\newblock {\em Conjectures and Refutations: The Growth of Scientific
+  Knowledge}.
+\newblock Routledge.
+
+\bibitem[Powers and Swinton, 1984]{powers1984effects}
+Powers, D.~E. and Swinton, S.~S. (1984).
+\newblock Effects of self-study for coachable test item types.
+\newblock {\em Journal of Educational Psychology}, 76:266--278.
+
+\bibitem[Prentice and Pyke, 1979]{prentice1979logistic}
+Prentice, R.~L. and Pyke, R. (1979).
+\newblock Logistic disease incidence models and case-control studies.
+\newblock {\em Biometrika}, 66:403--411.
+
+\bibitem[Rao, 1970]{rao1970estimation}
+Rao, C.~R. (1970).
+\newblock Estimation of heteroscedastic variances in linear models.
+\newblock {\em Journal of the American Statistical Association}, 65:161--172.
+
+\bibitem[Reichenbach, 1957]{reichenbach1991direction}
+Reichenbach, H. (1957).
+\newblock {\em The Direction of Time}.
+\newblock University of California Press.
+
+\bibitem[Rigdon and Hudgens, 2015]{Rigdon:2015}
+Rigdon, J. and Hudgens, M.~G. (2015).
+\newblock Randomization inference for treatment effects on a binary outcome.
+\newblock {\em Statistics in Medicine}, 34:924--935.
+
+\bibitem[Robins et~al., 2007]{robins2007comment}
+Robins, J., Sued, M., Lei-Gomez, Q., and Rotnitzky, A. (2007).
+\newblock Comment: Performance of double-robust estimators when inverse
+  probability weights are highly variable.
+\newblock {\em Statistical Science}, 22:544--559.
+
+\bibitem[Robins, 1999]{robins1999association}
+Robins, J.~M. (1999).
+\newblock Association, causation, and marginal structural models.
+\newblock {\em Synthese}, 121:151--179.
+
+\bibitem[Robins and Greenland, 1992]{Robins::1992}
+Robins, J.~M. and Greenland, S. (1992).
+\newblock Identifiability and exchangeability for direct and indirect effects.
+\newblock {\em Epidemiology}, 3:143--155.
+
+\bibitem[Robins et~al., 2000]{robins2000marginal}
+Robins, J.~M., Hernan, M.~A., and Brumback, B. (2000).
+\newblock Marginal structural models and causal inference in epidemiology.
+\newblock {\em Epidemiology}, 11:550--560.
+
+\bibitem[Robins et~al., 1992]{robins1992estimating}
+Robins, J.~M., Mark, S.~D., and Newey, W.~K. (1992).
+\newblock Estimating exposure effects by modelling the expectation of exposure
+  conditional on confounders.
+\newblock {\em Biometrics}, 48:479--495.
+
+\bibitem[Robins and Wasserman, 1997]{robinswasserman1997estimation}
+Robins, J.~M. and Wasserman, L.~A. (1997).
+\newblock Estimation of effects of sequential treatments by reparameterizing
+  directed acyclic graphs.
+\newblock In {\em Proceedings of the Thirteenth conference on Uncertainty in
+  artificial intelligence}, volume 409--420.
+
+\bibitem[Rosenbaum, 1984]{rosenbaum1984consquences}
+Rosenbaum, P.~R. (1984).
+\newblock The consequences of adjustment for a concomitant variable that has
+  been affected by the treatment.
+\newblock {\em Journal of the Royal Statistical Society. Series A},
+  147:656--666.
+
+\bibitem[Rosenbaum, 1987a]{rosenbaum1987model}
+Rosenbaum, P.~R. (1987a).
+\newblock Model-based direct adjustment.
+\newblock {\em Journal of the American Statistical Association}, 82:387--394.
+
+\bibitem[Rosenbaum, 1987b]{rosenbaum1987sensitivity}
+Rosenbaum, P.~R. (1987b).
+\newblock Sensitivity analysis for certain permutation inferences in matched
+  observational studies.
+\newblock {\em Biometrika}, 74:13--26.
+
+\bibitem[Rosenbaum, 1989]{rosenbaum1989role}
+Rosenbaum, P.~R. (1989).
+\newblock The role of known effects in observational studies.
+\newblock {\em Biometrics}, 45:557--569.
+
+\bibitem[Rosenbaum, 2002a]{rosenbaum2002covariance}
+Rosenbaum, P.~R. (2002a).
+\newblock Covariance adjustment in randomized experiments and observational
+  studies (with discussion).
+\newblock {\em Statistical Science}, 17:286--327.
+
+\bibitem[Rosenbaum, 2002b]{rosenbaum2002design}
+Rosenbaum, P.~R. (2002b).
+\newblock {\em Observational Studies}.
+\newblock Springer, 2nd edition.
+
+\bibitem[Rosenbaum, 2010]{Rosenbaum:2010}
+Rosenbaum, P.~R. (2010).
+\newblock {\em Design of Observational Studies.}
+\newblock New York: Springer.
+
+\bibitem[Rosenbaum, 2015]{rosenbaum2015two}
+Rosenbaum, P.~R. (2015).
+\newblock {Two R packages for sensitivity analysis in observational studies}.
+\newblock {\em Observational Studies}, 1:1--17.
+
+\bibitem[Rosenbaum, 2018]{rosenbaum2018sensitivity}
+Rosenbaum, P.~R. (2018).
+\newblock Sensitivity analysis for stratified comparisons in an observational
+  study of the effect of smoking on homocysteine levels.
+\newblock {\em Annals of Applied Statistics}, 12:2312--2334.
+
+\bibitem[Rosenbaum, 2020]{rosenbaum2020modern}
+Rosenbaum, P.~R. (2020).
+\newblock Modern algorithms for matching in observational studies.
+\newblock {\em Annual Review of Statistics and Its Application}, 7:143--176.
+
+\bibitem[Rosenbaum and Rubin, 1983a]{Rosenbaum::1983JRSSB}
+Rosenbaum, P.~R. and Rubin, D.~B. (1983a).
+\newblock Assessing sensitivity to an unobserved binary covariate in an
+  observational study with binary outcome.
+\newblock {\em Journal of the Royal Statistical Society - Series B (Statistical
+  Methodology)}, 45:212--218.
+
+\bibitem[Rosenbaum and Rubin, 1983b]{rosenbaum1983central}
+Rosenbaum, P.~R. and Rubin, D.~B. (1983b).
+\newblock The central role of the propensity score in observational studies for
+  causal effects.
+\newblock {\em Biometrika}, 70:41--55.
+
+\bibitem[Rosenbaum and Rubin, 1984]{rosenbaum1984reducing}
+Rosenbaum, P.~R. and Rubin, D.~B. (1984).
+\newblock Reducing bias in observational studies using subclassification on the
+  propensity score.
+\newblock {\em Journal of the American statistical Association}, 79:516--524.
+
+\bibitem[Rosenbaum and Rubin, 2023]{rosenbaum2023propensity}
+Rosenbaum, P.~R. and Rubin, D.~B. (2023).
+\newblock Propensity scores in the design of observational studies for causal
+  effects.
+\newblock {\em Biometrika}, 110:1--13.
+
+\bibitem[Rothman et~al., 2008]{rothman2008modern}
+Rothman, K.~J., Greenland, S., Lash, T.~L., et~al. (2008).
+\newblock {\em Modern epidemiology}, volume~3.
+\newblock Wolters Kluwer Health/Lippincott Williams \& Wilkins Philadelphia.
+
+\bibitem[Rubin, 1974]{Rubin:1974}
+Rubin, D.~B. (1974).
+\newblock Estimating causal effects of treatments in randomized and
+  nonrandomized studies.
+\newblock {\em Journal of Educational Psychology}, 66:688--701.
+
+\bibitem[Rubin, 1975]{rubin1975bayesian}
+Rubin, D.~B. (1975).
+\newblock Bayesian inference for causality: The importance of randomization.
+\newblock In {\em The Proceedings of the social statistics section of the
+  American Statistical Association}, volume 233, page 239. American Statistical
+  Association Alexandria, VA.
+
+\bibitem[Rubin, 1978]{rubin1978bayesian}
+Rubin, D.~B. (1978).
+\newblock Bayesian inference for causal effects: The role of randomization.
+\newblock {\em Annals of Statistics}, 6:34--58.
+
+\bibitem[Rubin, 1980]{Rubin:1980}
+Rubin, D.~B. (1980).
+\newblock Comment on ``{R}andomization analysis of experimental data: the
+  {F}isher randomization test'' by {D}. {B}asu.
+\newblock {\em Journal of American Statistical Association}, 75:591--593.
+
+\bibitem[Rubin, 2001]{rubin2001comment}
+Rubin, D.~B. (2001).
+\newblock Comment: Self-experimentation for causal effects.
+\newblock {\em CHANCE}, 14:16--17.
+
+\bibitem[Rubin, 2005]{Rubin:2005}
+Rubin, D.~B. (2005).
+\newblock Causal inference using potential outcomes: Degisn, modeling,
+  decisions.
+\newblock {\em Journal of American Statistical Association}, 100:322--331.
+
+\bibitem[Rubin, 2006a]{rubin2006causal}
+Rubin, D.~B. (2006a).
+\newblock Causal inference through potential outcomes and principal
+  stratification: application to studies with ``censoring" due to death (with
+  discussion).
+\newblock {\em Statistical Science}, 21:299--309.
+
+\bibitem[Rubin, 2006b]{rubin2006matched}
+Rubin, D.~B. (2006b).
+\newblock {\em Matched Sampling for Causal Effects}.
+\newblock Cambridge: Cambridge University Press.
+
+\bibitem[Rubin, 2007]{rubin2007design}
+Rubin, D.~B. (2007).
+\newblock The design versus the analysis of observational studies for causal
+  effects: parallels with the design of randomized trials.
+\newblock {\em Statistics in Medicine}, 26:20--36.
+
+\bibitem[Rubin, 2008]{rubin2008objective}
+Rubin, D.~B. (2008).
+\newblock For objective causal inference, design trumps analysis.
+\newblock {\em Annals of Applied Statistics}, 2:808--840.
+
+\bibitem[Rudolph et~al., 2018]{rudolph2018causal}
+Rudolph, K.~E., Goin, D.~E., Paksarian, D., Crowder, R., Merikangas, K.~R., and
+  Stuart, E.~A. (2018).
+\newblock Causal mediation analysis with observational data: considerations and
+  illustration examining mechanisms linking neighborhood poverty to adolescent
+  substance use.
+\newblock {\em American Journal of Epidemiology}, 188:598--608.
+
+\bibitem[Sabbaghi and Rubin, 2014]{sabbaghi2014comments}
+Sabbaghi, A. and Rubin, D.~B. (2014).
+\newblock {Comments on the Neyman--Fisher controversy and its consequences}.
+\newblock {\em Statistical Science}, 29:267--284.
+
+\bibitem[Salsburg, 2001]{salsburg2001lady}
+Salsburg, D. (2001).
+\newblock {\em The Lady Tasting Tea: How Statistics Revolutionized Science in
+  the Twentieth Century}.
+\newblock Henry Holt and Company.
+
+\bibitem[Sanders and Karim, 2021]{sanders2021incorporating}
+Sanders, E.~Gustafson, P. and Karim, M.~E. (2021).
+\newblock Incorporating partial adherence into the principal stratification
+  analysis framework.
+\newblock {\em Statistics in Medicine}, 40:3625--3644.
+
+\bibitem[Sanderson et~al., 2017]{sanderson2017negative}
+Sanderson, E., Macdonald-Wallis, C., and Davey~Smith, G. (2017).
+\newblock Negative control exposure studies in the presence of measurement
+  error: implications for attempted effect estimate calibration.
+\newblock {\em International Journal of Epidemiology}, 47:587--596.
+
+\bibitem[Scharfstein et~al., 1999]{scharfstein1999adjusting}
+Scharfstein, D.~O., Rotnitzky, A., and Robins, J.~M. (1999).
+\newblock Adjusting for nonignorable drop-out using semiparametric nonresponse
+  models.
+\newblock {\em Journal of the American Statistical Association}, 94:1096--1120.
+
+\bibitem[Schlesselman, 1978]{Schlesselman::1978}
+Schlesselman, J.~J. (1978).
+\newblock Assessing effects of confounding variables.
+\newblock {\em American Journal of Epidemiology}, 108:3--8.
+
+\bibitem[Schochet et~al., 2008]{schochet2008does}
+Schochet, P.~Z., Burghardt, J., and McConnell, S. (2008).
+\newblock Does job corps work? impact findings from the national job corps
+  study.
+\newblock {\em American Economic Review}, 98:1864--1886.
+
+\bibitem[Sekhon, 2009]{sekhon2009opiates}
+Sekhon, J.~S. (2009).
+\newblock Opiates for the matches: Matching methods for causal inference.
+\newblock {\em Annual Review of Political Science}, 12:487--508.
+
+\bibitem[Sekhon, 2011]{sekhon2011multivariate}
+Sekhon, J.~S. (2011).
+\newblock Multivariate and propensity score matching software with automated
+  balance optimization: The matching package for {R}.
+\newblock {\em Journal of Statistical Software}, 47:1--52.
+
+\bibitem[Sekhon and Titiunik, 2017]{sekhon2017interpreting}
+Sekhon, J.~S. and Titiunik, R. (2017).
+\newblock On interpreting the regression discontinuity design as a local
+  experiment.
+\newblock In {\em Regression Discontinuity Designs}, volume~38. Emerald
+  Publishing Limited.
+
+\bibitem[Shinozaki and Matsuyama, 2015]{shinozaki2015brief}
+Shinozaki, T. and Matsuyama, Y. (2015).
+\newblock Doubly robust estimation of standardized risk difference and ratio in
+  the exposed population.
+\newblock {\em Epidemiology}, 26:873--877.
+
+\bibitem[Small, 2015]{small2015introduction}
+Small, D.~S. (2015).
+\newblock {Introduction to Observational Studies and the Reprint of Cochran's
+  paper ``Observational Studies'' and Comments}.
+\newblock {\em Observational Studies}, 1:124--125.
+
+\bibitem[Sobel, 1982]{sobel1982asymptotic}
+Sobel, M.~E. (1982).
+\newblock Asymptotic confidence intervals for indirect effects in structural
+  equation models.
+\newblock {\em Sociological Methodology}, 13:290--312.
+
+\bibitem[Sobel, 1986]{sobel1986some}
+Sobel, M.~E. (1986).
+\newblock Some new results on indirect effects and their standard errors in
+  covariance structure models.
+\newblock {\em Sociological Methodology}, 16:159--186.
+
+\bibitem[Sommer and Zeger, 1991]{sommer1991estimating}
+Sommer, A. and Zeger, S.~L. (1991).
+\newblock On estimating efficacy from clinical trials.
+\newblock {\em Statistics in Medicine}, 10:45--52.
+
+\bibitem[Stuart, 2010]{stuart2010matching}
+Stuart, E.~A. (2010).
+\newblock Matching methods for causal inference: A review and a look forward.
+\newblock {\em Statistical Science}, 25:1--21.
+
+\bibitem[Stuart and Jo, 2015]{stuart2015assessing}
+Stuart, E.~A. and Jo, B. (2015).
+\newblock Assessing the sensitivity of methods for estimating principal causal
+  effects.
+\newblock {\em Statistical Methods in Medical Research}, 24:657--674.
+
+\bibitem[Su et~al., 2023]{su2023estimated}
+Su, F., Mou, W., Ding, P., and Wainwright, M. (2023).
+\newblock {When is the estimated propensity score better? High-dimensional
+  analysis and bias correction}.
+\newblock {\em arXiv preprint arXiv:2303.17102}.
+
+\bibitem[Tao and Fu, 2019]{tao2019doubly}
+Tao, Y. and Fu, H. (2019).
+\newblock Doubly robust estimation of the weighted average treatment effect for
+  a target population.
+\newblock {\em Statistics in Medicine}, 38:315--325.
+
+\bibitem[Theil, 1953]{theil1953estimation}
+Theil, H. (1953).
+\newblock Estimation and simultaneous correlation in complete equation systems.
+  central planning bureau.
+\newblock Technical report, Mimeo, The Hague.
+
+\bibitem[Thistlethwaite and Campbell, 1960]{thistlethwaite1960regression}
+Thistlethwaite, D.~L. and Campbell, D.~T. (1960).
+\newblock Regression-discontinuity analysis: An alternative to the ex post
+  facto experiment.
+\newblock {\em Journal of Educational Psychology}, 51:309.
+
+\bibitem[Thistlewaite and Campbell, 2016]{thistlewaiteregression2016obs}
+Thistlewaite, D.~L. and Campbell, D.~T. (2016).
+\newblock Regression-discontinuity analysis: An alternative to the ex-post
+  facto experiment (with discussion).
+\newblock {\em Observational Studies}, 2:119--209.
+
+\bibitem[Tibshirani, 1996]{tibshirani1996regression}
+Tibshirani, R. (1996).
+\newblock Regression shrinkage and selection via the lasso.
+\newblock {\em Journal of the Royal Statistical Society: Series B
+  (Methodological)}, 58:267--288.
+
+\bibitem[Titterington, 2013]{titterington2013biometrika}
+Titterington, D. (2013).
+\newblock {{\it Biometrika} highlights from volume 28 onwards}.
+\newblock {\em Biometrika}, 100:17--73.
+
+\bibitem[Valeri and Vanderweele, 2014]{valeri2014estimation}
+Valeri, L. and Vanderweele, T.~J. (2014).
+\newblock The estimation of direct and indirect causal effects in the presence
+  of misclassified binary mediator.
+\newblock {\em Biostatistics}, 15:498--512.
+
+\bibitem[Van~der Laan and Rose, 2011]{van2011targeted}
+Van~der Laan, M.~J. and Rose, S. (2011).
+\newblock {\em Targeted Learning: Causal Inference for Observational and
+  Experimental Data}.
+\newblock New York: Springer.
+
+\bibitem[Van~der Vaart, 2000]{van2000asymptotic}
+Van~der Vaart, A.~W. (2000).
+\newblock {\em Asymptotic {S}tatistics}.
+\newblock Cambridge: Cambridge {U}niversity {P}ress.
+
+\bibitem[Van~Elteren, 1960]{van1960combination}
+Van~Elteren, P. (1960).
+\newblock On the combination of independent two-sample tests of wilcoxon.
+\newblock {\em Bulletin of the Institute of International Statistics},
+  37:351--361.
+
+\bibitem[VanderWeele, 2008]{vanderweele2008simple}
+VanderWeele, T.~J. (2008).
+\newblock Simple relations between principal stratification and direct and
+  indirect effects.
+\newblock {\em Statistics and Probability Letters}, 78:2957--2962.
+
+\bibitem[VanderWeele, 2015]{vanderweele2015explanation}
+VanderWeele, T.~J. (2015).
+\newblock {\em Explanation in Causal Inference: Methods for Mediation and
+  Interaction}.
+\newblock Oxford: Oxford University Press.
+
+\bibitem[VanderWeele et~al., 2012]{Vanderweele::2012genetic}
+VanderWeele, T.~J., Asomaning, K., and Tchetgen~Tchetgen, E.~J. (2012).
+\newblock Genetic variants on 15q25.1, smoking, and lung cancer: {A}n
+  assessment of mediation and interaction.
+\newblock {\em American Journal of Epidemiology}, 175:1013--1020.
+
+\bibitem[VanderWeele and Ding, 2017]{vanderweele2017sensitivity}
+VanderWeele, T.~J. and Ding, P. (2017).
+\newblock {Sensitivity analysis in observational research: introducing the
+  E-value}.
+\newblock {\em Annals of Internal Medicine}, 167:268--274.
+
+\bibitem[VanderWeele and Shpitser, 2011]{vanderweele2011new}
+VanderWeele, T.~J. and Shpitser, I. (2011).
+\newblock A new criterion for confounder selection.
+\newblock {\em Biometrics}, 67:1406--1413.
+
+\bibitem[VanderWeele and Tchetgen~Tchetgen, 2017]{vanderweele2017mediation}
+VanderWeele, T.~J. and Tchetgen~Tchetgen, E.~J. (2017).
+\newblock Mediation analysis with time varying exposures and mediators.
+\newblock {\em Journal of the Royal Statistical Society: Series B (Statistical
+  Methodology)}, 79:917--938.
+
+\bibitem[VanderWeele et~al., 2014]{vanderweele2014methodological}
+VanderWeele, T.~J., Tchetgen~Tchetgen, E.~J., Cornelis, M., and Kraft, P.
+  (2014).
+\newblock Methodological challenges in {M}endelian randomization.
+\newblock {\em Epidemiology}, 25:427.
+
+\bibitem[Vansteelandt and Daniel, 2014]{vansteelandt2014regression}
+Vansteelandt, S. and Daniel, R.~M. (2014).
+\newblock On regression adjustment for the propensity score.
+\newblock {\em Statistics in Medicine}, 33:4053--4072.
+
+\bibitem[Vansteelandt and Dukes, 2022]{vansteelandt2021assumption}
+Vansteelandt, S. and Dukes, O. (2022).
+\newblock Assumption-lean inference for generalised linear model parameters
+  (with discussion).
+\newblock {\em Journal of the Royal Statistical Society, Series B (Statistical
+  Methodology)}, 84:657--685.
+
+\bibitem[Vansteelandt and Joffe, 2014]{vansteelandt2014structural}
+Vansteelandt, S. and Joffe, M. (2014).
+\newblock {Structural nested models and G-estimation: the partially realized
+  promise}.
+\newblock {\em Statistical Science}, 29:707--731.
+
+\bibitem[Vermeulen and Vansteelandt, 2015]{vermeulen2015bias}
+Vermeulen, K. and Vansteelandt, S. (2015).
+\newblock Bias-reduced doubly robust estimation.
+\newblock {\em Journal of the American Statistical Association},
+  110:1024--1036.
+
+\bibitem[Voight et~al., 2012]{voight2012plasma}
+Voight, B.~F., Peloso, G.~M., Orho-Melander, M., Frikke-Schmidt, R., Barbalic,
+  M., Jensen, M.~K., Hindy, G., H{\'o}lm, H., Ding, E.~L., and Johnson, T.
+  (2012).
+\newblock {Plasma HDL cholesterol and risk of myocardial infarction: a
+  Mendelian randomisation study}.
+\newblock {\em The Lancet}, 380:572--580.
+
+\bibitem[Wager and Athey, 2018]{wager2018estimation}
+Wager, S. and Athey, S. (2018).
+\newblock Estimation and inference of heterogeneous treatment effects using
+  random forests.
+\newblock {\em Journal of the American Statistical Association},
+  113:1228--1242.
+
+\bibitem[Wager et~al., 2016]{wager2016high}
+Wager, S., Du, W., Taylor, J., and Tibshirani, R.~J. (2016).
+\newblock High-dimensional regression adjustments in randomized experiments.
+\newblock {\em Proceedings of the National Academy of Sciences of the United
+  States of America}, 113:12673--12678.
+
+\bibitem[Wald, 1940]{wald1940fitting}
+Wald, A. (1940).
+\newblock The fitting of straight lines if both variables are subject to error.
+\newblock {\em Annals of Mathematical Statistics}, 11:284--300.
+
+\bibitem[Wang et~al., 2020]{wang2020robust}
+Wang, L., Zhang, Y., Richardson, T.~S., and Zhou, X.-H. (2020).
+\newblock Robust estimation of propensity score weights via subclassification.
+\newblock {\em arXiv preprint arXiv:1602.06366}.
+
+\bibitem[Wang and Li, 2022]{wang2022rerandomization}
+Wang, Y. and Li, X. (2022).
+\newblock Rerandomization with diminishing covariate imbalance and diverging
+  number of covariates.
+\newblock {\em Annals of Statistics}, 50:3439--3465.
+
+\bibitem[White, 1980]{white::1980}
+White, H. (1980).
+\newblock A heteroskedasticity-consistent covariance matrix estimator and a
+  direct test for heteroskedasticity.
+\newblock {\em Econometrica}, 48:817--838.
+
+\bibitem[Wooldridge, 2016]{wooldridge2009should}
+Wooldridge, J. (2016).
+\newblock Should instrumental variables be used as matching variables?
+\newblock {\em Research in Economics}, 70:232--237.
+
+\bibitem[Wooldridge, 2015]{wooldridge2015control}
+Wooldridge, J.~M. (2015).
+\newblock Control function methods in applied econometrics.
+\newblock {\em Journal of Human Resources}, 50:420--445.
+
+\bibitem[Wu and Ding, 2021]{wu2018randomization}
+Wu, J. and Ding, P. (2021).
+\newblock Randomization tests for weak null hypotheses in randomized
+  experiments.
+\newblock {\em Journal of the American Statistical Association},
+  116:1898--1913.
+
+\bibitem[Yang and Ding, 2018a]{yang2018using}
+Yang, F. and Ding, P. (2018a).
+\newblock Using survival information in truncation by death problems without
+  the monotonicity assumption.
+\newblock {\em Biometrics}, 74:1232--1239.
+
+\bibitem[Yang and Small, 2016]{yang2016using}
+Yang, F. and Small, D.~S. (2016).
+\newblock Using post-outcome measurement information in censoring-by-death
+  problems.
+\newblock {\em Journal of the Royal Statistical Society: Series B (Statistical
+  Methodology)}, 78:299--318.
+
+\bibitem[Yang and Ding, 2018b]{yang2018asymptotic}
+Yang, S. and Ding, P. (2018b).
+\newblock Asymptotic causal inference with observational studies trimmed by the
+  estimated propensity scores.
+\newblock {\em Biometrika}, 105:487--493.
+
+\bibitem[Zelen, 1979]{zelen1979new}
+Zelen, M. (1979).
+\newblock A new design for randomized clinical trials.
+\newblock {\em New England Journal of Medicine}, 300:1242--1245.
+
+\bibitem[Zhang and Rubin, 2003]{zhang2003estimation}
+Zhang, J.~L. and Rubin, D.~B. (2003).
+\newblock Estimation of causal effects via principal stratification when some
+  outcomes are truncated by ``death''.
+\newblock {\em Journal of Educational and Behavioral Statistics}, 28:353--368.
+
+\bibitem[Zhang et~al., 2009]{zhang2009likelihood}
+Zhang, J.~L., Rubin, D.~B., and Mealli, F. (2009).
+\newblock Likelihood-based analysis of causal effects of job-training programs
+  using principal stratification.
+\newblock {\em Journal of the American Statistical Association}, 104:166--176.
+
+\bibitem[Zhang and Ding, 2022]{zhang2022interpretable}
+Zhang, M. and Ding, P. (2022).
+\newblock Interpretable sensitivity analysis for the baron-kenny approach to
+  mediation with unmeasured confounding.
+\newblock {\em arXiv preprint arXiv:2205.08030}.
+
+\bibitem[Zhao and Ding, 2021a]{zhao2020caFRT}
+Zhao, A. and Ding, P. (2021a).
+\newblock {Covariate-adjusted Fisher randomization tests for the average
+  treatment effect}.
+\newblock {\em Journal of Econometrics}, 225:278--294.
+
+\bibitem[Zhao and Ding, 2021b]{zhao2021no}
+Zhao, A. and Ding, P. (2021b).
+\newblock No star is good news: A unified look at rerandomization based on $ p
+  $-values from covariate balance tests.
+\newblock {\em arXiv preprint arXiv:2112.10545}.
+
+\bibitem[Zhao et~al., 2020]{zhao2020statistical}
+Zhao, Q., Wang, J., Hemani, G., Bowden, J., and Small, D. (2020).
+\newblock {Statistical inference in two-sample summary-data Mendelian
+  randomization using robust adjusted profile score}.
+\newblock {\em Annals of Statistics}, 48:1742--1769.
+
+\end{thebibliography}

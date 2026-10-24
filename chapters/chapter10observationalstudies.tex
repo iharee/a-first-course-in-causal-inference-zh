@@ -1,0 +1,523 @@
+\chapter{观察性研究、选择偏差与因果效应的非参数识别}\label{chapter::observational-studies}
+ \chaptermark{观察性研究}
+
+ 
+\citet{cochran1965planning}总结了观察性研究的两个共同特征：
+\begin{enumerate}
+\item
+目标是阐明因果关系；
+\item 
+无法通过控制实验来实现研究目的。 
+\end{enumerate}
+
+第一个特征与本书第\ref{part::rcts}部分讨论的随机实验相同，但第二个特征与随机实验存在本质区别。 
+
+
+\citet{dorn1953philosophy}指出，观察性研究的设计者应当时刻思考以下问题：
+\begin{quote}
+如果能够通过控制实验完成研究，那么实验过程会是怎样的？
+\end{quote}
+遵循\citet{dorn1953philosophy}的建议总是有益的，因为潜在结果框架与实验存在内在联系——无论是真实实验还是思想实验。本书第\ref{part::observational-studies}部分将探讨基于观察性研究的因果推断，阐明其与随机实验的根本差异。不过许多基于观察性研究的因果推断思想同样与随机实验密切相关。 
+
+ 
+
+
+\section{示例说明}
+ 
+ \begin{example}
+ [职业培训项目]\label{eg::job-training-obs}
+ \citet{lalonde1986evaluating}研究职业培训项目对收入的因果效应，比较随机实验与观察性研究的结果。此前已使用过实验数据，即\ri{Matching}包中的\ri{lalonde}；也在第\ref{section:correlatioandregressionintro}节和习题\ref{hw::lalonde-obs-reg}中使用过观察性对应数据\ri{cps1re74.csv}。\citet{lalonde1986evaluating}发现，许多传统统计或计量经济学方法在观察性数据上得到的估计，与实验估计相差很大。\cite{dehejia1999causal}采用因果推断启发的方法重新分析，发现能较好地恢复实验这一金标准。此后，这成为观察性研究因果推断中的经典例子。 
+ \end{example}
+ 
+ 
+  \begin{example}
+ [吸烟与同型半胱氨酸]\label{eg::nhanes2005-2006}
+ \citet{bazzano2003relationship}利用2005–2006年美国国家健康与营养检查调查数据，对比每日吸烟者与非吸烟者的同型半胱氨酸水平\footnote{同型半胱氨酸是一种氨基酸，血液中该物质含量高是心血管疾病的标志}。\citet{rosenbaum2018sensitivity}将该数据集命名为\ri{homocyst}并收录于\ri{senstrat}包中。数据集包含以下重要协变量：
+ 
+\begin{tabular}{ll}
+\hline 
+\texttt{female} &
+1=女性，0=男性
+\\
+\texttt{age3} &
+年龄分组：20–39岁、40–50岁、$\geq $60岁
+\\
+\texttt{ed3} &
+三类教育程度：$<$高中、高中、上过大学
+\\
+\texttt{bmi3}&
+BMI分组：$<$30、$[30,35)$、$\geq $35
+\\
+\texttt{pov2}&
+TRUE=收入达贫困线两倍以上，FALSE=其他情况\\
+\hline 
+\end{tabular} 
+
+ \end{example}
+ 
+ 
+ 
+ 
+   \begin{example} 
+ [学校供餐计划与体重指数]\label{eg::chan-bmi-ATE}
+ \citet{chan2016globally}利用NHANES 2007–2008的部分数据，研究参与学校供餐计划是否会导致学生体重指数上升。该数据被命名为\ri{nhanes_bmi}并收录于\ri{ATE}包中，含以下关键协变量：
+ 
+\begin{tabular}{ll}
+\hline 
+\texttt{age}&
+年龄  
+\\
+\texttt{ChildSex}&
+性别 (1: 男，0: 女)
+\\
+\texttt{black}&
+种族 (1: 黑人，0: 其他) 
+\\
+\texttt{mexam}&
+族裔 (1: 西班牙裔: 0: 其他)
+\\
+\texttt{pir200\_plus}&
+家庭收入高于联邦贫困线200\% 的联邦贫困线水平  \\
+\texttt{WIC}&
+是否参与特殊营养补助计划 \\
+\texttt{Food\_Stamp}&
+是否参与食品券计划   \\
+\texttt{fsdchbi}&
+儿童食物安全状况  \\
+\texttt{AnyIns}&
+是否享有任何保险 \\
+\texttt{RefSex}&
+应答成年人性别 (1: 男，0: 女) \\
+\texttt{RefAge}&
+应答成年人年龄\\
+\hline 
+\end{tabular} 
+
+ \end{example}
+ 
+示例\ref{eg::job-training-obs}–\ref{eg::chan-bmi-ATE}的共同点是：我们旨在估计非随机化处理对结果的因果效应。这些均属于观察性研究范畴。 
+ 
+ 
+\section{潜在结果框架下的因果效应与选择偏差} 
+ \label{sec::selection-bias-randomization}
+
+ 
+ 
+单位$i$（$(i=1,\ldots, n)$）具有处理前协变量$X_i$、二元处理指标$Z_i$和观测结果$Y_i$，处理与对照潜在结果分别为$Y_i(1)$、$Y_i(0)$。为简化讨论，假定
+$$
+\{X_i, Z_i, Y_i(1),  Y_i(0)  \}_{i=1}^n \iidsim \{  X, Z, Y(1),  Y(0) \} .
+$$
+因此，总体量可以省略下标$i$。所关心的因果效应包括平均因果效应
+$$
+\tau = E\{  Y(1) - Y(0)  \},
+$$
+、处理组平均因果效应
+$$
+\tau_\textsc{T} =  E\{  Y(1) - Y(0)  \mid Z = 1 \},
+$$
+以及对照组平均因果效应
+$$
+\tau_\textsc{C} =  E\{  Y(1) - Y(0)  \mid Z = 0 \}. 
+$$ 
+
+由期望的线性性，
+\begin{eqnarray*}
+\tau_\textsc{T} &=&  E\{  Y(1)    \mid Z = 1 \} - E\{   Y(0)  \mid Z = 1 \}  \\
+&=&  E(  Y    \mid Z = 1 ) - E\{   Y(0)  \mid Z = 1 \}
+\end{eqnarray*}
+和
+\begin{eqnarray*}
+ \tau_\textsc{C} &=&  E\{  Y(1)    \mid Z = 0 \} - E\{   Y(0)  \mid Z = 0 \} \\
+ &=&  E\{  Y(1)    \mid Z = 0 \} - E(  Y   \mid Z = 0 ).
+\end{eqnarray*}
+在上述$\tau_\textsc{T} $与$\tau_\textsc{C} $的公式中，$E(Y    \mid Z = 1 ) $和$E(   Y   \mid Z = 0 ) $可直接由数据估计，$E\{   Y(0)  \mid Z = 1 \}$与$E\{  Y(1)    \mid Z = 0 \}$却不能。后两者是{\it 反事实量}，因为它们是在实际未接受的处理水平下，潜在结果的均值。 
+ 
+
+直观差分估计量——亦称{\it 初步}\footnote{拉丁语短语，意为“基于初步印象”或“在证伪前视为正确”。\citet{holland1986statistics}首次使用该词}因果效应：
+\begin{eqnarray*}
+\tau_\textsc{PF} &=& E(  Y    \mid Z = 1 )  - E(   Y   \mid Z = 0 )   \\
+&=& E\{  Y(1)    \mid Z = 1 \}  - E\{   Y(0)  \mid Z = 0 \} 
+\end{eqnarray*}
+通常无法准确估计前述因果效应。例如：
+$$
+ \tau_\textsc{PF} - \tau_\textsc{T} = E\{   Y(0)  \mid Z = 1 \} - E\{   Y(0)  \mid Z = 0 \} 
+ $$
+以及
+$$
+  \tau_\textsc{PF} - \tau_\textsc{C} =  E\{   Y(1)  \mid Z = 1 \} - E\{   Y(1)  \mid Z = 0 \} 
+ $$
+通常不为零，这正是{\it 选择偏差}的体现。它反映了不同处理组间潜在结果均值的系统性差异。 
+ 
+ 
+ 
+ 
+ 为何随机化如此关键？\citet{rubin1978bayesian}率先运用潜在结果框架阐明随机化的价值。正如本书第\ref{chapter::bridging}章所述，若满足
+\begin{equation}\label{eq::rubinrandomization}
+ Z  \ind \{ Y (1) , Y (0) \}
+\end{equation}
+则选择偏差项必为零：
+$$
+  \tau_\textsc{PF} - \tau_\textsc{T}  = 
+ E\{   Y(0)  \mid Z = 1 \} - E\{   Y(0)  \mid Z = 0 \}  = 0
+ $$
+且
+$$
+   \tau_\textsc{PF} - \tau_\textsc{C} =
+ E\{   Y(1)  \mid Z = 1 \} - E\{   Y(1)  \mid Z = 0 \}  = 0. 
+ $$
+因此在\eqref{eq::rubinrandomization}条件下，必然有
+\begin{equation}
+\label{eq::no-selection-bias-all-equal}
+ \tau = \tau_\textsc{T} = \tau_\textsc{C} = \tau_\textsc{PF}.
+\end{equation}
+可见随机化的根本意义在于平衡处理组与对照组的潜在结果分布，这比单纯平衡观测协变量分布更具重要意义。 
+ 
+
+若无随机化机制，选择偏差可能极大——尤其在结果变量无界时更为明显。这恰恰揭示了观察性研究因果推断的核心困难。 
+
+
+\section{因果效应非参数识别的充分条件} 
+ 
+ 
+ 
+\subsection{识别条件}\label{sec::identification-ignorability}
+ 
+ 
+ 观察性研究的因果推断依赖较强假设，因而颇具挑战。一种策略是利用处理前协变量，假定给定观测协变量$X$后，选择偏差项为零，即
+\begin{eqnarray}
+\label{eq::meanind0} E\{   Y(0)  \mid Z = 1, X \} &=& E\{   Y(0)  \mid Z = 0, X \}  ,\\
+\label{eq::meanind1} E\{   Y(1)  \mid Z = 1 , X\} &=& E\{   Y(1)  \mid Z = 0, X \}   . 
+\end{eqnarray}
+假设\eqref{eq::meanind0}与\eqref{eq::meanind1}表示，处理组和对照组潜在结果均值的差异完全来自观测协变量的差异。因此，协变量取值相同时，两组潜在结果的均值相同。数学上，\eqref{eq::meanind0}和\eqref{eq::meanind1}保证\eqref{eq::no-selection-bias-all-equal}中几类效应的条件版本相等：
+$$
+ \tau(X) = \tau_\textsc{T}(X) =  \tau_\textsc{C}(X) = \tau_\textsc{PF}(X),
+ $$
+其中
+\begin{eqnarray*}
+ \tau(X)  &=& E\{ Y(1) - Y(0) \mid X  \}, \\
+ \tau_\textsc{T}(X) &=&  E\{ Y(1) - Y(0) \mid Z=1,  X  \},\\
+  \tau_\textsc{C}(X) &=& E\{ Y(1) - Y(0) \mid Z=0,  X  \},\\
+   \tau_\textsc{PF}(X) &=& E(Y\mid Z=1, X) - E(Y\mid Z=0, X).
+\end{eqnarray*}
+特别地，$ \tau(X) $通常称为{\it 条件平均因果效应}（CATE）。 
+
+
+
+本章的关键结论是：在\eqref{eq::meanind0}与\eqref{eq::meanind1}下，平均因果效应$\tau$是{\it 非参数可识别的}。经典统计学较少强调非参数识别，但它是观察性研究因果推断的核心。先给出一个抽象定义。 
+
+\begin{definition}[识别性]
+\label{def::nonparametric-identification}
+若在一定模型假设下，参数$\theta$可写成观测数据分布的函数，就称其可识别。若不施加任何参数模型假设，参数$\theta$仍可写成观测数据分布的函数，就称其非参数可识别。 
+\end{definition}
+
+
+
+定义\ref{def::nonparametric-identification}目前较抽象，后续会用具体例子说明。经典统计问题常忽略这一点：例如，若有$Y_i$的独立同分布样本，均值$\theta = E(Y)$就非参数可识别；若有成对数据$(X_i, Y_i)$的独立同分布样本，Pearson 相关系数$\theta = \rho_{YX}$也非参数可识别。在这些例子中，识别自动成立。但定义\ref{def::nonparametric-identification}在观察性研究的因果推断中至关重要：目标参数$\tau = E\{ Y(1)  - Y(0)\}$涉及不可观测随机变量，能否由观测数据非参数识别并不显然。在假设\eqref{eq::meanind0}与\eqref{eq::meanind1}下可以，具体如下。 
+
+
+ $   \tau_\textsc{PF}(X)$只依赖可观测量，故按定义非参数可识别。\eqref{eq::meanind0}与\eqref{eq::meanind1}又保证三个因果效应等于$   \tau_\textsc{PF}(X)$，所以$\tau(X) $、$\tau_\textsc{T}(X) $、$  \tau_\textsc{C}(X)$均非参数可识别。根据全期望公式，在\eqref{eq::meanind0}与\eqref{eq::meanind1}下，无条件版本也非参数可识别：
+$$
+ \tau = E\{ \tau(X)\},\quad
+ \tau_\textsc{T} = E\{  \tau_\textsc{T}(X) \mid Z=1  \}, \quad
+   \tau_\textsc{C} = E\{   \tau_\textsc{C}(X) \mid Z=0 \}.
+ $$
+以下除另有说明外，只关注$\tau$（第\ref{chapter::ATT-and-other}章例外）。下面的定理概括$\tau$的识别公式。 
+ 
+\begin{theorem}
+\label{thm::identification-formula}
+在\eqref{eq::meanind0}与\eqref{eq::meanind1}条件下，平均因果效应$\tau$可如下识别：
+ \begin{eqnarray} 
+ \tau &=& E\{ \tau(X)\} \\
+ &=& E\{  E(Y\mid Z=1, X) - E(Y\mid Z=0, X) \} \label{eq::nonparametric-identification-tau} \\
+ &=&  \int \{  E(Y\mid Z=1, X=x) - E(Y\mid Z=0, X=x)\} f(x) \diff x.
+ \end{eqnarray}
+\end{theorem} 
+ 
+ 
+ 公式\eqref{eq::nonparametric-identification-tau}由\citet{rosenbaum1983central}正式建立，Robins 也称其为 g 公式\citep[see][]{hernan2020causal}。
+ 
+ 
+ 协变量离散时，定理\ref{thm::identification-formula}的识别公式可写为
+\begin{eqnarray}
+ \tau  &=&  \sum_x  E(Y\mid Z=1, X=x)  \pr(X=x)  \nonumber \\
+ &&  - \sum_x E(Y\mid Z=0, X=x) \pr(X=x), \label{eq::nonparametric-identification-tau-discrete}
+\end{eqnarray}
+由全概率公式，简单均值差可写为
+\begin{eqnarray}  
+ \tau_\textsc{PF} &=& \sum_x   E(Y\mid Z=1, X=x) \pr(X=x\mid Z=1) \nonumber  \\
+ &&- \sum_x   E(Y\mid Z=0, X=x) \pr(X=x\mid Z=0)  \label{eq::difference-in-means-discrete-x}
+  \end{eqnarray}
+比较\eqref{eq::nonparametric-identification-tau-discrete}和\eqref{eq::difference-in-means-discrete-x}可见，两者都比较条件期望$ E(Y\mid Z=1, X=x) $与$ E(Y\mid Z=0, X=x)$，但平均所用的协变量分布不同。因果参数$\tau$按同一个协变量分布平均，而均值差$ \tau_\textsc{PF} $分别按处理组与对照组各自的协变量分布平均。 
+ 
+ 
+ 
+ 实际研究中常引入更强假设：
+ 
+ \begin{assumption}[可忽略性]
+ \label{assume:weak-ignorability} 
+ 满足
+\begin{eqnarray}
+ Y(z) \ind Z \mid X \quad (z=0,1) .
+ \label{eq::ignorability}
+\end{eqnarray}
+ \end{assumption}
+ 
+ 
+假设 \ref{assume:weak-ignorability} 有多种名称：
+\begin{enumerate}
+\item
+{\it 可忽略性}，这一名称来自\citet{rubin1978bayesian}；\footnote{仅根据本书的讨论，这个名称的由来并不明显。它实际上源于因果推断的贝叶斯视角，这超出本书范围。}
+
+\item
+流行病学界通称{\it 无混杂性}；
+
+\item
+社会科学家多称之为{\it 基于可观测变量的无选择性}；
+
+\item
+{\it 条件独立性}，直接描述假设中的记号$\ind$。
+\end{enumerate}
+
+
+有时还需引入更强假设：
+
+\begin{assumption}[强可忽略性]
+\label{assume:strong-ignorability}
+满足
+\begin{eqnarray}
+ \{  Y(1), Y(0)  \} \ind Z \mid X .
+  \label{eq::strong-ignorability}
+\end{eqnarray}
+\end{assumption}
+
+
+假设\ref{assume:strong-ignorability}称为{\it 强可忽略性}\citep{rubin1978bayesian, rosenbaum1983central}。若只关心$\tau$，采用更强的假设\ref{assume:weak-ignorability}与\ref{assume:strong-ignorability}，主要是借助条件独立记号$\ind$简化表述，识别$\tau$并不需要如此强的条件。但若关注分布、分位数或结果变换等其他尺度的因果效应，一般需要更强的分布层面条件。{\it 强可忽略性}要求给定协变量后，整个潜在结果向量与处理独立；{\it 可忽略性}则只要求每个潜在结果分别与处理独立。前者更强，但差异主要是技术性和理论性的，见习题\ref{hw::ignorability-difference}。在多数合理的统计模型中，两者同时成立，见下面第\ref{sec::plausibility-ignorability}节。本书不作特别区分，统一称为{\it 可忽略性}。 
+ 
+ 
+ 
+ 
+ 
+ \subsection{可忽略性假设的合理性} \label{sec::plausibility-ignorability}
+
+
+
+观察性研究因果推断的一个根本问题，是可忽略性假设是否合理。第\ref{sec::identification-ignorability}节可能显得过于数学化：可忽略性只是平均因果效应非参数识别的充分条件。它的科学含义是什么？直观上，它排除了同时影响处理和结果的未测量协变量。这些“共同原因”称为混杂变量，因此可忽略性也称无混杂性。用数据生成过程可以看得更清楚：若
+\begin{eqnarray*}
+Y(1) &=& g_1(X, V_1),\\
+Y(0) &=& g_0(X, V_0), \\
+Z &=& 1\{ g(X,V)  \geq 0 \}
+\end{eqnarray*}
+且$(V_1, V_0)\ind V$，则假设\ref{assume:weak-ignorability}与\ref{assume:strong-ignorability}都成立。此时处理与结果的共同原因$X$全部被观测，剩余随机成分独立。若生成过程改为
+\begin{eqnarray*}
+Y(1) &=& g_1(X, U, V_1),\\
+Y(0) &=& g_0(X, U, V_0), \\
+Z &=& 1\{ g(X, U, V)  \geq 0 \}
+\end{eqnarray*}
+且$(V_1, V_0)\ind V$，假设\ref{assume:weak-ignorability}与\ref{assume:strong-ignorability}一般不成立。未观测共同原因$U$使处理与潜在结果即使给定$X$后仍有关联。若没有$U$，只根据$(Z,X,Y)$分析，最终估计量一般对因果参数有偏。这在计量经济学中称为{\it 遗漏变量偏差}，见后文习题\ref{hw::cochran+ovb}。 
+
+
+
+若观测到丰富的协变量$X$，涵盖同时影响处理和结果的因素，可忽略性可能合理。第\ref{part::observational-studies}部分从这一假设出发讨论识别与估计。但它根本上不可检验：可根据科学背景加以论证，却通常不能确信它是否成立。第\ref{part::challenges-os}和\ref{part::instrumentalvariables}部分将讨论可忽略性不可信时的其他策略。 
+
+
+
+
+\section{两种简单估计方法及其局限性}
+
+
+\subsection{基于离散协变量的分层法}
+
+若协变量$X_i \in \{1, \ldots, K \}$离散，可忽略性\eqref{eq::ignorability}写为
+$$
+ Y(z) \ind Z \mid X = k \quad (z=0,1; k=1,\ldots, K),
+ $$
+这实质上将观察性研究视为第\ref{chapter::bridging}章超总体框架下的分层随机实验。因此，可采用估计量
+$$
+\hat{\tau} = \sum_{k=1}^K \pi_{[k]} \left\{   \hat{\bar{Y}}_{[k]}(1) - \hat{\bar{Y}}_{[k]}(0)   \right\},
+$$
+它与第\ref{chapter::stratification-poststratification}章讨论的分层或后分层估计量相同。 
+
+
+这种方法至今广泛应用。例\ref{eg::nhanes2005-2006}包含离散协变量，分析留作习题\ref{hw::stratification-example-rosenbaum}。但实现存在明显困难：第一，$K$较小时效果良好；$K$较大时，许多层可能满足$n_{[k]1}  = 0$或$n_{[k]0} = 0$，使其$\hat{\tau}_{[k]}$无法良好定义。这涉及后文第\ref{chapter::overlap}章的重叠性问题。第二，对多维连续或混合协变量$X$，如何分层并不显然。常见做法是先根据原协变量划分层，再分析，但这可能给分析带来任意性。 
+
+
+\subsection{结果回归法}\label{sec::outcome-regression}
+
+
+最常见的结果回归方法，是将观测结果对处理指标和协变量作加性 OLS 回归，假定
+$$
+E(Y\mid Z, X) = \beta_0 + \beta_z Z  + \beta_x \tran X .
+$$
+若该线性模型正确，
+\begin{eqnarray*}
+\tau(X) &=&  E(Y\mid Z=1, X) - E(Y\mid Z=0, X) \\
+&=& (\beta_0 + \beta_z   + \beta_x\tran  X ) - ( \beta_0    + \beta_x\tran  X )  \\
+&=& \beta_z,
+\end{eqnarray*}
+即因果效应不随协变量变化。结合可忽略性，
+$$
+\tau = E\{ \tau(X)  \} = \beta_z.
+$$
+因此，在可忽略性成立且结果模型线性时，平均因果效应等于$Z$的系数。这是线性模型最重要的应用之一。但$Z$系数的因果解释依赖两个强假设：可忽略性和线性模型。 
+ 
+ 
+ 
+第\ref{chapter:rerandomization-regression}章已指出，即使在完全随机实验中，上述方法也未必最优，因为忽略了协变量带来的效应异质性。若假定
+$$
+E(Y\mid Z, X) = \beta_0 + \beta_z Z  + \beta_x\tran  X  + \beta_{zx}\tran  X Z,
+$$
+则
+\begin{eqnarray*}
+\tau(X) &=& 
+E(Y\mid Z=1, X) - E(Y\mid Z=0, X)  \\
+&=& (\beta_0 + \beta_z   + \beta_x\tran  X +\beta_{zx}\tran  X ) - ( \beta_0    + \beta_x\tran  X ) \\
+&=& \beta_z+  \beta_{zx}\tran  X,
+\end{eqnarray*}
+结合可忽略性，
+$$
+\tau = E\{ \tau(X)  \} =E(\beta_z+  \beta_{zx}\tran  X) = \beta_z + \beta_{zx}\tran E(X). 
+$$
+因此，$\tau$的估计量为$ \hat{\beta}_z + \hat{\beta}_{zx}\tran  \bar{X}$，其中$\hat{\beta}_z$是$Z$的回归系数，$\bar{X}$是$X$的样本均值。若先中心化协变量，使$\bar{X}=0$，估计量就只是$Z$的回归系数。通常一开始就作中心化以简化操作；也可回顾第\ref{chapter:rerandomization-regression}章介绍的\citet{lin2013}估计量。\citet{rosenbaum1983central}与\citet{hirano2001estimation}讨论了这一估计量。 
+
+
+
+也可用更复杂的模型估计因果效应。例如，分别根据处理组与对照组建立预测器$\hat{\mu}_1(X)$和$\hat{\mu}_0(X)$，得到条件平均因果效应估计
+$$
+\hat\tau(X) = \hat{\mu}_1(X) - \hat{\mu}_0(X)
+$$
+及平均因果效应估计
+$$
+\hat{\tau}^{\text{reg}} = n^{-1} \sumn \{ \hat{\mu}_1(X_i) - \hat{\mu}_0(X_i) \}  . 
+$$
+上述$\hat{\tau} $与第\ref{chapter:rerandomization-regression}章的投影型估计量形式相同，有时称为{\it 结果回归}估计量。前面的 OLS 估计都是特例。可用非参数自助法估计标准误，见第\ref{sec::bootstrap}节。 
+
+
+二元结果情形示例： 
+
+ \begin{example}
+ [二元结果的结果回归估计]\label{eg::reg-binary}
+ 对于二元结果，可用逻辑模型描述$Y$：
+$$
+E(Y\mid Z, X) = \pr(Y =1\mid Z, X) = \frac{   e^{\beta_0 + \beta_z Z + \beta_x \tran X}  }
+{ 1+ e^{\beta_0 + \beta_z Z + \beta_x \tran X} } ,
+$$
+根据系数估计$ \hat \beta_0, \hat \beta_z, \hat{\beta}_x $，平均因果效应的估计量为
+$$
+\hat{\tau} = n^{-1} \sumn \left\{  
+\frac{   e^{\hat\beta_0 +\hat \beta_z + \hat\beta_x \tran X_i}  }
+{ 1+ e^{\hat\beta_0 +\hat \beta_z  + \hat\beta_x \tran X_i} }  
+- \frac{   e^{\hat\beta_0 + \hat\beta_x \tran X_i}  }
+{ 1+ e^{\hat\beta_0   + \hat\beta_x \tran X_i} } 
+\right \}  . 
+$$
+它并非简单地取逻辑模型的处理系数。\footnote{模型正确时，$\hat\beta_z$估计给定协变量后的条件对数优势比，并不等于$\tau$。\citet{freedman2008randomization}曾提醒不要在完全随机实验中直接用逻辑回归系数估计$\tau$。逻辑回归的更多细节见第\ref{appendix::basic-linear-regression}章。}该估计量是全部系数及协变量经验分布的非线性函数。计量经济学称其为逻辑模型中处理的“平均偏效应”或“平均边际效应”，许多软件可同时报告估计及标准误。也可类似地推导完全交互逻辑模型下的估计量，见习题\ref{hw::outcome-two-logit}。 
+ \end{example}
+
+
+
+
+
+ 
+
+上述结果条件均值预测器也可以采用机器学习工具。\citet{hill2011bayesian}倡导用树方法估计$\tau$，\citet{wager2018estimation}提出也用其估计$\tau(X) $。\citet{wager2018estimation}还将树方法与下一章的{\it 倾向得分}结合。此后，机器学习与因果推断的交叉成为活跃研究领域\citep[e.g.,][]{hahn2020bayesian, kunzel2019metalearners}。 
+
+
+结果回归方法的最大问题，是对结果模型设定敏感，习题\ref{hw::lalonde-obs-reg}给出了例子。受到实证研究与发表激励的影响，研究者可能搜索大量模型后，只报告合意的因果效应估计，却不披露模型搜索过程。这是因果推断中$p$值操纵的重要来源，习题\ref{hw::lalonde-obs-reg}已暗示这一问题。\citet{leamer1978specification}批评了实证研究中的此类做法。  
+
+ 
+
+
+\section{作业习题}
+
+
+\paragraph{简单恒等式}\label{hw::simple-identity-taus}
+
+证明：$\tau = \pr(Z=1) \tau_\textsc{T} + \pr(Z=0)\tau_\textsc{C}$。 
+
+
+\paragraph{其他因果效应的非参数可识别性}\label{hw::nonparametric-identification-dce-qce}
+
+基于可忽略性假设证明：
+\begin{enumerate}
+\item
+ 分布因果效应
+$$
+\textsc{DCE}_y = \pr\{  Y(1) > y  \} - \pr\{ Y(0) > y \} 
+$$
+对任意$y$均非参数可识别；
+\item
+分位数因果效应
+$$
+\textsc{QCE}_q = \text{quantile}_q\{ Y(1) \} - \text{quantile}_q\{ Y(0) \},
+$$
+对所有$q$均非参数可识别，其中$\text{quantile}_q\{ \cdot \} $表示随机变量的第$q$分位数。 
+\end{enumerate}
+
+
+
+注：在概率论中，$\pr\{  Y(z) \leq y \}$是潜在结果$Y(z)$的累积分布函数，$\pr\{  Y(z) > y \}$是其生存函数。分布因果效应比较处理与对照潜在结果的生存函数。 
+ 
+分位数因果效应比较潜在结果的边际分位数，不同于个体因果效应的分位数
+$$
+\tau_q =  \text{quantile}_q\{ Y(1)  - Y(0)\} .
+$$
+事实上，$\tau_q$不可识别，因为边际分布$\pr\{  Y(1) \leq  y  \} $与$ \pr\{ Y(0) \leq  y \} $不能唯一确定$\tau_q$。 
+
+
+\paragraph{完全交互效应模型下的结果插补估计}\label{hw::outcome-two-logit}
+
+本题推广例 \ref{eg::reg-binary}。 
+
+假定二元结果服从逻辑模型
+$$
+E(Y\mid Z, X) = \pr(Y =1\mid Z, X) = \frac{   e^{\beta_0 + \beta_z Z + \beta_x \tran X + \beta_{xz}  \tran X Z }  }
+{ 1+ e^{\beta_0 + \beta_z Z + \beta_x \tran X + \beta_{xz}  \tran X Z} } .
+$$
+对应的平均因果效应结果回归估计量是什么？
+
+\paragraph{数据分析：分层法与回归法}\label{hw::stratification-example-rosenbaum}
+
+使用\ri{senstrat}包的\ri{homocyst}数据集。结果\ri{homocysteine}为同型半胱氨酸水平，处理为\ri{z}，其中$z=1$表示每日吸烟者，$z=0$表示从不吸烟者。协变量为\ri{female, age3, ed3, bmi3, pov2}，包内有详细说明。\ri{st}是层指标，由离散协变量的全部组合定义。
+
+
+\begin{enumerate}
+[(1)]
+\item
+统计无实验组或对照组个体的分层数量及其占比。剔除此类分层后估计平均因果效应，报告点估计值、方差及95\% 平均因果效应的置信区间。
+
+\item
+将结果对处理指标和协变量作不含交互项的 OLS 回归，报告处理系数及稳健标准误。
+
+对结果变量执行无交互项的OLS回归，报告处理系数及其稳健标准误。剔除极端分层后重复分析并对比结果。 
+
+
+\item
+应用\citet{lin2013}提出的估计器，报告处理系数及稳健标准误。若保留极端分层则结果如何？
+
+若不删除只有处理单位或只有对照单位的层，会发生什么？
+
+
+\item
+综合比较三种方法的结果，哪种更可信？
+
+\end{enumerate} 
+
+
+
+\paragraph{可忽略性与强可忽略性}\label{hw::ignorability-difference}
+
+
+举一个可忽略性成立、强可忽略性却不成立的例子。 
+
+
+注：这与一个经典概率问题有关：寻找三个随机变量$A,B,C$，使
+$$
+A\ind C \text{ and } B\ind C \text{ but } (A,B) \nind C.
+$$
+
+
+\paragraph{推荐阅读}
+
+
+\citet{cochran1965planning}是观察性研究的经典文献，包含许多有用见解，但未使用形式化潜在结果框架。Dylan Small 于 2015 年创办{\it《Observational Studies》}期刊\citep{small2015introduction}，并将 W. G. Cochran 的旧文《Observational Studies》重新刊为\citet{cochran2015}。多位学者也对\citet{cochran2015}作了富有见地的评论。 
+

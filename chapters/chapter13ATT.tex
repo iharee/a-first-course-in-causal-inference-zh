@@ -1,0 +1,557 @@
+
+\chapter{处理组单元的平均因果效应及其他估计量}
+ \label{chapter::ATT-and-other}
+
+第\ref{chapter::observational-studies}章至第\ref{chapter::doubly-robust}章主要讨论了在可忽略性假设与重叠性假设下，平均因果效应$\tau = E\{  Y(1) - Y(0) \}$的识别与估计。从概念上讲，将讨论范围扩展至处理组与对照组单元的平均因果效应是顺理成章的：
+\begin{eqnarray*}
+\tau_\textsc{T}  &=&  E\{  Y(1) - Y(0) \mid Z=1 \} ,  \\
+\tau_\textsc{C}  &=&  E\{  Y(1) - Y(0) \mid Z=0 \} . 
+\end{eqnarray*}
+若$\tau_\textsc{T}$与$\tau_\textsc{C}$均不等于$\tau$，则说明处理组与对照组间的平均因果效应存在异质性。究竟应当估计$\tau_\textsc{T}$、$\tau_\textsc{C}$还是$\tau$，则需视具体研究问题而定。 
+
+
+由于二者具有对称性，本章重点探讨$\tau_\textsc{T} $。第\ref{sec::other-estmand-overlap}章还会探讨其他估计量的相关问题。 
+
+
+
+\section{$\tau_\textsc{T} $的非参数识别}
+
+
+处理组单元的平均因果效应可表示为
+$$
+\tau_\textsc{T} = E(Y\mid Z=1) -  E\{    Y(0) \mid Z=1 \},
+$$
+其中第一项$E(Y\mid Z=1) $可直接由数据识别；第二项$E\{    Y(0) \mid Z=1 \}$则为反事实值。识别该项的经典假设即为前述的可忽略性与重叠性假设。
+
+
+
+\begin{assumption}
+\label{assume::ignorability-y0}
+$Z\ind Y(0) \mid X$且$e(X) < 1$。 
+\end{assumption}
+
+由于识别的关键在于确定$E\{    Y(0) \mid Z=1 \}$，因此仅需“单边”的可忽略性与重叠性假设即可。在假设\ref{assume::ignorability-y0}下，可得到关于$\tau_\textsc{T} $的如下识别结果： 
+
+
+\begin{theorem}
+\label{thm::identification-ATT}
+在假设\ref{assume::ignorability-y0}成立时，有
+\begin{eqnarray*}
+ E\{    Y(0) \mid Z=1 \}  &=& E\left\{  E(    Y \mid Z=0 , X) \mid  Z=1  \right\} \\
+ &=&  \int  E(    Y \mid Z=0 , X=x) f(  x \mid Z=1) \diff x .
+\end{eqnarray*}
+\end{theorem}
+
+
+依据定理\ref{thm::identification-ATT}，反事实均值$ E\{    Y(0) \mid Z=1 \}  $等同于在给定处理组协变量分布的条件下，对照组观测结果的条件均值。这意味着$\tau_\textsc{T} $可通过下式实现非参数识别：
+\begin{equation}
+\tau_\textsc{T}  = E(Y\mid Z=1) -E\left\{  E(    Y \mid Z=0 , X) \mid  Z=1  \right\}  \label{eq::att-identification} 
+\end{equation}
+
+\begin{myproof}{定理}{\ref{thm::identification-ATT}}有
+\begin{eqnarray*}
+ E\{    Y(0) \mid Z=1 \} &=&  E\big[   E\{    Y(0) \mid Z=1 , X\} \mid  Z=1  \big] \\
+ &=& E\big[   E\{    Y(0) \mid Z=0 , X\} \mid  Z=1  \big] \\
+ &=& E\left\{  E(    Y \mid Z=0 , X) \mid  Z=1  \right\} \\
+ &=& \int  E(    Y \mid Z=0 , X=x) f(  x \mid Z=1)  \diff x.
+\end{eqnarray*}
+\end{myproof}
+
+
+若$X$离散，定理\ref{thm::identification-ATT}的识别公式简化为
+$$
+ E\{    Y(0) \mid Z=1 \}  = \sum_{k=1}^K E(    Y \mid Z=0 , X=k) \pr(X=k \mid  Z=1  ),
+$$
+%
+%Under Assumption \ref{assume::ignorability-y0}, we have 
+%\begin{eqnarray*}
+% E\{    Y(0) \mid Z=1 \} &=&  E\big[   E\{    Y(0) \mid Z=1 , X\} \mid  Z=1  \big] \\
+% &=& E\big[   E\{    Y(0) \mid Z=0 , X\} \mid  Z=1  \big] \\
+% &=& E\left\{  E(    Y \mid Z=0 , X) \mid  Z=1  \right\} ,
+%\end{eqnarray*}
+%therefore, we can identify $\tau_\textsc{T}$ by
+%\begin{eqnarray} 
+%\tau_\textsc{T}  &=& E(Y\mid Z=1) -E\left\{  E(    Y \mid Z=0 , X) \mid  Z=1  \right\}  \label{eq::att-identification}  \\
+%&=& E(Y\mid Z=1) - \sum_{k=1}^K E(    Y \mid Z=0 , X=k) \pr(X=k \mid  Z=1  )  \nonumber \\
+%&=& E(Y\mid Z=1) - \int  E(    Y \mid Z=0 , X=x) F( \text{d} x \mid Z=1),  \nonumber 
+%\end{eqnarray} 
+%where $F( x \mid Z=1)$ is the distribution function of the covariates among treated units. 
+%For discrete $X$, we can use
+由此得到$\tau_\textsc{T} $的分层估计量：
+$$
+\hat{\tau}_\textsc{T} =   \hat{\bar{Y}}(1) - \sum_{k=1}^K \hat{\pi}_{[k]\mid 1} \hat{\bar{Y}}_{[k]}(0),
+$$
+其中$\hat{\pi}_{[k]\mid 1} = n_{[k]1}/n_1$是处理单位中协变量$X$属于第$k$类的比例。 
+
+
+对于连续型$X$，则需借助对照组数据拟合$E(Y\mid Z=0, X)$的模型。若拟合所得处理组潜在结果为$\hat{\mu}_0(X_i)$，则相应估计量为
+$$
+\hat{\tau}_\textsc{T}^\text{reg} =  \hat{\bar{Y}}(1) - n_1^{-1} \sumn Z_i \hat{\mu}_0(X_i) = n_1^{-1} \sumn Z_i  \{  Y_i - \hat{\mu}_0(X_i)  \}. 
+$$
+
+
+\begin{example}\label{eg::att-regression1}
+若为所有单元设定如下线性模型
+$$
+E(Y\mid Z, X) = \beta_0  + \beta_z  Z + \beta_x\tran X,
+$$
+则
+\begin{eqnarray*}
+\tau_\textsc{T} &=& E\{   E(Y\mid Z=1, X)  -  E(    Y \mid Z=0 , X)  \mid Z=1\} \\
+&=&  \beta_z.
+\end{eqnarray*}
+借助OLS估计出$( \hat{\beta}_0, \hat{\beta}_z,  \hat{\beta}_x )$后，即可用$\hat{\beta}_z$作为$\tau_\textsc{T} $的估计值。 
+% The estimator is
+%$$
+%\hat{\tau}_\textsc{T} = \hat{\bar{Y}}(1) - \hat{\beta}_0 -  \hat{\beta}_x \tran \hat{\bar{X}}(1).
+%$$
+%Using the property of the OLS (see Section \ref{eq::OLS-mean-data}), we have
+%$$
+%\sumn Z_i(   Y_i - \hat{\beta}_0 -  \hat{\beta}_z Z_i -   \hat{\beta}_x\tran X_i  ) = 0
+%\Longrightarrow   
+%\hat{\bar{Y}}(1)  -  \hat{\beta}_0 - \hat{\beta}_z -   \hat{\beta}_x\tran \hat{\bar{X}}(1) =0 .
+%$$
+%%which implies that $  \hat{\bar{Y}}(1)  -  \hat{\beta}_0 - \hat{\beta}_z -   \hat{\beta}_x\tran \hat{\bar{X}}(1) =0$. 
+%Therefore, the above estimator reduces to $\hat{\tau}_\textsc{T}  = \hat{\beta}_z$, the OLS coefficient of $Z$. 
+%
+%
+%By the property of the OLS, we can also write $\hat{\beta}_z$ as the difference in means of the adjusted outcome $Y_i -  \hat{\beta}_x\tran X_i $, resulting in
+%\begin{eqnarray}
+%\hat{\tau}_\textsc{T}  
+%&=&  \left\{  \hat{\bar{Y}}(1) - \hat{\beta}_x\tran \hat{\bar{X}}(1)  \right\} 
+%-    \left\{  \hat{\bar{Y}}(0)   -  \hat{\beta}_x\tran \hat{\bar{X}}(0)   \right\}  \nonumber   \\
+%&=& \left\{  \hat{\bar{Y}}(1) - \hat{\bar{Y}}(0) \right\} 
+%-  \hat{\beta}_x\tran  \left\{  \hat{\bar{X}}(1) -  \hat{\bar{X}}(0) \right\}. \label{eq::ATT--regression1}
+%\end{eqnarray}
+%Therefore, $\hat{\tau}_\textsc{T}  $ equals the simple difference in means of the outcome, adjusted by the imbalance of the covariates in the treatment and control groups. 
+第\ref{sec::outcome-regression}节指出，$\hat{\beta}_z$可以估计$\tau$；本例进一步说明，$\hat{\beta}_z$也可以估计$\tau_\textsc{T}$。这并不奇怪，因为该线性模型假定各单位的因果效应恒定。 
+\end{example}
+
+
+\begin{example}\label{eg::att-regression2}
+识别公式只依赖$E(Y\mid Z=0, X)$，因此只需对对照单位建立模型。若为线性模型，
+$$
+E(Y\mid Z=0, X) =\beta_{0\mid 0}   + \beta_{x\mid 0} \tran X,
+$$
+则
+\begin{eqnarray*}
+\tau_\textsc{T} &=& E(Y\mid Z=1) - E(   \beta_{0\mid 0}   + \beta_{x\mid 0} \tran X  \mid Z=1 ) \\
+&=& E(Y\mid Z=1) -   \beta_{0\mid 0}    -  \beta_{x\mid 0}   \tran E(X\mid Z=1). 
+\end{eqnarray*}
+仅用对照单位进行 OLS，得到$( \hat{\beta}_{0\mid 0} ,  \hat{\beta}_{x\mid 0})$后，估计量为
+$$
+\hat{\tau}_\textsc{T} = \hat{\bar{Y}}(1) -\hat{\beta}_{0\mid 0}  - \hat{\beta}_{x\mid 0}  \tran \hat{\bar{X}}(1).
+$$
+利用 OLS 性质（见\ref{eq::OLS-mean-data}），有
+$$
+\hat{\bar{Y}}(0) = \hat{\beta}_{0\mid 0} + \hat{\beta}_{x\mid 0}  \tran \hat{\bar{X}}(0).
+$$
+故估计量简化为
+$$
+\hat{\tau}_\textsc{T} = \left\{  \hat{\bar{Y}}(1) - \hat{\bar{Y}}(0) \right\} - \hat{\beta}_{x\mid 0}  \tran \left\{  \hat{\bar{X}}(1) -  \hat{\bar{X}}(0) \right\}, 
+$$
+这与例\ref{eg::att-regression1}的回归调整类似，只是协变量均值差的系数不同。 
+
+可用代数证明：将协变量按$ X_i  - \hat{\bar{X}}(1)$中心化后，上述估计量等于将结果对处理、协变量及其交互项作 OLS 回归得到的$Z$系数，详见习题\ref{para::regression-att-algebra}。  
+\end{example}
+
+
+
+
+\section{逆倾向得分加权与$\tau_\textsc{T} $的双重稳健估计}
+
+
+\begin{theorem}
+\label{thm::ipw-att}
+在假设\ref{assume::ignorability-y0}成立时，有
+\begin{eqnarray}
+E\{ Y(0) \mid Z=1 \} = E\left\{         \frac{e(X)}{e}  \frac{1-Z}{1-e(X)} Y \right\}
+\label{eq::ipw-att}
+\end{eqnarray}
+进而可得
+\begin{eqnarray}\label{eq::att-ipw-formula}
+\tau_\textsc{T} = E(Y\mid Z=1) -  E\left\{         \frac{e(X)}{e}  \frac{1-Z}{1-e(X)} Y \right\} ,
+\end{eqnarray}
+其中$e = \pr(Z=1)$为处理效应的边际概率。 
+\end{theorem}
+
+
+\begin{myproof}{定理}{\ref{thm::ipw-att}}\eqref{eq::ipw-att}左边等于
+\begin{eqnarray*}
+E\{ Y(0) \mid Z=1 \} &=& E\{ ZY(0)   \} /e \\
+&=& E\big[  E( Z \mid X) E\{ Y(0) \mid X  \} \big] /e \\
+&=&E\big[ e(X)  E\{ Y(0) \mid X  \} \big] /e . 
+\end{eqnarray*}
+\eqref{eq::ipw-att}右边等于
+\begin{eqnarray*}
+E\left\{         \frac{e(X)}{e}  \frac{1-Z}{1-e(X)} Y \right\} 
+&=& E\left[  E\left\{         \frac{e(X)}{e}  \frac{1-Z}{1-e(X)} Y(0) \mid X \right\}  \right]\\
+&=& E\left[   \frac{e(X)}{e \{1-e(X)\} }   E\left\{       (1-Z)Y(0) \mid X \right\}  \right]\\
+&=& E\left[   \frac{e(X)}{e \{1-e(X)\} }   E(      1-Z\mid X )   E\left\{       Y(0) \mid X \right\}  \right]\\
+&=& E\big[ e(X)  E\{ Y(0) \mid X  \} \big] /e .  
+\end{eqnarray*}
+故\eqref{eq::ipw-att}成立。 
+\end{myproof}
+
+
+
+
+据此可构建两种IPW估计量：
+$$
+\hat{\tau}_\textsc{T}^\text{ht} =  \hat{\bar{Y}}(1) - n_1^{-1} \sumn \hat{o}(X_i) (1-Z_i) Y_i
+$$
+和
+$$
+\hat{\tau}_\textsc{T}^\text{hajek} = \hat{\bar{Y}}(1) 
+- \frac{  \sumn \hat{o}(X_i) (1-Z_i) Y_i }{ \sumn \hat{o}(X_i) (1-Z_i) } ,
+$$
+其中$\hat{o}(X_i) = \hat{e}(X_i) / \{ 1 - \hat{e}(X_i)  \} $为处理效应的拟合比值。 
+
+ 
+ 
+
+
+
+还可以结合倾向得分与结果模型，构造$E\{  Y(0)\mid Z=1\}$的双重稳健估计量。定义
+\begin{eqnarray}
+\label{eq::dr-att-mu0}
+\tilde{\mu}_{0\textsc{T}}^\textup{dr} = E\left[ o(X,\alpha)  (1-Z) \{ Y - \mu_0(X, \beta_0) \}     + Z  \mu_0(X, \beta_0) \right] /e, 
+\end{eqnarray}
+其中$o(X,\alpha)  = e(X,\alpha)/ \{ 1 - e(X,\alpha)\}.$。
+
+\begin{theorem}
+\label{thm::dr-att}
+在假设\ref{assume::ignorability-y0}下，只要$ e(X,\alpha) = e(X)$或$\mu_0(X, \beta_0)=\mu_0(X) $成立，就有$\mu_{0\textsc{T}}^\text{dr}  = E\{ Y(0) \mid Z=1 \}.$。
+\end{theorem}
+
+
+\begin{myproof}{定理}{\ref{thm::dr-att}}有以下分解
+\begin{eqnarray*}
+&&  e\left[  \tilde{\mu}_{0\textsc{T}}^\text{dr}  -  E\{ Y(0) \mid Z=1 \} \right] \\
+&=& E\left[ o(X,\alpha) ( 1-Z )  \{ Y(0) - \mu_0(X, \beta_0) \} + Z  \mu_0(X, \beta_0) \right] -  E\{ Z Y(0)   \} \\
+&=& E\left[ o(X,\alpha) ( 1-Z ) \{ Y(0) - \mu_0(X, \beta_0) \} - Z  \{ Y (0) - \mu_0(X, \beta_0) \} \right] \\
+&=& E\left[ \left\{ o(X,\alpha)  ( 1-Z  ) -Z\right\} \{ Y (0) - \mu_0(X, \beta_0) \}   \right] \\
+&=& E\left[    \frac{ e(X,\alpha) - Z  }{1-  e(X,\alpha)}   \{ Y (0) - \mu_0(X, \beta_0) \}   \right] \\
+&=& E\left[  E\left\{   \frac{ e(X,\alpha) - Z  }{1-  e(X,\alpha)}  \mid X \right\}  \times E  \{ Y (0) - \mu_0(X, \beta_0)  \mid X\}   \right] \\
+&=& E\left[   \frac{ e(X,\alpha) - e(X)  }{1-  e(X,\alpha)} \times    \{ \mu_0(X) - \mu_0(X, \beta_0)  \}   \right] .
+\end{eqnarray*}
+因此，只要$ e(X,\alpha) = e(X)$或$\mu_0(X, \beta_0)=\mu_0(X) $成立，便有$\tilde{\mu}_{0\textsc{T}}^\text{dr}  -  E\{ Y(0) \mid Z=1 \}  = 0$。 
+\end{myproof}
+
+
+由\eqref{eq::dr-att-mu0}中$\tilde{\mu}_{0\textsc{T}}^\text{dr}$的总体形式取样本对应式，即可构造$\tau_\textsc{T}$的双重稳健估计量。 
+
+\begin{definition}
+[$\tau_\textsc{T}$的双重稳健估计量]\label{def::dr-att}
+根据数据$(X_i, Z_i, Y_i)_{i=1}^n$，按以下步骤构造$\tau_\textsc{T}$的双重稳健估计量： 
+\begin{enumerate}
+[(1)]
+\item
+获得倾向得分拟合值$e(X_i, \hat{\alpha})$，再计算相应的优势拟合值$o(X_i, \hat{\alpha})  =  e(X_i, \hat{\alpha}) / (1- e(X_i, \hat{\alpha}))$； 
+\item
+获得对照状态下结果均值的拟合值$ \mu_0(X_i, \hat{\beta}_0) $； 
+\item
+构造双重稳健估计量$\hat{\tau}_\textsc{T}^\textup{dr} = \hat{\bar{Y}}(1) - \hat{\mu}_{0\textsc{T}}^\textup{dr}$，其中
+$$
+ \hat{\mu}_{0\textsc{T}}^\textup{dr}  
+ = \frac{1}{n_1} \sumn \left[ o(X_i,\hat{\alpha}) (1-Z_i)\{ Y_i-\mu_0(X_i, \hat{\beta}_0) \}      +Z_i \mu_0(X_i, \hat{\beta}_0)       \right].
+$$
+\end{enumerate}
+\end{definition}
+
+
+由定义\ref{def::dr-att}，可将$\hat{\tau}_\textsc{T}^\textup{dr}$改写为
+$$
+e(X_i, \hat{\alpha})
+= \hat{\tau}_\textsc{T}^\textup{reg}
+ - \frac{1}{n_1} \sumn  o(X_i,\hat{\alpha})  (1-Z_i)\{ Y_i-\mu_0(X_i, \hat{\beta}_0) \}    
+$$
+或
+$$
+e(X_i, \hat{\alpha})
+= \hat{\tau}_\textsc{T}^\textup{ht} 
+- \frac{1}{n_1} \sumn  \{ o(X_i,\hat{\alpha}) (1-Z_i) + Z_i  \} \mu_0(X_i, \hat{\beta}_0)  .
+$$
+与$\hat{\tau}^\textup{dr}  $类似，可从$(Z_i, X_i, Y_i)_{i=1}^n$重抽样，用自助法估计$\hat{\tau}_\textsc{T}^\textup{dr}  $的方差。关于$\tau_\textsc{T}$估计的文献包括\citet{hahn1998role}、\citet{mercatanti2014debit}、\citet{shinozaki2015brief}与\citet{yang2018asymptotic}。 
+
+
+
+\section{实例演示}
+\label{sec::dr-att-example}
+
+
+下面的\ri{R}函数实现了$\tau_\textsc{T}$的两种结果回归估计量、两种 IPW 估计量及双重稳健估计量。为避免倾向得分估计过于极端，还可对其设定上限。 
+
+\begin{lstlisting}
+ATT.est = function(z, y, x, out.family = gaussian, Utruncps = 1)
+{
+  ## sample size
+  nn  = length(z)
+  nn1 = sum(z)
+  
+  ## fitted propensity score
+  pscore   = glm(z ~ x, family = binomial)$fitted.values
+  pscore   = pmin(Utruncps, pscore)
+  odds     = pscore/(1 - pscore)
+  
+  ## fitted potential outcomes
+  outcome0 = glm(y ~ x, weights = (1 - z), 
+                 family = out.family)$fitted.values
+  
+  ## outcome regression estimator
+  ace.reg0 = lm(y ~ z + x)$coef[2]
+  ace.reg  = mean(y[z==1]) - mean(outcome0[z==1]) 
+  ## propensity score weighting estimator
+  ace.ipw0 = mean(y[z==1]) - 
+                mean(odds*(1 - z)*y)*nn/nn1
+  ace.ipw  = mean(y[z==1]) - 
+                mean(odds*(1 - z)*y)/mean(odds*(1 - z))
+  ## doubly robust estimator
+  res0     = y - outcome0
+  ace.dr   = ace.reg - mean(odds*(1 - z)*res0)*nn/nn1
+  
+  return(c(ace.reg0, ace.reg, ace.ipw0, ace.ipw, ace.dr))     
+}
+\end{lstlisting}
+
+下面的\ri{R}函数进一步实现自助法方差估计。 
+
+\begin{lstlisting}
+OS_ATT = function(z, y, x, n.boot = 10^2,
+                  out.family = gaussian, Utruncps = 1)
+{
+  point.est  = ATT.est(z, y, x, out.family, Utruncps)
+  
+  ## nonparametric bootstrap
+  n   = length(z)
+  x          = as.matrix(x)
+  boot.est   = replicate(n.boot, {
+    id.boot = sample(1:n, n, replace = TRUE)
+    ATT.est(z[id.boot], y[id.boot], x[id.boot, ], 
+            out.family, Utruncps)
+  })
+  
+  boot.se    = apply(boot.est, 1, sd)
+  
+  res        = rbind(point.est, boot.se)
+  rownames(res) = c("est", "se")
+  colnames(res) = c("reg0", "reg", "HT", "Hajek", "DR")
+  
+  return(res)
+}
+\end{lstlisting}
+
+ 
+现以例\ref{eg::chan-bmi-ATE}数据为例重新估计$\tau_\textsc{T}$。若不截断倾向得分值，得到：
+\begin{lstlisting}
+     reg0    reg     HT  Hajek     DR
+est 0.061 -0.351 -1.992 -0.351 -0.187
+se  0.227  0.258  0.705  0.328  0.287
+\end{lstlisting}
+若将估计值截断至0.9，则结果为：
+\begin{lstlisting}
+     reg0    reg     HT  Hajek     DR
+est 0.061 -0.351 -0.597 -0.192 -0.230
+se  0.223  0.255  0.579  0.302  0.276
+\end{lstlisting}
+这里将倾向得分估计的上限设为$0.9$。如预期，HT 估计量对截断敏感。例\ref{eg::att-regression1}的回归估计与其他估计相差较大，因为它施加了不必要的限制，要求处理组与对照组回归中$X$的系数相同。例\ref{eg::att-regression2}的回归估计则更接近 Hájek 与双重稳健估计。上述估计与第\ref{sec::ATE-application}节略有不同，说明$\tau_\textsc{T}$与$\tau$的差异体现了处理效应异质性。 
+
+
+
+\section{其他估计量}\label{sec::other-estmand-overlap}
+
+
+\citet{li2018balancing}统一讨论了观察性研究中的因果估计目标。他们从条件平均因果效应$\tau(X)$出发，提出一般估计目标族
+$$
+\tau^h =  \frac{  E\{ h(X) \tau(X)  \} }{ E\{ h(X)   \} }
+$$
+其由权重函数$h(X)$决定，要求$E\{ h(X)   \}  \neq 0$。分母作归一化，使恒定因果效应$\tau(X) = \tau$在加权平均后仍为$\tau$。 
+
+
+在可忽略性下，
+$$
+\tau^h =  \frac{  E[  h(X)   \{ \mu_1(X) - \mu_0(X) \}   ] }{ E\{ h(X)   \} }
+$$
+由此得到结果回归估计量
+$$
+\hat \tau^h =  \frac{   \sumn h(X_i)  \{ \hat{\mu}_1(X_i)   -  \hat{\mu}_0(X_i) \}  }{  \sumn h(X_i) } .
+$$
+此外，可证明$\tau^h$具有如下加权形式：
+
+\begin{theorem}\label{thm::weighted-estimand-li}
+在可忽略性与重叠性假设下，
+$$
+\tau^h = E\left\{ \frac{ZYh(X)}{ e(X)}  - \frac{(1-Z)Yh(X)}{1-e(X)}  \right\} / E\{ h(X)   \} .
+$$
+\end{theorem}
+
+定理\ref{thm::weighted-estimand-li}的证明类似于定理\ref{thm::pscore-weighting}和\ref{thm::ipw-att}，留作习题\ref{problem::general-estimand-li}。由定理\ref{thm::weighted-estimand-li}可构造$\tau^h$对应的 IPW 估计量。 
+
+
+根据定理\ref{thm::weighted-estimand-li}，每个单位既有估计目标定义带来的权重，也有倾向得分倒数带来的权重。最终，处理单位的权重为$h(X) / e(X)$，对照单位的权重为$h(X)/ \{  1-e(X) \}.$。\citet[][Table 1]{li2018balancing}概括了若干估计目标，下面列出其中一部分： 
+
+\begin{tabular}{cccc}
+\hline 
+ 总体 & $h(X)$ & 估计目标 & 权重 \\ \hline 
+合并 & $1$ & $\tau$ & $1/e(X)$与$1/\{  1-e(X) \} $  \\
+处理组 & $e(X)$ & $\tau_\textsc{T}$ & 1 与$ e(X)/\{  1-e(X) \}$ \\
+对照组 & $1-e(X)$ & $\tau_\textsc{C}$ & $\{  1-e(X) \} /e(X) $与 1\\
+重叠 & $e(X)\{  1-e(X) \} $ &$\tau_\textsc{O}$  &  $ 1-e(X)$与$e(X) $ \\
+\hline 
+\end{tabular}
+
+
+重叠总体及其对应的估计目标
+$$
+\tau_\textsc{O} = \frac{   E\left[ e(X)\{  1-e(X) \}   \tau(X) \right] }{   E\left[ e(X)\{  1-e(X) \}    \right] }
+$$
+是这里新出现的概念。它给满足$e(X) = 1/2$的单位最大权重，降低极端倾向得分单位的权重。一个优点是，其 IPW 估计量的分母不含可能极小的$e(X)$或$1-e(X) $，因而较稳定。若$ e(X) \ind  \tau(X) $成立（包括$\tau(X) = \tau$这一特例），$\tau_\textsc{O} $就退化为$\tau$。但一般而言，$\tau_\textsc{O} $改变了原始目标总体，而且依赖可能被误设的倾向得分，因此存在争议。\citet{li2018balancing}与\citet{li2019addressing}给出了一些理论依据和数值证据。第\ref{chapter::pscore-unification}章将再次讨论这一估计目标。 
+
+
+也可以为$\tau^h$构造双重稳健估计量，细节留作习题\ref{problem::general-estimand-dr}。 
+ 
+ 
+ \section{作业习题}
+ 
+ 
+\paragraph{$\tau_\textsc{T},  \tau_\textsc{C}, $与$\tau$的关系}\label{hw::difference-tau-T-tau} 
+ 
+假定$Z\ind \{Y(1), Y(0)\} \mid X$。回顾$e(X) = \pr(Z=1\mid X)$为倾向得分，$e = \pr(Z=1)$为处理的边际概率，$\tau(X) = E\{  Y(1)-Y(0) \mid X \}$为条件平均因果效应。证明
+$$
+\tau_\textsc{T} - \tau = \frac{  \cov\{ e(X) ,  \tau(X)  \} }{e},\quad
+\tau_\textsc{C} - \tau = - \frac{  \cov\{ e(X) ,  \tau(X)  \} }{1-e}.
+$$ 
+
+
+注：上述结果还蕴含$ \tau_\textsc{T} -  \tau_\textsc{C} =  \cov\{ e(X) ,  \tau(X)  \} / \{  e(1-e) \}$。所以$ \tau_\textsc{T} ,   \tau_\textsc{C} , \tau$之间的差异取决于倾向得分与条件平均因果效应的协方差。$e(X) $与$  \tau(X) $不相关时，这些差异为零。 
+ 
+ 
+\paragraph{关于$\tau_\textsc{T}$回归估计量的一个代数事实} 
+ \label{para::regression-att-algebra}
+ 
+ 本题补充例\ref{eg::att-regression2}的细节。 
+ 
+证明：若将所有单位的协变量按$X_i - \hat{\bar{X}}(1)$中心化，则$\hat{\tau}_\textsc{T} $等于将结果对截距、处理、协变量和交互项作 OLS 回归得到的$Z$系数。 
+ 
+ 
+ 
+ \paragraph{处理组平均因果效应的模拟}
+
+第\ref{chapter::doubly-robust}章对$\tau$进行了模拟。请对$\tau_\textsc{T}$进行类似模拟，分别考虑倾向得分与结果模型设定正确或错误的情况。 
+
+可改变模型参数，增加模拟设定和自助法重复次数。报告结果，至少包含偏差、方差及自助法方差估计；也可报告渐近正态性、置信区间覆盖率等性质。 
+
+
+
+\paragraph{$\tau_\textsc{T}$双重稳健估计量的另一形式}\label{hw::alternative-dr2-robins-att}
+
+由\eqref{eq::dr-att-mu0}启发，可得$ E\{ Y(0) \mid Z=1 \}  $的另一种双重稳健形式：
+$$
+\tilde{\mu}_{0\textsc{T}}^\text{dr2} = 
+\frac{  E\left[ o(X,\alpha)   (1-Z) \{ Y - \mu_0(X, \beta_0) \}  \right] }{  E\left[ o(X,\alpha)   (1-Z) \right] } 
+  + E\{  Z  \mu_0(X, \beta_0) \} /e.
+$$
+
+证明：在假设\ref{assume::ignorability-y0}下，只要$e(X,\alpha)  = e(X)$或$\mu_0(X, \beta_0) =  \mu_0(X)$成立，就有$\tilde{\mu}_{0\textsc{T}}^\text{dr2}= E\{ Y(0) \mid Z=1 \}$。给出$\tau_\textsc{T}$的双重稳健估计量的样本对应式。 
+
+ 
+
+
+
+ \paragraph{对照组平均因果效应}\label{hw::formulas-atc}
+
+仿照\eqref{eq::att-identification}和\eqref{eq::att-ipw-formula}，证明$\tau_\textsc{C}$的识别公式，并提出$\tau_\textsc{C}$的双重稳健估计量。 
+
+
+\paragraph{估计个体效应与条件平均因果效应}\label{hw::individual-effect-prediction}
+
+假设$\{ Z_i, X_i, Y_i(1), Y_i(0) \}_{i=1}^n \iidsim \{ Z, X, Y(1), Y(0) \}$。个体效应为$\tau_i = Y_i(1) - Y_i(0)$，条件平均因果效应为$\tau(X_i) = E\{ Y_i(1) - Y_i(0) \mid X_i  \}$。这里讨论个体效应，故保留下标$i$，因为$\tau$表示平均因果效应，并非$Y(1) - Y(0)$的总体版本。 
+
+\begin{enumerate}
+\item
+在满足$Z_i\ind \{ Y_i(1), Y_i(0)  \}$、$e = \pr(Z_i = 1)$的随机化下，证明
+$$
+\delta_i = \frac{Z_i Y_i}{e} - \frac{(1-Z_i)Y_i}{1-e}
+$$
+是个体效应的无偏预测量，即
+$$
+E( \delta_i  -  \tau_i ) = 0\quad (i=1,\ldots, n).
+$$
+再证明对所有$i=1,\ldots, n$均有$E( \delta_i ) = \tau $。 
+
+\item
+在满足$Z_i\ind \{ Y_i(1), Y_i(0)  \}\mid X_i$、$e(X_i) = \pr(Z_i=1\mid X_i)$的可忽略性下，证明
+$$
+\delta_i = \frac{Z_i Y_i}{ e(X_i) } - \frac{(1-Z_i)Y_i}{1-e(X_i)}
+$$
+是个体效应和条件平均因果效应的无偏预测量，即
+$$
+E( \delta_i  -  \tau_i ) = 0, \quad
+E\{  \delta_i  -  \tau(X_i) \} = 0, \quad (i=1,\ldots, n).
+$$
+再证明对所有$i=1,\ldots, n$均有$E( \delta_i ) = \tau $。 
+\end{enumerate}
+ 
+
+
+\paragraph{一般估计目标与$(\tau_\textsc{T}, \tau_\textsc{C})$}\label{problem::general-estimand-att-atc}
+
+
+假定无混杂。证明：$h(X) = e(X)$时$\tau^h = \tau_\textsc{T}$，$h(X) = 1-  e(X)$时$\tau^h = \tau_\textsc{C}$。
+
+
+\paragraph{关于$\tau_\textsc{O}$的进一步讨论}\label{problem::ATO-treated-control}
+
+证明
+$$
+\tau_\textsc{O} 
+=  \frac{   E  [   \{1-e(X)\} \tau(X) \mid Z=1   ]      }{  E  \{ 1-e(X) \mid Z=1   \}   }
+=  \frac{   E  \{ e(X) \tau(X) \mid Z=0   \}      }{  E  \{ e(X) \mid Z=0   \}   }.
+$$
+
+
+
+\paragraph{一般估计目标的 IPW 估计}\label{problem::general-estimand-li}
+
+证明定理 \ref{thm::weighted-estimand-li}。 
+
+
+\paragraph{一般估计目标的双重稳健估计}\label{problem::general-estimand-dr}
+
+
+给定$h(X)$，可用以下公式构造$\tau^h$的双重稳健估计量：
+\begin{eqnarray*}
+\tilde{\mu}_1^{h,\textup{dr}} &=& E\left[   \frac{Zh(X)  \{ Y-\mu_1(X,\beta_1)   \}}{  e(X,\alpha) }   + h(X) \mu_1(X, \beta_1)  \right] ,  \\
+\tilde{\mu}_0^{h, \textup{dr}} &=& E\left[   \frac{(1-Z) h(X)  \{ Y-\mu_0(X,\beta_0) \}}{  1-e(X,\alpha) }   + h(X) \mu_0(X, \beta_0)  \right]  .  
+\end{eqnarray*}
+证明，在可忽略性与重叠性下，
+\begin{enumerate}
+\item
+若$e(X,\alpha) = e(X)$或$\mu_1(X, \beta_1) = \mu_1(X)$成立，则$\tilde{\mu}_1^{h,\textup{dr}}= E\{  h(X)  Y(1) \}$；
+\item
+若$e(X,\alpha) = e(X)$或$\mu_0(X, \beta_0) = \mu_0(X)$成立，则$\tilde{\mu}_0^{h, \textup{dr}}= E\{ h(X)  Y(0) \}$；
+\item 
+若$e(X,\alpha) = e(X)$或$\{\mu_1(X, \beta_1) = \mu_1(X),   \mu_0(X, \beta_0) = \mu_0(X)\}$成立，则
+$$
+\frac{\tilde{\mu}_1^{h,\textup{dr}}  -\tilde{\mu}_0^{h, \textup{dr}}  }{  E\{ h(X)  \}  }
+= \tau^h .
+$$
+\end{enumerate}
+
+注：\citet{tao2019doubly}证明了以上结果，但它们只适用于给定的$h(X)$。最值得关注的$\tau_\textsc{T}, \tau_\textsc{C}$和$\tau_\textsc{O}$，其权重都依赖需要先估计的倾向得分$e(X)$。因此，上述公式不能直接用于构造$\tau_\textsc{T}$和$\tau_\textsc{C}$的双重稳健估计量；$\tau_\textsc{O}$则不存在双重稳健估计量。
+
+
+\paragraph{分析 Karolinska 研究所的数据集}\label{hw::Karolinska-att}
+
+重新考虑习题\ref{hw::Karolinska-dr}，使用本章方法估计$\tau_\textsc{T}$。 
+
+
+
+ \paragraph{推荐阅读}
+ 
+ \citet{shinozaki2015brief}着重讨论$\tau_\textsc{T}$，\citet{li2018balancing}讨论一般的$\tau^h$。 
+ 
+ 
+ 
+ 
+

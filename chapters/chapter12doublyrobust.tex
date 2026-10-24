@@ -1,0 +1,458 @@
+
+\chapter{用于估计平均因果效应的双重稳健估计量或增强型逆倾向得分加权估计量}\label{chapter::doubly-robust}
+ \chaptermark{双重稳健估计量}
+
+在可忽略性条件 $Z\ind \{ Y(1), Y(0) \} \mid X$ 以及重叠条件 $0< e(X) < 1$ 下，第 \ref{chapter::pscore-key} 章已给出了平均因果效应 $\tau = E\{ Y(1) - Y(0)  \}$ 的两种识别公式。第一种是结果回归公式：
+\begin{eqnarray}
+\tau  =  E\{ \mu_1(X) \} - E\{ \mu_0(X) \} \label{eq::iden-outreg}
+\end{eqnarray}
+其中
+\begin{eqnarray*}
+\mu_1(X)  &=& E\{  Y(1) \mid X \} = E(Y\mid Z=1, X),\\ 
+\mu_0(X) &=& E\{  Y(0) \mid X \} = E(Y\mid Z=0, X)
+\end{eqnarray*}
+分别为处理组和对照组下结果变量的条件均值函数。第二种是逆倾向得分加权（IPW）公式：
+\begin{eqnarray}
+\tau = E\left\{  \frac{ZY}{e(X)}   \right\} - E\left\{  \frac{(1-Z)Y}{1-e(X)}   \right\} \label{eq::iden-ipw}
+\end{eqnarray}
+此处
+$$
+e(X) = \pr(Z=1\mid X)
+$$
+即为第 \ref{chapter::pscore-key} 章中定义的倾向得分。  
+
+
+结果回归估计量需要针对处理组和对照组分别拟合结果模型；若模型设定正确则该估计量具有一致性。IPW估计量则需拟合基于协变量的倾向得分模型；若倾向得分模型设定正确则该估计量也具有一致性。 
+
+
+从数学上看，由 \eqref{eq::iden-outreg} 和 \eqref{eq::iden-ipw} 可推导出无数种平均因果效应的识别公式。下文我将介绍一种具有良好理论性质的特殊组合形式。该组合形式能确保：只要倾向得分模型或结果模型其中之一设定正确，相应估计量便具有一致性。这种估计量即由 James Robins 所倡导的{\it 双重稳健}估计量 \citep{scharfstein1999adjusting, bang2005doubly}。 
+
+
+
+\section{双重稳健估计量}
+
+\subsection{总体层面的定义}
+
+
+为结果条件均值设定模型$\mu_1(X, \beta_1)$与$\mu_0(X, \beta_0)$，参数分别为$\beta_1$与$\beta_0$。例如，工作模型为线性或逻辑模型时，参数就是回归系数。结果模型设定正确时，$\mu_1(X, \beta_1) = \mu_1(X)$且$   \mu_0(X, \beta_0) = \mu_0(X)$。再为倾向得分设定工作模型$e(X, \alpha)$，参数为$\alpha$；例如使用逻辑模型时，$\alpha$为回归系数。倾向得分模型正确时，$e(X,\alpha) = e(X)$。实践中两种模型都可能误设，因此称为{\it 工作模型}。 
+
+定义如下量：
+\begin{eqnarray}
+\tilde{\mu}_1^\textup{dr} &=& E\left[   \frac{Z\{ Y-\mu_1(X,\beta_1) \}}{  e(X,\alpha) }   + \mu_1(X, \beta_1)  \right] , \label{eq::dr-aug-out1}   \\
+\tilde{\mu}_0^\textup{dr} &=& E\left[   \frac{(1-Z)\{ Y-\mu_0(X,\beta_0) \}}{  1-e(X,\alpha) }   + \mu_0(X, \beta_0)  \right]  , \label{eq::dr-aug-out0} 
+\end{eqnarray}
+该式亦可改写为
+\begin{eqnarray}
+\tilde{\mu}_1^\textup{dr} &=& E\left[   \frac{Z Y}{  e(X,\alpha) }   - \frac{  Z -  e(X,\alpha)  }{ e(X,\alpha) } \mu_1(X, \beta_1)  \right]  ,\label{eq::dr-aug-ipw1} \\
+\tilde{\mu}_0^\textup{dr} &=& E\left[   \frac{(1-Z) Y}{  1-e(X,\alpha) }    - \frac{ e(X,\alpha)-Z  }{1- e(X,\alpha)} \mu_0(X, \beta_0)  \right]    .\label{eq::dr-aug-ipw0} 
+\end{eqnarray}
+ 
+\eqref{eq::dr-aug-out1} 和 \eqref{eq::dr-aug-out0} 本质上是在结果回归估计量基础上引入了倾向得分加权修正项；而 \eqref{eq::dr-aug-ipw1} 与 \eqref{eq::dr-aug-ipw0} 则体现了用预测结果值修正 IPW 估计量的思想。正因如此，双重稳健估计量亦被称为{\it 增强型逆倾向得分加权}（AIPW）估计量。 
+
+
+
+这种修正方式能显著优化估计量的理论性质。   
+ 
+ 
+
+
+\begin{theorem}
+\label{thm::doublyrobust}
+假设满足可忽略性条件 $Z \ind  \{  Y(1), Y(0) \} \mid X$ 以及重叠条件 $0 < e(X) < 1$。则： 
+\begin{enumerate}
+\item
+若 $e(X,\alpha) = e(X)$ 或 $\mu_1(X, \beta_1) = \mu_1(X)$ 任一条件成立，则 $\tilde{\mu}_1^\textup{dr} = E\{  Y(1) \}$。
+\item 
+若 $e(X,\alpha) = e(X)$ 或 $\mu_0(X, \beta_0) = \mu_0(X)$ 任一条件成立，则 $\tilde{\mu}_0^\textup{dr} = E\{  Y(0) \}$。
+\item 
+若 $e(X,\alpha) = e(X)$ 或者 $\{\mu_1(X, \beta_1) = \mu_1(X),   \mu_0(X, \beta_0) = \mu_0(X)\}$ 任一条件成立，则 $\tilde{\mu}_1^\textup{dr} - \tilde{\mu}_0^\textup{dr} = \tau$。 
+\end{enumerate}
+\end{theorem}
+
+
+由定理 \ref{thm::doublyrobust} 可知：只要倾向得分模型或结果模型其中之一设定正确，$\tilde{\mu}_1^\textup{dr} - \tilde{\mu}_0^\textup{dr} $ 的值便等于真实因果效应 $\tau$，这也正是该估计量被称为“双重稳健”的原因。  
+
+
+\begin{myproof}{定理}{\ref{thm::doublyrobust}}这里只证明$\mu_1 = E\{  Y(1) \}$的结论，$\mu_0 = E\{  Y(0) \}$的证明类似。 
+
+
+有如下分解
+\begin{eqnarray*}
+&&\tilde{\mu}_1^\textup{dr} - E\{  Y(1) \}     \\
+&=& E\left[   \frac{Z\{ Y(1)-\mu_1(X,\beta_1) \}}{  e(X,\alpha) }   - \{ Y(1) -  \mu_1(X, \beta_1) \} \right]  
+\qquad (\text{by definition})\\
+&=&    E\left[   \frac{Z - e(X,\alpha) }{  e(X,\alpha) }   \{ Y(1) -  \mu_1(X, \beta_1) \} \right]  
+\qquad (\text{combining terms})\\
+&=&  E\left(  E\left[   \frac{Z - e(X,\alpha) }{  e(X,\alpha) }   \{ Y(1) -  \mu_1(X, \beta_1) \} \mid X \right] \right) 
+\qquad (\text{tower property})\\
+&=& E\left[  E\left\{   \frac{Z - e(X,\alpha) }{  e(X,\alpha) } \mid X \right\} \times E\left\{  Y(1) -  \mu_1(X, \beta_1)  \mid X \right\} \right] 
+\qquad (\text{ignorability})\\
+&=& E\left[   \frac{e(X) - e(X,\alpha) }{  e(X,\alpha) }  \times  \left\{  \mu_1(X) -  \mu_1(X, \beta_1)   \right\} \right]  . 
+\end{eqnarray*}
+所以，只要$e(X,\alpha) = e(X)$或$\mu_1(X, \beta_1) = \mu_1(X)$成立，就有$\tilde{\mu}_1^\textup{dr} - E\{  Y(1) \}  = 0$。 
+\end{myproof}
+
+
+
+ 
+
+\subsection{样本层面的实现}
+
+
+基于总体层面的 $\tilde{\mu}_1^\textup{dr} $ 与 $\tilde{\mu}_0^\textup{dr} $，我们可以构造对应的样本估计量以计算 $\tau$ 的值。
+
+
+\begin{definition}
+[平均因果效应的双重稳健估计量]\label{def::dr:ace}
+根据数据$(X_i, Z_i, Y_i)_{i=1}^n$，可按以下步骤构造$\tau$的双重稳健估计量。\footnote{此前不强调工作模型参数时，用$\hat e(X_i)$表示$e(X_i, \hat{\alpha})$，用$ \hat \mu_z(X_i) $表示$ \mu_z(X_i, \hat{\beta}_1) $。} 
+\begin{enumerate}
+[(1)]
+\item
+计算倾向得分的拟合值：$e(X_i, \hat{\alpha})$； 
+\item
+计算结果均值的拟合值：$ \mu_1(X_i, \hat{\beta}_1) $ 与 $ \mu_0(X_i, \hat{\beta}_0) $； 
+\item
+构造双重稳健估计量$\hat{\tau}^\textup{dr} = \hat{\mu}_1^\textup{dr}  - \hat{\mu}_0^\textup{dr}$，其中
+$$
+ \hat{\mu}_1^\textup{dr}  = \frac{1}{n} \sumn \left[ \frac{Z_i\{ Y_i-\mu_1(X_i,\hat{\beta}_1) \}}{  e(X_i, \hat{\alpha}) }   + \mu_1(X_i, \hat{\beta}_1) \right]
+$$
+和
+$$
+ \hat{\mu}_0^\textup{dr}  = \frac{1}{n} \sumn \left[  \frac{(1-Z_i)\{ Y_i-\mu_0(X_i, \hat{\beta}_0) \}}{  1-e(X_i,\hat{\alpha}) }   + \mu_0(X_i, \hat{\beta}_0)       \right] . 
+$$
+\end{enumerate}
+\end{definition}
+
+根据定义\ref{def::dr:ace}，双重稳健估计量也可写为
+$$
+\hat{\tau}^\textup{dr} =\hat{\tau}^\textup{reg}  + 
+\frac{1}{n} \sumn  \frac{Z_i\{ Y_i-\mu_1(X_i,\hat{\beta}_1) \}}{  e(X_i, \hat{\alpha}) } 
+-  \frac{1}{n} \sumn   \frac{(1-Z_i)\{ Y_i-\mu_0(X_i, \hat{\beta}_0) \}}{  1-e(X_i,\hat{\alpha}) }  . 
+$$
+仿照\eqref{eq::dr-aug-ipw1}与\eqref{eq::dr-aug-ipw0}，还可改写为
+$$
+\hat{\tau}^\textup{dr} = \hat{\tau}^\textup{ipw}  
+  - \frac{1}{n} \sumn    \frac{  Z_i -  e(X_i, \hat\alpha)  }{ e(X_i, \hat\alpha) } \mu_1(X_i, \hat\beta_1)
+  + \frac{1}{n} \sumn    \frac{ e(X_i, \hat\alpha)-Z_i  }{1- e(X_i,\hat \alpha)} \mu_0(X_i, \hat\beta_0) .
+$$ 
+
+ 
+\citet{funk2011doubly}建议从$(Z_i, X_i, Y_i)_{i=1}^n$重抽样，用非参数自助法近似$\hat{\tau}^\textup{dr}$的方差。
+ 
+
+\section{双重稳健估计量的更多直观解释与理论}
+
+本章开头指出，结果回归与 IPW 的基本识别公式能立即产生无穷多个其他识别公式，但\eqref{eq::dr-aug-out1}和\eqref{eq::dr-aug-out0}这种特定双重稳健形式并不容易直接想到。\eqref{eq::dr-aug-out1}与\eqref{eq::dr-aug-out0}最初由理论推导而来，依赖高等数理统计中的{\it 半参数效率理论}\citep{bickel1993efficient}，超出本书范围。下面给出构造\eqref{eq::dr-aug-out1}和\eqref{eq::dr-aug-out0}的两个直观视角。第\ref{sec::improving-ipw}与\ref{sec::improving-outreg}节都只讨论$E\{ Y(1) \}$，$E\{ Y(0) \}$的估计由对称性类似可得。 
+
+
+
+\subsection{降低 IPW 估计量的方差}\label{sec::improving-ipw}
+
+
+基于
+$$
+\mu_1 = E\left\{   \frac{ZY}{e(X)}   \right\}
+$$
+的$\mu_1$ IPW 估计，完全忽略$Y$的结果模型。其优点是不假定结果模型仍可一致。但若协变量能预测结果，即使工作结果模型有误，残差的方差通常也小于结果本身。对可能误设的模型$\mu_1(X, \beta_1)$，总有分解
+$$
+\mu_1  = E\{ Y(1) \} = E\{ Y(1)  -\mu_1(X, \beta_1) \} + E\{\mu_1(X, \beta_1)\}.
+$$
+将$Y(1)  -\mu_1(X, \beta_1)$视为处理下的“伪潜在结果”，对第一项应用 IPW，得
+\begin{eqnarray}
+\mu_1  &=& E\left\{ \frac{Z \{Y  -\mu_1(X, \beta_1) \}}{e(X)} \right\} + E\{\mu_1(X, \beta_1)\}  \label{eq::explain-ipw-efficiency-basic}  \\
+&=& E\left\{ \frac{Z \{Y  -\mu_1(X, \beta_1) \}}{e(X)}  +  \mu_1(X, \beta_1) \right\} ,\label{eq::explain-ipw-efficiency}
+\end{eqnarray}
+只要倾向得分模型正确，公式成立，无须结果模型正确。利用工作模型提高效率是抽样调查中的旧思想，\citet{little2004robust}和\citet{lumley2011connections}指出了它与双重稳健估计的联系。   
+
+
+
+\subsection{降低结果回归估计量的偏差}\label{sec::improving-outreg}
+
+
+第\ref{sec::improving-ipw}节从 IPW 出发，利用工作结果模型提高效率。也可从结果回归估计
+$$
+\tilde{\mu}_1 = E\{\mu_1(X, \beta_1)\} 
+$$
+出发。若模型错误，它未必等于$\mu_1$，偏差为$ E\{\mu_1(X, \beta_1)  -  Y(1)\}   $。只要倾向得分模型正确，可用 IPW 估计该偏差：
+$$
+B = 
+E\left\{ \frac{Z \{\mu_1(X, \beta_1) - Y\}}{e(X)} \right\} 
+$$
+因此，去偏后的估计为$
+\tilde{\mu}_1 - B  ,
+$，恰好等于\eqref{eq::explain-ipw-efficiency}。 
+
+
+\section{示例}
+\label{sec::dr-examples}
+
+
+\subsection{$\tau$的若干常用估计量汇总}
+
+
+下面的\ri{R}代码实现$\tau$的结果回归、HT、Hájek 和双重稳健估计，可方便地根据\ri{glm}函数的拟合值计算。倾向得分默认采用逻辑模型，结果默认采用线性模型，指定\ri{out.family = gaussian}。\footnote{\ri{glm}比\ri{lm}更一般；指定\ri{out.family = gaussian}时，\ri{glm}与\ri{lm}相同。}二元结果也可指定\ri{out.family = binomial}拟合逻辑模型。
+
+\begin{lstlisting}
+OS_est = function(z, y, x, out.family = gaussian, 
+                  truncps = c(0, 1))
+{
+     ## fitted propensity score
+     pscore   = glm(z ~ x, family = binomial)$fitted.values
+     pscore   = pmax(truncps[1], pmin(truncps[2], pscore))
+     
+     ## fitted potential outcomes
+     outcome1 = glm(y ~ x, weights = z, 
+                    family = out.family)$fitted.values
+     outcome0 = glm(y ~ x, weights = (1 - z), 
+                    family = out.family)$fitted.values
+     
+     ## outcome regression estimator
+     ace.reg  = mean(outcome1 - outcome0) 
+     ## IPW estimators
+     y.treat     = mean(z*y/pscore)
+     y.control   = mean((1 - z)*y/(1 - pscore))
+     one.treat   = mean(z/pscore)
+     one.control = mean((1 - z)/(1 - pscore))
+     ace.ipw0    = y.treat - y.control
+     ace.ipw     = y.treat/one.treat - y.control/one.control
+     ## doubly robust estimator
+     res1      = y - outcome1
+     res0      = y - outcome0
+     r.treat   = mean(z*res1/pscore)
+     r.control = mean((1 - z)*res0/(1 - pscore))
+     ace.dr    = ace.reg + r.treat - r.control
+
+     return(c(ace.reg, ace.ipw0, ace.ipw, ace.dr))     
+}
+\end{lstlisting}
+
+
+这些估计量的解析方差公式推导繁琐，可从$\{ Z_i, X_i, Y_i \}_{i=1}^n$重抽样，用自助法方便地近似方差。下面的函数基于前面的\ri{OS_est}，返回点估计及自助法标准误。 
+
+
+\begin{lstlisting}
+OS_ATE = function(z, y, x, n.boot = 2*10^2,
+                     out.family = gaussian, truncps = c(0, 1))
+{
+     point.est  = OS_est(z, y, x, out.family, truncps)
+     
+     ## nonparametric bootstrap
+     n          = length(z)
+     x          = as.matrix(x)
+     boot.est   = replicate(n.boot, {
+       id.boot = sample(1:n, n, replace = TRUE)
+       OS_est(z[id.boot], y[id.boot], x[id.boot, ], 
+              out.family, truncps)
+     })
+
+     boot.se    = apply(boot.est, 1, sd)
+     
+     res        = rbind(point.est, boot.se)
+     rownames(res) = c("est", "se")
+     colnames(res) = c("reg", "HT", "Hajek", "DR")
+     
+     return(res)
+}
+\end{lstlisting}
+
+
+
+
+\subsection{模拟}
+\label{sec::dr-simulation}
+
+
+下面用模拟评价四种情形下估计量的有限样本性质：
+\begin{enumerate}
+\item\label{case::11}
+倾向得分模型与结果模型均正确；
+\item\label{case::01}
+倾向得分模型错误，结果模型正确；
+\item\label{case::10}
+倾向得分模型正确，结果模型错误；
+\item\label{case::00}
+倾向得分模型与结果模型均错误。
+\end{enumerate}
+报告模拟中估计量的平均偏差、真实标准误及估计标准误的平均值。 
+
+
+
+情形\ref{case::11}的数据生成过程为
+\begin{lstlisting}
+  x       = matrix(rnorm(n*2), n, 2)
+  x1      = cbind(1, x)
+  beta.z  = c(0, 1, 1)
+  pscore  = 1/(1 + exp(- as.vector(x1%*%beta.z)))
+  z       = rbinom(n, 1, pscore)
+  beta.y1 = c(1, 2, 1)
+  beta.y0 = c(1, 2, 1)
+  y1      = rnorm(n, x1%*%beta.y1)
+  y0      = rnorm(n, x1%*%beta.y0)
+  y       = z*y1 + (1 - z)*y0
+\end{lstlisting}
+情形\ref{case::01}将倾向得分模型改为非线性：
+\begin{lstlisting}
+  x1      = cbind(1, x, exp(x))
+  beta.z  = c(-1, 0, 0, 1, -1)
+  pscore  = 1/(1 + exp(- as.vector(x1%*%beta.z)))
+\end{lstlisting}
+情形\ref{case::10}将结果模型改为非线性： 
+\begin{lstlisting}
+  beta.y1 = c(1, 0, 0, 0.2, -0.1)
+  beta.y0 = c(1, 0, 0, -0.2, 0.1)
+  y1      = rnorm(n, x1%*%beta.y1)
+  y0      = rnorm(n, x1%*%beta.y0)
+\end{lstlisting}
+情形\ref{case::00}同时修改倾向得分与结果模型。 
+
+
+样本量设为$n=500$，按上述数据生成过程生成$500$个独立数据集。在情形\ref{case::11}中， 
+\begin{lstlisting}
+          reg   HT Hajek   DR
+ave.bias 0.00 0.02  0.03 0.01
+true.se  0.11 0.28  0.26 0.13
+est.se   0.10 0.25  0.23 0.12
+\end{lstlisting}
+全部估计量都近似无偏，两种加权估计量的方差较大。在情形\ref{case::01}中，
+\begin{lstlisting}
+          reg    HT Hajek    DR
+ave.bias 0.00 -0.76 -0.75 -0.01
+true.se  0.12  0.59  0.47  0.18
+est.se   0.13  0.50  0.38  0.18
+\end{lstlisting}
+由于倾向得分误设，两种加权估计严重有偏；结果回归与双重稳健估计近似无偏。 
+
+
+在情形\ref{case::10}中，
+\begin{lstlisting}
+           reg   HT Hajek   DR
+ave.bias -0.05 0.00 -0.01 0.00
+true.se   0.11 0.15  0.14 0.14
+est.se    0.11 0.14  0.13 0.14
+\end{lstlisting}
+由于结果模型误设，结果回归估计的偏差大于其他三种；加权估计与双重稳健估计近似无偏。 
+
+
+在情形\ref{case::00}中，
+\begin{lstlisting}
+           reg   HT Hajek   DR
+ave.bias -0.08 0.11 -0.07 0.16
+true.se   0.13 0.32  0.20 0.41
+est.se    0.13 0.25  0.16 0.26
+\end{lstlisting}
+由于两个模型都错误，全部估计量有偏。HT 与双重稳健估计的偏差最大。两个模型都错误时，双重稳健估计反而显得“双重脆弱”。 
+
+
+以上所有情形中，只要估计量对真实平均因果效应近似无偏，自助法标准误就接近真实标准误。 
+
+
+
+
+\subsection{应用}
+\label{sec::ATE-application}
+
+
+
+
+重新考虑例\ref{eg::chan-bmi-ATE}，得到如下估计及自助法标准误：
+\begin{lstlisting}
+       reg     HT  Hajek     DR
+est -0.017 -1.516 -0.156 -0.019
+se   0.230  0.492  0.246  0.233
+\end{lstlisting}
+两种加权估计的绝对值远大于其他两种。将倾向得分截断在$[0.1, 0.9]$内，得到以下估计及自助法标准误：
+\begin{lstlisting}
+       reg     HT  Hajek     DR
+est -0.017 -0.713 -0.054 -0.043
+se   0.223  0.422  0.235  0.231
+\end{lstlisting}
+Hájek 估计变得更接近结果回归与双重稳健估计，Horvitz--Thompson 估计仍明显偏离。 
+
+
+
+\section{进一步讨论}
+
+
+
+回顾定理\ref{thm::doublyrobust}的证明，双重稳健性的关键是乘积结构
+$$
+\tilde{\mu}_1^\textup{dr} - E\{  Y(1) \} 
+= E\left[   \frac{e(X) - e(X,\alpha) }{  e(X,\alpha) }  \times  \left\{  \mu_1(X) -  \mu_1(X, \beta_1)   \right\} \right] ,
+$$
+它保证，只要$e(X) = e(X,\alpha) $或$ \mu_1(X) =  \mu_1(X, \beta_1) $，估计误差就为零。但两个模型都错误时，这一结构也可能带来“双重脆弱性”：两个误差相乘，可能产生更大的误差。第\ref{sec::dr-simulation}节的模拟验证了这一点。 
+
+
+\citet{kang2007demystifying}通过模拟批评双重稳健估计，发现其有限样本表现甚至可能比简单结果回归与 IPW 更不稳定。尽管受到\citet{kang2007demystifying}批评，自\citet{scharfstein1999adjusting}的开创性工作以来，它已成为因果推断的标准策略。近来，统计与计量经济学理论以更时髦的“双重机器学习”名称重新研究它\citep{chernozhukov2018double}：基本思想是用机器学习替代倾向得分和结果的工作模型，比传统参数模型更灵活。 
+
+
+
+
+
+\section{作业习题}
+
+
+
+ \paragraph{实例分析}\label{hw::discreteX-obs}
+考虑离散协变量$X \in \{1, \ldots, K\}$，目标参数为$\tau$。不施加模型限制时，第$X=k\ (k=1, \ldots, K)$层的倾向得分估计$\hat{e}(X)$为处理比例$\hat{e}_{[k]} = \hat{\pr}(Z=1\mid X=k) $，结果均值估计为处理组与对照组各自的样本均值$\hat{\bar{Y}}_{[k]}(1)  = \hat{E}(Y\mid Z=1, X=k) $与$\hat{\bar{Y}}_{[k]}(0)  = \hat{E}(Y\mid Z=0, X=k) $。证明分层、结果回归、HT、Hájek 和双重稳健估计量在数值上完全相同。 
+ 
+
+
+\paragraph{$\tau$双重稳健估计量的另一形式}\label{hw::alternative-dr2-robins}
+
+由\eqref{eq::explain-ipw-efficiency-basic}启发，可得$\mu_1 = E\{ Y(1) \} $的另一种双重稳健形式：
+$$
+\tilde{\mu}_1^\text{dr2} = 
+\frac{ E\left[   \frac{Z\{ Y-\mu_1(X,\beta_1) \}}{  e(X,\alpha) } \right] }{E\left[   \frac{Z }{  e(X,\alpha) } \right]} 
+ + E\{ \mu_1(X, \beta_1)  \} .
+$$
+证明，只要$e(X,\alpha)  = e(X)$或$\mu_1(X, \beta_1) =  \mu_1(X)$，便有$\tilde{\mu}_1^\text{dr2} = \mu_1$。给出估计$\mu_0$的类似公式，并据此给出$\tau$双重稳健估计量的样本对应式。 
+
+注：这一双重稳健形式见于\citet{robins2007comment}。 
+
+
+
+\paragraph{双重稳健估计偏差的上界}\label{hw::upperbound-dr}
+
+
+考虑用于估计$E\{  Y(1) \} $的总体双重稳健形式$\tilde{\mu}_1^\textup{dr} $，证明
+$$
+ |   \tilde{\mu}_1^\textup{dr} - E\{  Y(1) \}  |  \leq
+\sqrt{
+E\left[   \frac{ \{  e(X) - e(X,\alpha)\}^2  }{  e(X,\alpha)^2 }  \right] \times 
+E\left[  \left\{  \mu_1(X) -  \mu_1(X, \beta_1)   \right\}^2 \right] .
+}
+$$
+再求$\tilde{\mu}_0^\textup{dr} $估计$E\{  Y(0) \} $时偏差的类似上界。 
+
+
+注：证明可参考第\ref{sec::cauchy-schwarz-inequality}节。 
+
+
+\paragraph{例\ref{eg::job-training-obs}的数据分析}
+
+
+运用前文所述方法分析数据集 \ri{cps1re74.csv}。 
+
+ 
+ 
+\paragraph{分析 Karolinska 研究所的数据集}\label{hw::Karolinska-dr}
+ 
+ \citet{rubin2008objective}用\texttt{karolinska.txt}说明观察性因果推断。数据包含 1988—1995 年在瑞典中部与北部确诊的 158 名贲门癌患者，其中 79 人在高诊疗量医院确诊，即该时期诊治此类患者超过十人的医院；另 79 人在其他低诊疗量医院确诊。处理\texttt{z}表示是否在高诊疗量医院确诊，结果\texttt{y}表示确诊后是否存活超过一年。协变量\texttt{x}包含年龄、是否来自农村及是否为男性等信息。 
+ 
+\begin{lstlisting}
+karolinska = read.table("karolinska.txt", header = TRUE)
+z = karolinska$hvdiag
+y = 1 - (karolinska$year.survival == 1)
+x = as.matrix(karolinska[, c(3, 4, 5)])
+\end{lstlisting}
+
+
+用迄今介绍的方法分析该数据集。 
+
+
+
+ \paragraph{推荐阅读}
+ 
+ \citet{lunceford2004stratification} 系统综述了第 \ref{chapter::pscore-key} 与 \ref{chapter::doubly-robust} 章所述各类估计量的特性。 
+ 
+

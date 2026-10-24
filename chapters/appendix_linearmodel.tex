@@ -1,0 +1,545 @@
+
+\chapter{线性回归与逻辑回归}
+\label{appendix::basic-linear-regression}
+ 
+ \section{总体普通最小二乘法}\label{sec::populationOLS}
+ 
+ 
+假设 $(x_{i},y_{i})_{i=1}^{n} \iidsim (x,y)$，其中 $x $ 是一个 $p$ 维的随机标量或向量，而 $y $ 是一个随机标量。  
+下文中我将使用 $(x,y)$ 来表示任意一次观测值，为简便起见省略下标 $i$。  
+将总体普通最小二乘（OLS）系数定义为  
+\[
+\beta=\arg\min_{b } E\left\{ (y-x \tran b)^{2}\right\} .
+\]  
+该目标函数关于 $b$ 呈二次形式，因此只要各阶矩存在且 $E(xx \tran )$ 可逆，便可证明其最小化值为  
+$$
+\beta=\left\{ E\left(xx \tran \right)\right\} ^{-1}E\left(xy\right)
+$$ 
+%As a special case, the covariate contains $1$ and a scalar $x$,
+%the OLS coefficient of $x$ simplifies to 
+%\[
+%\beta=\frac{\cov(x,y)}{\var(x)} = \rho_{xy} \sqrt{   \frac{\var(y)}{\var(x)}  }.
+%\]
+
+借助 $\beta$，我们可以将 $x \tran \beta$ 定义为 $y$ 在 $x$ 上的 {\it 线性投影}；同时定义 \begin{equation}
+\varepsilon=y-x \tran \beta\label{eq:populationresidualols}
+\end{equation} 为 {\it 总体残差}。  
+根据 $\beta$ 的定义，我们可以验证 $$
+E(x\varepsilon)=E\left\{ x(y-x \tran \beta)\right\} =E(xy)-E(xx \tran )\beta=0. 
+$$
+
+
+\begin{example}
+[带截距项的总体普通最小二乘法]
+如果我们将 $1$ 作为 $x$ 的一个组成部分，那么
+$$
+E(\varepsilon)
+=E(y-x \tran \beta)
+=0
+$$
+这进一步意味着 $\cov(x,\varepsilon)=0$。
+因此，当 $\beta$ 中包含截距项时，总体残差的均值必定为零；而且根据设定，该残差与其他协变量也不存在相关性。 
+\end{example}
+
+
+ 
+\begin{example}
+[仅含一个变量的总体情形下带截距项的普通最小二乘法]\label{eg::ols1-intercept}
+一个重要的特例是：对于标量 $x$ 和 $y$，我们可以定义
+$$
+(\alpha, \beta)  = \arg\min_{a,b} E \{  (y - a - bx)^2 \}
+$$
+它们具有如下显式公式
+$$
+\beta = \frac{  \cov(x,y) }{\var(x)},\quad 
+\alpha = E(y)  - \beta E(x).
+$$
+\end{example}
+
+ 
+ \begin{example}
+[不含截距项的单变量总体普通最小二乘法]
+若不设置截距项，我们可以定义
+$$
+\gamma = \arg\min_{c} E \{  (y  - c x)^2 \}
+$$
+该值等于
+$$
+\gamma = \frac{  E(xy) }{E(x^2)}.
+$$
+当 $x$ 的均值为零时，$ \gamma$ 的值即等于示例 \ref{eg::ols1-intercept} 中的 $\beta $。 
+\end{example}
+
+
+
+
+
+
+我们也可以将（\ref{eq:populationresidualols}）重新写为
+\begin{equation}
+y=x \tran \beta+\varepsilon,\label{eq:population-ols-decomposition}
+\end{equation}
+该等式依据总体OLS系数与残差的定义即可成立，无需任何建模假设。我们将（\ref{eq:population-ols-decomposition}）称为总体OLS分解。 
+
+
+ \section{样本普通最小二乘法}\label{sec::sampleOLS}
+
+基于数据 $(x_{i},y_{i})_{i=1}^{n} \iidsim (x,y)$，我们可以轻松求得总体OLS系数的矩估计量\[
+\hat{\beta}=\left(n^{-1}\sumn x_{i}x_{i} \tran \right)^{-1}\left(n^{-1}\sumn x_{i}y_{i}\right),
+\]以及残差$ \hat{\varepsilon}_i = y_i - x_i \tran  \hat{\beta} . $ 该估计值被称为样本OLS，或简称为OLS。该OLS系数$\hat{\beta}$能够使残差平方和\[
+\hat \beta=\arg\min_{b } n^{-1} \sumn  (y_i-x_i \tran b)^{2} ,
+\]达到最小值，因此它必然满足$$
+\sumn x_i (y_i-x_i \tran \hat{\beta}) = 0,
+$$这一条件，该条件有时也被称作{\it 正规方程}。所谓拟合值，也就是$y_i$在$x_i$上的{\it 线性投影}，其数值等于$$
+ \hat{y}_i = x_i\tran \hat\beta \quad (i=1,\ldots, n).
+ $$
+ 
+ 
+ 利用矩阵记法
+$$
+ X = \begin{pmatrix}
+ x_1\tran \\
+ \vdots \\
+ x_n\tran 
+ \end{pmatrix},\quad
+ Y = \begin{pmatrix}
+ y_1 \\
+ \vdots \\
+ y_n
+ \end{pmatrix} ,
+ $$
+我们可以将OLS系数表示为
+$$
+\hat{\beta} = (X \tran X)^{-1} X\tran Y
+$$
+而将拟合值向量表示为
+$$
+ \hat{Y} = X\hat{\beta} =  X (X \tran X)^{-1} X\tran Y.
+ $$
+定义“帽子矩阵”为
+$$
+H =  X (X \tran X)^{-1} X\tran.
+$$
+此时我们还能得到 $ \hat{Y}  = HY$，这也正是该矩阵被称为“帽子矩阵”的原因。矩阵 $H $ 的对角元素，即 $h_{ii}$，通常被称为{\it 杠杆值}。
+
+
+假设$(x,y)$具有有限四阶矩，利用大数定律和中心极限定理可以证明
+$$
+\sqrt{n}(\hat{\beta}-\beta)\rightarrow\text{N} ( 0, V )
+$$
+依分布收敛，其中$V =  B^{-1} M B^{-1}$，$B =   E(xx \tran ) $，$M= E(\varepsilon^{2}xx \tran )$。因此，$\hat{\beta}$的渐近方差的矩估计量为
+\begin{equation}\label{eq::v-hat-ehw}
+\hat{V}_\textsc{ehw} =  
+n^{-1}
+\left(n^{-1}\sumn x_{i}x_{i} \tran \right)^{-1}
+\left(n^{-1}\sumn  \hat{\varepsilon}_i^2  x_{i}x_{i} \tran \right) 
+\left(n^{-1}\sumn x_{i}x_{i} \tran \right)^{-1} ,
+\end{equation}
+这称为 Eicker--Huber--White（EHW）稳健协方差估计量\citep{eicker1967limit, huber::1967, white::1980}。可以证明$n \hat{V}_\textsc{ehw}  \rightarrow  V$依概率收敛。利用$\hat{\beta}$和$\hat{V}_\textsc{ehw} $，就能对总体 OLS 系数$\beta$进行推断。  
+
+
+EHW稳健协方差估计量有多种基于杠杆值的变体\citep{long2000using}。具体而言，在$\hat{V}_\textsc{ehw}$的定义中，HC1将$\hat{\varepsilon}_i^2$替换为$n\hat{\varepsilon}_i^2/(n-p)$，HC2将$\hat{\varepsilon}_i^2$替换为$\hat{\varepsilon}_i^2 /(1 - h_{ii}) $，HC3则将$\hat{\varepsilon}_i^2$替换为$\hat{\varepsilon}_i^2/(1 - h_{ii})^2$。 
+
+ 
+
+
+\section{弗里斯-沃-洛弗尔定理}
+\label{appendix::fwl-theorem}
+
+Frisch–Waugh–Lovell（FWL）定理有两个版本，分别适用于总体层面和样本层面。它将多元OLS化为单变量OLS，有助于理解和计算OLS系数。下面介绍本书所需的若干特殊情形。 
+
+\begin{theorem}
+[总体FWL]\label{thm::population-FWL}
+在将 $y$ 对 $(x_1, x_2, \ldots, x_p)$ 进行OLS拟合时，$x_1$ 的系数值等于将 $y$ 或 $\tilde{y}$ 对 $\tilde{x}_1$ 进行OLS拟合时 $\tilde{x}_1$ 的系数值。此处 $\tilde{y}$ 表示将 $y$ 对 $(x_2, \ldots, x_p)$ 进行OLS拟合后所得的残差，而 $\tilde{x}_1$ 则表示将 $x_1$ 对 $(x_2, \ldots, x_p)$ 进行OLS拟合后所得的残差。
+\end{theorem}
+
+
+在定理\ref{thm::population-FWL}中，对$x_1$进行残差化处理至关重要，但对$y$进行残差化处理则并无必要。   
+
+
+
+\begin{theorem}
+[样本FWL]\label{thm::sample-FWL}
+给定包含列向量的数据 $(Y, X_1, X_2, \ldots, X_p)$，在将 $Y$ 对 $(X_1, X_2, \ldots, X_p)$ 进行普通最小二乘拟合时，$X_1$ 所对应的系数值，等于将 $Y$ 或 $\tilde{Y}$ 对 $\tilde{X}_1$ 进行普通最小二乘拟合时 $\tilde{X}_1$ 的系数值。此处 $\tilde{Y}$ 表示将 $Y$ 对 $(X_2, \ldots, X_p)$ 进行普通最小二乘拟合后所得的残差向量；而 $\tilde{X}_1$ 则表示将 $X_1$ 对 $(X_2, \ldots, X_p)$ 进行普通最小二乘拟合后所得的残差向量。 
+\end{theorem}
+
+
+再次强调，在定理\ref{thm::sample-FWL}中，对$X_1$进行残差化处理至关重要，但对$Y$进行残差化处理则并无必要。\citet{ding2021frisch}则给出了更多与样本FWL定理相关的数值性质。
+ 
+
+\section{线性模型}\label{section::linear-model-var}
+
+有时会施加更强的模型假设，要求给定$x$时$y$的条件均值为线性：$$
+E(y\mid x)=x \tran \beta
+$$或等价地，\[
+y=x \tran \beta+\varepsilon \qquad  \text{with} \qquad  E(\varepsilon\mid x)=0,
+\]称为受限均值模型。在该模型下，总体OLS系数就是真正关注的参数：\begin{align*}
+\left\{ E(xx \tran )\right\} ^{-1}E(xy) & =\left\{ E(xx \tran )\right\} ^{-1}E\left\{ xE(y\mid x)\right\} \\
+ & =\left\{ E(xx \tran )\right\} ^{-1}E(xx \tran \beta)\\
+ & =\beta.
+\end{align*}此外，总体OLS系数不依赖$x$的分布。第\ref{sec::sampleOLS}节的渐近推断方法也适用于此模型。 
+
+
+
+在 $\var(\varepsilon \mid x) = \sigma^2$ 这一特殊情形下， 
+%$$
+%y_i = x_i\tran \beta + \varepsilon_i \quad (i=1, \ldots, n)
+%$$
+%where the $\varepsilon_i$'s have mean $0$ and variance $\sigma^2$, 
+普通最小二乘估计系数的渐近方差最终会简化为$$
+V = \sigma^2 \{ E(xx \tran ) \}^{-1}
+$$因此，用于估计$\hat{\beta}$的渐近方差的一个更为简单的矩估计量为\begin{equation}
+\hat{V}_\textsc{ols} = \hat\sigma^2 \left( \sumn x_{i}x_{i} \tran \right)^{-1}
+\label{eq::v-hat-ols}
+\end{equation}其中$\hat\sigma^2 =  (n-p)^{-1}  \sum_{i=1}^n \hat{\varepsilon}_i^2$是$\sigma^2$的一个无偏估计量；需要提醒的是，$n$代表样本量，而$p$代表变量$x$的维度。该估计量正是\ri{lm}函数所提供的标准协方差估计量。 
+
+
+
+
+基于\ri{BostonHousing}数据，我们首先通过\ri{lm}函数获得标准输出结果。 
+
+\begin{lstlisting}
+> library("mlbench")
+> data(BostonHousing)
+> ols.fit = lm(medv ~ ., data = BostonHousing)
+> summary(ols.fit)
+
+Call:
+lm(formula = medv ~ ., data = BostonHousing)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-15.595  -2.730  -0.518   1.777  26.199 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  3.646e+01  5.103e+00   7.144 3.28e-12 ***
+crim        -1.080e-01  3.286e-02  -3.287 0.001087 ** 
+zn           4.642e-02  1.373e-02   3.382 0.000778 ***
+indus        2.056e-02  6.150e-02   0.334 0.738288    
+chas1        2.687e+00  8.616e-01   3.118 0.001925 ** 
+nox         -1.777e+01  3.820e+00  -4.651 4.25e-06 ***
+rm           3.810e+00  4.179e-01   9.116  < 2e-16 ***
+age          6.922e-04  1.321e-02   0.052 0.958229    
+dis         -1.476e+00  1.995e-01  -7.398 6.01e-13 ***
+rad          3.060e-01  6.635e-02   4.613 5.07e-06 ***
+tax         -1.233e-02  3.760e-03  -3.280 0.001112 ** 
+ptratio     -9.527e-01  1.308e-01  -7.283 1.31e-12 ***
+b            9.312e-03  2.686e-03   3.467 0.000573 ***
+lstat       -5.248e-01  5.072e-02 -10.347  < 2e-16 ***
+\end{lstlisting}
+
+
+在\ri{R}中，\ri{lm}函数能够计算$\hat{\beta}$；而\ri{car}程序包中的\ri{hccm}函数则能够计算$\hat{V}_\textsc{ehw} $及其各种变体。下文我们将对比基于不同标准误差选择所得到的$t$统计量。在本例中，针对某些回归系数而言，EHW标准误差的数值差异相当显著。 
+
+\begin{lstlisting}
+> library("car")
+> ols.fit.hc0 = sqrt(diag(hccm(ols.fit, type = "hc0")))
+> ols.fit.hc1 = sqrt(diag(hccm(ols.fit, type = "hc1")))
+> ols.fit.hc2 = sqrt(diag(hccm(ols.fit, type = "hc2")))
+> ols.fit.hc3 = sqrt(diag(hccm(ols.fit, type = "hc3")))
+> tvalues = summary(ols.fit)$coef[,1]/
++   cbind(summary(ols.fit)$coef[,2], 
++         ols.fit.hc0, 
++         ols.fit.hc1, 
++         ols.fit.hc2, 
++         ols.fit.hc3)
+> colnames(tvalues) = c("ols", "hc0", "hc1", "hc2", "hc3")
+> round(tvalues, 2)
+               ols   hc0   hc1   hc2   hc3
+(Intercept)   7.14  4.62  4.56  4.48  4.33
+crim         -3.29 -3.78 -3.73 -3.48 -3.17
+zn            3.38  3.42  3.37  3.35  3.27
+indus         0.33  0.41  0.41  0.41  0.40
+chas1         3.12  2.11  2.08  2.05  2.00
+nox          -4.65 -4.76 -4.69 -4.64 -4.53
+rm            9.12  4.57  4.51  4.43  4.28
+age           0.05  0.04  0.04  0.04  0.04
+dis          -7.40 -6.97 -6.87 -6.81 -6.66
+rad           4.61  5.05  4.98  4.91  4.76
+tax          -3.28 -4.65 -4.58 -4.54 -4.43
+ptratio      -7.28 -8.23 -8.11 -8.06 -7.89
+b             3.47  3.53  3.48  3.44  3.34
+lstat       -10.35 -5.34 -5.27 -5.18 -5.01
+\end{lstlisting}
+
+
+
+
+\section{加权最小二乘法}
+\label{sec::appendix-wls}
+
+
+假设 $(w_i, x_i, y_i) \iidsim (w, x, y)$，且 $w\neq 0$。在总体层面，我们可以定义加权最小二乘（WLS）系数为
+$$
+\beta_w = \arg\min_b  E\{  w (y-x \tran b)^{2}    \},
+$$
+该系数满足
+$$
+E  \{  w x (y-x \tran \beta_w ) \} = 0
+$$
+因此，若 $E  ( w xx\tran )$ 可逆，则该系数的值即为
+$$
+\beta_w  = \{  E  ( w xx\tran ) \}^{-1} E(  w xy )
+$$ 
+
+在样本层面，我们可以将WLS系数定义为
+$$
+\hat{\beta}_w = \arg\min_b \sumn w_i (y_i-x_i \tran b)^{2},
+$$
+该系数满足
+$$
+\sumn w_i x_i (y_i -x_i \tran \hat\beta_w ) = 0
+$$
+因此，若 $\sumn   w_i x_ix_i\tran$ 可逆，则该系数的值即为
+$$
+\hat \beta_w  =  \left(  n^{-1} \sumn   w_i x_ix_i\tran \right)^{-1} \left(   n^{-1} \sumn   w_i x_i y_i \right)
+$$ 
+
+在 \ri{R} 中，我们可以在 \ri{lm} 函数内指定 \ri{weights} 以实现加权最小二乘法。 
+
+
+
+\section{逻辑回归}\label{sec::logistic-regression}
+
+
+
+
+ 
+  
+ \subsection{模型}
+严格来说，即便结果变量 $y$ 为二元变量，我们依然可以应用普通最小二乘法。不过，当预测概率值超出 $[0,1]$ 的范围时就会显得不太合理。正因如此，我们才考虑引入下述模型：
+\[
+\pr(y_{i}=1\mid x_{i})=g(x_{i} \tran \beta),
+\]
+其中 $g(\cdot):\mathbb{R}\rightarrow[0,1]$ 是一个单调函数，其逆函数通常被称为{\it 链接函数}。函数 $g(\cdot)$ 可以是任意随机变量的分布函数，不过我们主要研究其逻辑形式：
+$$
+g(z) =  \frac{ e^z }{1 + e^z} = (1 + e^{-z})^{-1}. 
+$$
+我们也可将逻辑模型表述为
+$$
+\pr(y_{i}=1\mid x_{i}) =\frac{e^{x_{i} \tran \beta}}{1+e^{x_{i} \tran \beta}},
+$$
+或者，根据定义 $\text{logit}(z) = \log\frac{z}{1-z}$，我们可得
+\[
+\text{logit}\left\{ \pr(y_{i}=1\mid x_{i})\right\}  =x_{i} \tran \beta.
+\]
+
+假设 $x_{i1}$ 为二元变量。  
+在逻辑回归模型下，我们有
+\begin{eqnarray*}
+\beta_1 &=& \text{logit}\left\{ \pr(y_{i}=1\mid x_{i1} = 1,  \ldots )\right\}  - \text{logit}\left\{ \pr(y_{i}=1\mid x_{i1} = 0,\ldots)\right\}   \\
+&=& \log \frac{  \pr(y_{i}=1\mid x_{i1} = 1, \ldots)/\pr(y_{i}=0\mid x_{i1} = 1, \ldots)     }
+{  \pr(y_{i}=1\mid x_{i1} = 0, \ldots)/\pr(y_{i}=0\mid x_{i1} = 0, \ldots)    } ,
+\end{eqnarray*}
+其中 $\ldots$ 代表所有其他回归变量 $ x_{i2}, \ldots, x_{ip} $。
+因此，系数 $\beta_1$ 等于在其他回归变量固定的条件下，$x_{i1}$ 对 $y_i$ 产生的优势比的对数。 
+
+
+
+\subsection{最大似然估计}\label{sec::mle-logistic}
+
+
+设 $\pr(y_{i}=1\mid x_{i}) = \pi(x_{i},\beta)$。  
+为了估计参数 $\beta$，我们可以最大化下述似然函数：  
+\begin{align*}
+L(\beta)  
+&=\prod_{i=1}^{n}\left\{ \pi(x_{i},\beta)\right\} ^{y_{i}}\left\{ 1-\pi(x_{i},\beta)\right\} ^{1-y_{i}} \\
+& =\prod_{i=1}^{n}\left\{ \frac{\pi(x_{i},\beta)}{1-\pi(x_{i},\beta)}\right\} ^{y_{i}}\left\{ 1-\pi(x_{i},\beta)\right\} \\
+ & =\prod_{i=1}^{n}\left(e^{x_{i} \tran \beta}\right)^{y_{i}}\frac{1}{1+e^{x_{i} \tran \beta}}\\
+ & =\prod_{i=1}^{n}\frac{e^{y_{i}x_{i} \tran \beta}}{1+e^{x_{i} \tran \beta}}.
+\end{align*}  
+用 $\hat{\beta}$ 表示该最大化值，它被称为最大似然估计值（MLE）。对 $L(\beta)  $ 取对数并关于 $\beta$ 求导后，我们可以证明该 MLE 必须满足一阶条件：  
+$$
+\sumn  x_i  \{ y_i - \pi(x_{i}, \hat\beta)\} = 0.
+$$  
+若 $x_i$ 中包含截距项，则该 MLE 还必须满足  
+$$
+\sumn    \{ y_i - \pi(x_{i}, \hat\beta)\} = 0,
+$$  
+也就是说，观测到的 $y_i$ 的均值必须等于拟合概率值 $ \pi(x_{i}, \hat\beta)$ 的均值。
+
+
+运用最大似然估计的一般理论，我们可以证明该估计量对于真实参数 $\beta$ 而言具有一致性，且呈渐近正态分布：
+$$
+\sqrt{n}( \hat{\beta} -  \beta) \rightarrow \text{N}(0, V)
+$$
+其分布形式为，其中
+$
+V = E [  \pi(x_{i},\beta) \{1-  \pi(x_{i},\beta)\} x x\tran   ].
+$
+因此，我们可用 $$
+n^{-1} \sumn \pi(x_{i}, \hat\beta) \{1-  \pi(x_{i},\hat\beta)\}   x_i x_i\tran.
+$$ 来近似表示 $\hat{\beta} $ 的协方差矩阵。
+%$$
+%n^{-1} \sumn \frac{ e^{x_i\tran \hat\beta} }{(1 + e^{x_i\tran \hat\beta})^2}  x_i x_i\tran.
+%$$
+在 \ri{R} 中，\ri{glm} 函数能够计算出最大似然估计值，并输出相应的协方差矩阵。我们采用 \ri{lalonde} 中的数据来演示逻辑回归的应用，该数据中的二元结果变量用于反映1978年的实际收入情况。
+
+
+
+\begin{lstlisting}
+> library(Matching)
+> data(lalonde)
+> logit.re78 = glm(I(re78>0) ~ ., family = binomial, 
++                  data = lalonde)
+> summary(logit.re78)
+
+Call:
+glm(formula = I(re78 > 0) ~ ., family = binomial, data = lalonde)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.1789  -1.3170   0.7568   0.9413   1.0882  
+
+Coefficients:
+              Estimate Std. Error z value Pr(>|z|)  
+(Intercept)  1.910e+00  1.241e+00   1.539   0.1238  
+age         -2.812e-03  1.533e-02  -0.183   0.8545  
+educ        -2.179e-02  7.831e-02  -0.278   0.7808  
+black       -1.060e+00  5.041e-01  -2.103   0.0354 *
+hisp         2.741e-01  6.967e-01   0.393   0.6940  
+married      7.577e-02  3.057e-01   0.248   0.8042  
+nodegr      -1.984e-01  3.460e-01  -0.573   0.5664  
+re74         7.857e-06  3.173e-05   0.248   0.8044  
+re75         4.016e-05  6.058e-05   0.663   0.5074  
+u74         -6.177e-02  4.095e-01  -0.151   0.8801  
+u75          1.505e-02  3.518e-01   0.043   0.9659  
+treat        5.412e-01  2.222e-01   2.435   0.0149 *
+\end{lstlisting}
+
+ 
+
+\subsection{病例对照研究的扩展}\label{sec::case-control}
+
+在病例对照研究中，抽样过程是以二元结果作为条件的，也就是说，结果值为 $y_i=1$ 和 $y_i=0$ 的单位是以不同的概率被抽样的。设 $s_i$ 为抽样指示变量。在病例对照研究中，该变量作为 $y_i$ 的函数满足$$
+\pr(s_i =1\mid x_i, y_i) = \pr(s_i =1\mid  y_i) 
+$$而我们仅能观察到那些满足 $s_i = 1$ 的单位。 
+
+
+根据该模型以及病例对照研究的抽样机制来看，我们是否仍能运用逻辑回归来估计各项系数似乎并不明确。不过，\citet{prentice1979logistic}的研究得出了肯定的结论。在病例对照研究中，逻辑回归依然能够一致地估计出除截距项之外的所有系数。
+
+
+
+
+\subsection{带权重的逻辑回归}
+
+有时，第 $i$ 个单位会具有权重 $w_i$。此时我们可以通过求解$$
+\sumn  w_i x_i  \{ y_i - \pi(x_{i}, \hat\beta)\} = 0.
+$$来进行加权逻辑回归。  
+在\ri{R}中，我们可以在\ri{glm}函数中指定\ri{weights}以实现加权逻辑回归。 
+
+
+
+
+
+
+
+\section{作业习题}
+
+
+ 
+
+
+\paragraph{带有截距项的加权最小二乘样本}\label{hw::sample-ols-intercept}
+
+假设回归量 $x_i$ 包含了截距项。请证明：
+\begin{equation}\label{eq::OLS-mean-data}
+\bar{y}_w = \bar{x}_w\tran \hat{\beta}_w
+\end{equation}
+其中 $ \bar{x}_w =  \sumn w_i  x_i / \sumn w_i $ 以及 $ \bar{y}_w =  \sumn w_i  y_i / \sumn w_i $ 分别为 $x_i$ 与 $y_i$ 的加权平均值。 
+
+
+\paragraph{带有二元回归变量的总体普通最小二乘法}\label{problem::pols-binary}
+
+
+假设 $x$ 为二元变量。定义总体最小二乘法：
+$$
+(\alpha, \beta)  = \arg\min_{(a,b)} E \{  (y - a - bx)^2 \} .
+$$
+请证明：$\beta = E(y\mid x=1) - E(y\mid x=0)$，且 $\alpha = E(y\mid x=0)$。 
+
+
+\paragraph{单变量加权最小二乘法}\label{hw::wls-uni-binary}
+
+作为加权最小二乘法的一个特例，定义
+$$
+(\hat \alpha_w, \hat \beta_w  ) = \arg\min_{(a,b)} \sumn w_i(y_i - a - b x_i)^2
+$$
+其中 $w_i\geq 0$。请证明
+\begin{eqnarray}\label{eq::wls-beta}
+ \hat \beta_w  = \frac{  \sumn w_i (x_i -  \bar{x}_w) (y_i - \bar{y}_w) }{  \sumn w_i (x_i - \bar{x}_w)^2 }
+\end{eqnarray}
+以及
+\begin{eqnarray}\label{eq::wls-alpha}
+\hat \alpha_w = \bar{y}_w -  \hat \beta_w \bar{x}_w,
+\end{eqnarray}
+此处 $ \bar{x}_w =  \sumn w_i  x_i / \sumn w_i $ 与 $ \bar{y}_w =  \sumn w_i  y_i / \sumn w_i $ 分别为 $x_i$ 与 $y_i$ 的加权平均值。 
+
+
+
+进一步假设 $x_i$ 均为二元变量。请证明：  
+\begin{eqnarray}\label{eq::wls-10}
+\hat \beta_w  = \frac{ \sumn  w_i  x_i  y_i  }{ \sumn w_i  x_i  } - \frac{ \sumn w_i  (1-x_i)  y_i  }{ \sumn w_i  (1-x_i)  }.
+\end{eqnarray}  
+也就是说，如果在单变量加权最小二乘法中自变量为二元变量，那么该自变量的系数就等于加权均值之差。 
+
+
+备注：为证明\eqref{eq::wls-10}，可对加权最小二乘问题进行适当的重新参数化处理。否则，推导过程可能会相当繁琐。 
+
+
+
+
+\paragraph{具有正交回归量的OLS估计}\label{hw::ols-orthogonal}
+
+
+考虑对一个大小为 $n$ 的向量 $Y$ 和一个大小为 $n\times p$ 的矩阵 $X $ 进行普通最小二乘拟合，得到的系数为 $\hat{\beta}$。将矩阵 $X$ 划分为 $X = (X_1, X_2)$，其中 $X_1$ 是一个大小为 $n\times k$ 的矩阵，$X_2$ 是一个大小为 $n\times l$ 的矩阵，且满足 $p=k+l$。相应地，将 $\hat{\beta}$ 也划分为
+$$
+\hat{\beta} = \begin{pmatrix}
+\hat{\beta}_1\\
+\hat{\beta}_2
+\end{pmatrix} . 
+$$
+
+
+假设 $X_1$ 与 $X_2$ 正交，即 $X_1\tran X_2 = 0$。请证明：$\hat{\beta}_1$ 等于用 OLS 方法以 $X_1$ 对 $Y$ 进行回归所得的系数，而 $\hat{\beta}_2$ 等于用 OLS 方法以 $X_2$ 对 $Y$ 进行回归所得的系数。 
+
+
+
+
+
+\paragraph{对回归变量进行非退化变换后的OLS估计}\label{hw::ols-transform-regressors}
+
+
+
+定义 $\hat{\beta}$ 为将 $n$ 维向量 $Y$ 对 $n\times p$ 矩阵 $X $ 进行样本OLS拟合后所得的系数。  
+设 $\Gamma$ 为一个 $p\times p$ 的非退化矩阵，并定义 $X' = X\Gamma$。  
+定义 $\hat{\beta} ' $ 为将 $Y$ 对 $X' $ 进行样本OLS拟合后所得的系数。 
+
+请证明：
+$$
+ \hat{\beta}  =  \Gamma\hat{\beta} ' .
+$$
+
+
+
+\paragraph{ OLS估计量的方差}\label{hw::variance-ols-estimator}
+
+
+假设 $(x_{i},y_{i})_{i=1}^{n} \iidsim (x,y)$，且 $$
+E(y\mid x) = x\tran \beta,\quad \var(y\mid x) = \sigma^2(x).
+$$  
+试证明：最小二乘估计量 $\hat{\beta}$ 的条件均值为 $$
+E( \hat{\beta} \mid x_1,\ldots, x_n ) = \beta 
+$$条件方差为 $$
+\var( \hat{\beta} \mid x_1,\ldots, x_n )
+= \left(\sumn x_{i}x_{i} \tran \right)^{-1}
+\left(\sumn \sigma^2(x_i) x_{i}x_{i} \tran \right)
+\left(\sumn x_{i}x_{i} \tran \right)^{-1}.
+$$
+
+ 
+
+
+备注：该问题或许能为\eqref{eq::v-hat-ehw}与\eqref{eq::v-hat-ols}这两个方差估计量提供一些直观理解。
+

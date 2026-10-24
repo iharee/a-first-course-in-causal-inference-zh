@@ -1,0 +1,455 @@
+
+\chapter{在因果效应回归中使用倾向得分}\label{chapter::pscore-unification}
+ 
+
+自 \citet{rosenbaum1983central} 的开创性论文发表以来，文献中出现了许多关于倾向得分的创新性应用 \citep[e.g.,][]{bang2005doubly, robins2007comment, van2011targeted, vansteelandt2014regression}。本章将讨论两种使用倾向得分的简单方法： 
+\begin{enumerate}
+\item
+将倾向得分作为协变量纳入回归模型；
+\item
+以倾向得分的倒数作为权重进行回归分析。 
+\end{enumerate}
+我之所以选择重点介绍这两种方法，原因如下： 
+\begin{enumerate}
+\item
+它们易于实现，且仅需使用常规的统计软件即可完成回归运算；
+\item
+它们的统计性质与许多更为复杂的估计方法相当；
+\item
+它们可方便地扩展至包括机器学习算法在内的各种统计模型。
+\end{enumerate}
+
+ 
+\section{将倾向得分作为协变量的回归分析}
+\label{sec::regress-on-pscore}
+
+根据定理 \ref{thm::pscore-dimreduction}，若条件 $X$ 下可忽略性成立，那么条件 $e(X)$ 下该性质同样成立：
+$$
+Z\ind \{ Y(1) , Y(0)\} \mid e(X). 
+$$ 
+类似于 \eqref{eq::nonparametric-identification-tau}，$\tau$ 也可以通过如下方式非参数地估计：
+$$
+\tau = E\Big[   E\{ Y\mid Z=1, e(X) \} - E\{ Y\mid Z=0, e(X) \} \Big] ,
+$$
+这一结论也促使我们提出基于 $Y$ 对 $Z$ 及 $e(X)$ 回归的估计方法。 
+
+
+
+最简单的回归设定是将$Y$对$\{1, Z, e(X)\}$作 OLS 回归，以$Z$的系数作为估计量，记为$\tau_{e}$。为简化讨论，先考虑总体 OLS：
+$$
+\arg\min_{a,b,c}  E\{ Y - a - bZ - c  e(X)  \}^2
+$$
+将$Z$的系数定义为$\tau_{e}$。若倾向得分模型正确，且结果模型确实关于$Z$和$e(X)$线性，则对应估计量一致估计$\tau$。更有意思的是，只要倾向得分模型正确，即使结果模型完全误设，$\tau_{e}$仍对应第\ref{sec::other-estmand-overlap}节介绍的$\tau_\textsc{O}$。 
+
+\begin{theorem}\label{thm::ols-pscore-tau-o}
+若 $Z\ind \{  Y(1), Y(0) \} \mid X$，则在总体OLS拟合中 $Y$ 对 $\{1, Z, e(X)\}$ 回归时 $Z$ 的系数满足
+$$
+\tau_e=  \tau_\textsc{O} = \frac{  E\{ h_\textsc{O}(X) \tau(X) \} }{ E\{ h_\textsc{O}(X) \} },
+$$
+其中 $ h_\textsc{O}(X)  = e(X) \{ 1- e(X)  \} $ 且 $\tau(X) = E\{ Y(1) - Y(0) \mid X  \}$。 
+\end{theorem}
+
+
+定理\ref{thm::ols-pscore-tau-o}有一个特别之处：不再需要重叠性条件。即使某些单位的倾向得分$e(X)$为$0$或$1$，其权重$ e(X) \{ 1- e(X) \}$也为零，因此不会对最终参数$ \tau_\textsc{O} $作贡献。 
+
+
+\begin{myproof}{定理}{\ref{thm::ols-pscore-tau-o}}利用第\ref{appendix::fwl-theorem}节回顾的 FWL 定理证明定理\ref{thm::ols-pscore-tau-o}。根据 FWL 定理，可分两步求得$\tau_e$：
+\begin{enumerate}
+\item
+先对 $Z$ 以 $\{1, e(X)\}$ 作OLS拟合以获取残差 $\tilde{Z}$；
+\item
+再对 $Y$ 以 $\tilde{Z}$ 作OLS拟合以求得 $\tau_e$。 
+\end{enumerate}
+
+%: first, we obtain the residual $\tilde{Z}$ from the OLS fit of $Z$ on $\{1, e(X)\}$; then, we obtain $\tau_e$ from the OLS fit of $Y$ on $\tilde{Z}$. 
+
+我们还可借助第 \ref{appendix::tower-property} 节介绍的协方差性质简化计算。首先，$Z$ 对 $\{1, e(X)\}$ 回归时 $e(X)$ 的系数为
+\begin{eqnarray*}
+\frac{ \cov\{Z, e(X)  \}  }{  \var\{ e(X) \} }
+&=&  \frac{  E [ \cov\{Z, e(X)  \mid X\}  ] + \cov\{  E(Z\mid X), e(X) \}   }{  \var\{ e(X) \}  } \\
+&=& \frac{0 +\var\{ e(X) \}  }{ \var\{ e(X) \} } = 1,
+\end{eqnarray*}
+故截距项为 $E(Z) - E\{e(X)\} = 0$，残差 $\tilde{Z} = Z - e(X)$；该结果与 $Z - e(X)$ 与 $X$ 任何函数均不相关的事实相符。 
+
+因此，可将$Y$对中心化变量$Z - e(X)$作一元 OLS 回归，得到$\tau_e$：
+$$
+\tau_e = 
+\frac{ \cov\{  Z-e(X) , Y \}  }{  \var\{ Z - e(X) \} } .
+$$
+分母简化为
+\begin{eqnarray*}
+\var\{ Z - e(X) \} &=& E\{ Z - e(X)\}^2 \\
+&=& E\{ Z + e(X)^2 - 2Ze(X)\} \\
+&=&E\{ e(X) + e(X)^2 - 2e(X)^2 \} \\
+&=&E\{ h_\textsc{O}(X) \} .
+\end{eqnarray*}
+分子简化为
+\begin{eqnarray*}
+&&\cov\{ Z-e(X)  , Y\} \\
+&=&  E[ \{ Z-e(X)  \} Y ] \\
+&=& E[ \{ Z-e(X)  \} ZY(1) ] + E[ \{ Z-e(X)  \} (1-Z)Y(0) ] \\
+&& \quad\quad\quad\quad (\text{by } Y = ZY(1)  + (1-Z)Y(0)) \\
+&=& E[ \{ Z- Ze(X)  \} Y(1)]  - E[  e(X)  (1-Z)Y(0) ]  \\
+&=&  E[  Z\{ 1- e(X)  \} Y(1) ] - E [ e(X)  (1-Z)Y(0) ] \\
+&=& E[  e(X)\{ 1- e(X)  \} \mu_1(X)]  - E[  e(X)  \{ 1- e(X)  \}  \mu_0(X) ]\\
+&&   \quad\quad\quad\quad (\text{tower property and ignorability}) \\
+&=& E\{ h_\textsc{O}(X) \tau(X) \} .
+\end{eqnarray*}
+从而得到结论。 
+ \end{myproof}
+ 
+ 
+ 由定理 \ref{thm::ols-pscore-tau-o} 的证明可知：只需对 $Y$ 以去均值化处理后的变量 $ Z-e(X)$ 作OLS拟合即可。\citet{lee2018simple} 也提出了类似方法。此外，将 $X$ 加入回归模型虽可能提升有限样本下的估计效率，却不会改变估计量本质仍为 $\tau_\textsc{O}$ 的事实。下文推论总结了上述结论。
+ 
+ \begin{corollary}\label{coro::regress-on-pscore}
+若 $Z\ind \{  Y(1), Y(0) \} \mid X$，则 
+ \begin{enumerate}
+ \item[(1)]
+ 在总体OLS拟合中，$Y$ 对 $Z-e(X)$ 或 $\{1, Z-e(X) \}$ 回归时 $Z-e(X)$ 的系数即为 $\tau_\textsc{O}$；
+ \item[(2)]
+ 在总体OLS拟合中，$Y$ 对 $\{1, Z, e(X), X\}$ 回归时 $Z$ 的系数同样等于 $\tau_\textsc{O}$。 
+ \end{enumerate}
+ \end{corollary}
+ 
+ 
+ 
+\begin{myproof}{推论}{\ref{coro::regress-on-pscore}}(1) 第一个结论就是定理\ref{thm::ols-pscore-tau-o}证明中的中间步骤。第二个结论成立，是因为$Z-e(X) $均值为零，将$Y$对$Z-e(X)$或$\{1, Z-e(X) \}$回归，不改变其系数。 
+
+
+(2) 再次使用 FWL 定理。先将$Z$对$\{1, e(X), X\}$作总体 OLS 回归，其残差为$Z-e(X) $，因为
+$$
+Z-e(X) = Z-0 - 1\cdot e(X) - 0\tran X $$
+且$Z-e(X)$与$X$的任意函数都不相关。因此，将$Y$对$\{1, Z, e(X), X\}$作总体 OLS 回归所得$Z$系数，等于将$Y$对$Z-e(X)$作总体 OLS 回归所得的$Z$系数。 
+  \end{myproof}
+  
+  
+  
+  定理 \ref{thm::ols-pscore-tau-o} 促使我们设计两步法估计 $\tau_\textsc{O} $：
+\begin{enumerate}
+\item
+拟合倾向得分模型以得到 $\hat e(X_i) $；
+\item
+对 $Y_i$ 以 $(1,X_i, \hat e(X_i) )$ 作OLS回归求得 $Z_i$ 的系数。 
+\end{enumerate}  
+推论\ref{coro::regress-on-pscore}(1) 给出$\tau_\textsc{O} $的一种两步估计方法： 
+\begin{enumerate}
+\item
+拟合倾向得分模型以得到 $\hat e(X_i) $；
+\item
+对 $Y_i$ 以 $Z_i - \hat e(X_i)$ 作OLS回归求得 $Z_i$ 的系数。   
+\end{enumerate}
+推论\ref{coro::regress-on-pscore}(1) 还给出$\tau_\textsc{O} $的另一种两步估计方法： 
+\begin{enumerate}
+\item
+拟合倾向得分模型以得到 $\hat e(X_i) $；
+\item
+对 $Y_i$ 以 $(1, Z_i , \hat e(X_i),  X_i ) $ 作OLS回归求得 $Z_i$ 的系数。   
+\end{enumerate}
+尽管OLS便于获得点估计值，但由于第一步估计存在不确定性，其标准误往往偏离真实值。此时可通过自助法近似计算实际标准误。 
+  
+
+  
+  
+ 
+ 
+\citet{robins1992estimating}讨论了多种基于倾向得分的 OLS 估计量。以上结论似乎是其一般理论的特例，但他们未指出与重叠权重估计目标的联系；\citet{li2018balancing}重新提出了这一目标。\citet{lee2018simple}从另一角度提出将$Y$对$Z-e(X)$回归，也未联系\citet{robins1992estimating}和\citet{li2018balancing}中的已有结论。
+
+
+\citet{rosenbaum1983central}提出，将$Y$对$\{1, Z, e(X), Ze(X)\}$作 OLS 回归来估计平均因果效应。结果模型正确时，估计量一致；模型错误时，解释复杂得多。\citet{little2004robust}建议将$Y$对$Z$及$e(X)$的灵活函数作 OLS 回归，并证明它有一定的双重稳健性质。\footnote{例如，可加入$e(X)$的多项式项；\citet{little2004robust}建议使用样条。}由于实现较复杂，这里不展开讨论。 
+
+
+
+\section{以倾向得分倒数加权的回归分析} 
+
+
+\subsection{平均因果效应}
+
+
+先重新考察$\tau$的 Hájek 估计量：
+$$
+\hat{\tau}^\textup{hajek} = \frac{  \sumn \frac{Z_i Y_i}{ \hat{e}(X_i) }  }{  \sumn \frac{Z_i }{ \hat{e}(X_i) } }
+- \frac{  \sumn \frac{ (1-Z_i) Y_i}{ 1 - \hat{e}(X_i) }  }{  \sumn \frac{ 1-Z_i}{ 1 - \hat{e}(X_i) }  },
+$$
+它等于处理组与对照组结果加权均值之差，数值上也等于下面将$Y_i$对$(1,Z_i)$作加权最小二乘（WLS）回归时$Z_i$的系数。
+
+
+\begin{proposition}
+\label{prop::hajek-wls}
+$\hat{\tau}^\textup{hajek}$等于以下 WLS 中的$\hat{\beta}$：
+$$
+(\hat{\alpha}, \hat{\beta}) = \arg\min_{\alpha, \beta} \sum_{i=1}^n w_i(Y_i - \alpha - \beta Z_i)^2
+$$
+权重为
+\begin{eqnarray}\label{eq::weight-hajek}
+w_i =  \frac{Z_i}{   \hat{e}(X_i)  } + \frac{1-Z_i}{ 1-  \hat{e}(X_i) } 
+= 
+\begin{cases}
+\frac{1}{\hat{e}(X_i) } & \text{ if } Z_i=1;\\
+\frac{1}{ 1- \hat{e}(X_i) } & \text{ if } Z_i=0.
+\end{cases} 
+\end{eqnarray}
+\end{proposition}
+
+\citet{imbens2004nonparametric}指出了命题\ref{prop::hajek-wls}的结论，证明留作习题\ref{hw::ate-hajek-wls}。由命题\ref{prop::hajek-wls}，可方便地通过 WLS 求得$\hat{\tau}^\textup{hajek}$。但由于倾向得分是估计的，WLS 报告的标准误并非$\hat{\tau}^\textup{hajek}$的正确标准误。用自助法可方便地近似真实标准误。 
+
+ 
+
+
+
+为什么 WLS 给出$\tau$的一致估计？回顾恒定倾向得分的完全随机实验，可直接用$Y_i$对$(1,Z_i)$作 OLS 回归时$Z_i$的系数估计$\tau$。观察性研究中，各单位接受处理或对照的概率不同。若处理单位的权重为$1/e(X_i)$、对照单位的权重为$1/\{ 1-e(X_i)\}$，则两组都能代表整个总体。加权实际上构造了一个伪随机实验，因此加权均值差一致估计$\tau$。$\hat{\tau}^\textup{hajek}$与 WLS 数值等价不仅是有趣的代数事实，还能启发更复杂的协变量调整估计量。下面给出一个推广。
+
+
+在完全随机实验中，协变量按$\bar{X} = 0$中心化后，可用将$Y_i$对$(1,Z_i, X_i, Z_iX_i)$作 OLS 回归所得$Z_i$系数估计$\tau$，即利用协变量提高效率的\citet{lin2013}估计量。自然的观察性研究推广是：将$Y_i$对$(1,Z_i, X_i, Z_iX_i)$作 WLS 回归，采用\eqref{eq::weight-hajek}中的权重，以$Z_i$系数估计$\tau$。\citet{hirano2001estimation}曾在应用中使用这一估计量。完全交互的线性模型等价于分别对处理组与对照组拟合两个线性模型。若
+$$
+E(Y\mid Z=1, X) = \beta_{10} +  \beta_{1x}\tran X,\quad
+E(Y\mid Z=0, X) = \beta_{00} +  \beta_{0x}\tran X,
+$$
+设定正确，则 OLS 与 WLS 都一致估计模型系数，$Z$系数也一致估计$\tau$。更有意思的是，倾向得分模型正确、结果模型错误时，WLS 的$Z$系数仍一致估计$\tau$，即该 WLS 估计量具有双重稳健性。\citet{robins2007comment}讨论了这一性质，并将其归于 M. Joffe 未发表的论文。下面详述。 
+
+
+
+令$e(X_i, \hat{\alpha})$为倾向得分拟合值，$( \mu_1(X_i, \hat{\beta}_1),  \mu_0(X_i, \hat{\beta}_0)) $为 WLS 得到的结果均值拟合值。结果回归估计量为
+$$
+\hat{\tau}^\text{reg}_\text{wls} = \frac{1}{n} \sumn \mu_1(X_i, \hat{\beta}_1) - \frac{1}{n} \sumn \mu_0(X_i, \hat{\beta}_0)
+$$
+$\tau$的双重稳健估计量为
+$$
+\hat{\tau}^\text{dr}_\text{wls}  = 
+\hat{\tau}^\text{reg}_\text{wls}  + \frac{1}{n} \sumn  \frac{Z_i \{ Y_i- \mu_1(X_i, \hat{\beta}_1)\}  }{  e(X_i, \hat{\alpha}) } 
+- \frac{1}{n} \sumn  \frac{(1-Z_i) \{ Y_i- \mu_0(X_i, \hat{\beta}_0)\}  }{  1- e(X_i, \hat{\alpha}) }   .
+$$
+一个有意思的结论是：双重稳健估计量等于结果回归估计量；采用权重\eqref{eq::weight-hajek}时，两者都等于将$Y_i$对$(1,Z_i, X_i, Z_iX_i)$作 WLS 回归所得$Z_i$系数。 
+
+
+
+
+ 
+
+\begin{theorem}
+\label{thm::numerical-equivalence-wls-dr}
+若$\bar{X}=0$，且$( \mu_1(X_i, \hat{\beta}_1),  \mu_0(X_i, \hat{\beta}_0)) = (  \hat \beta_{10} +   \hat \beta_{1x}\tran X_i ,   \hat \beta_{00} +   \hat\beta_{0x}\tran X_i )$来自将$Y_i$对$(1,Z_i, X_i, Z_iX_i)$、以\eqref{eq::weight-hajek}为权重的 WLS 拟合，则
+$$
+\hat{\tau}^\textup{dr}_\textup{wls}  = \hat{\tau}^\textup{reg}_\textup{wls} 
+%=  \frac{1}{n} \sumn (\hat \beta_{10} +   \hat \beta_{1x}\tran X_i)   - \frac{1}{n} \sumn (\hat \beta_{00} +   \hat\beta_{0x}\tran X_i) 
+= \hat \beta_{10} - \hat \beta_{00} ,
+$$
+它就是 WLS 中$Z_i$的系数。 
+\end{theorem}
+
+\begin{myproof}{定理}{\ref{thm::numerical-equivalence-wls-dr}}将$Y_i$对$(1,Z_i, X_i, Z_iX_i)$作 WLS 回归，等价于分别使用处理组、对照组数据拟合两个 WLS 模型。二者都有截距，因此加权残差的均值为零（见\eqref{eq::OLS-mean-data}）：
+$$
+\sumn  \frac{Z_i ( Y_i- \hat \beta_{10} -  \hat \beta_{1x}\tran X_i ) }{  \hat{e}(X_i) }   =0 
+$$
+和
+$$
+\sumn  \frac{(1-Z_i) (  Y_i-\hat \beta_{00}  -   \hat\beta_{0x}\tran X_i   ) }{  1-\hat{e}(X_i) }  = 0 .
+$$
+所以$\hat{\tau}^\text{dr} $与$\hat{\tau}^\text{reg}$之差恰好为零。协变量中心化后，二者均简化为
+\begin{eqnarray*}
+ \frac{1}{n} \sumn (\hat \beta_{10} +   \hat \beta_{1x}\tran X_i)   - \frac{1}{n} \sumn (\hat \beta_{00} +   \hat\beta_{0x}\tran X_i)  
+&=& \hat \beta_{10} - \hat \beta_{00}  + (\hat \beta_{1x} - \hat\beta_{0x})\tran \bar{X} \\
+&=&\hat \beta_{10} - \hat \beta_{00}
+\end{eqnarray*}
+因而均等于将$Y_i$对$(1,Z_i, X_i, Z_iX_i)$作 WLS 回归所得$Z_i$系数。 
+\end{myproof} 
+
+
+\citet{freedman2008weighting}根据一些模拟不鼓励使用上述 WLS 估计量。他们在结果同方差的模拟设定中发现，结果模型正确时，WLS 变异较大，表现不如 OLS。但这不是一般结论：若误差方差与倾向得分的倒数成正比，WLS 将比 OLS 更有效率。 
+
+\citet{freedman2008weighting}还指出，WLS 拟合给出的标准误忽略了估计倾向得分的不确定性，因而不一致。用自助法近似 WLS 估计量的方差，就可方便地解决。 
+
+
+不过，\citet{freedman2008weighting}也发现“加权在某些情况下可能有帮助”，因为结果模型错误时，只要倾向得分模型正确，WLS 估计量仍一致。 
+
+
+
+最后表 \ref{table::regression-causal-cre-obs} 总结了RCT与观察性研究中各类回归估计法的特性。 
+
+
+
+\begin{table}
+\caption{完全随机实验与无混杂观察性研究中的回归估计量。权重$w_i$在\eqref{eq::weight-hajek}中定义。假定协变量已按$\bar{X} = 0$中心化。}\label{table::regression-causal-cre-obs}
+\begin{tabular}{|c|cc|}
+\hline 
+ & CRE & 无混杂观察性研究 \\
+ \hline 
+不含 $X$ &  $Y_i\sim (1, Z_i)$ & $Y_i\sim (1, Z_i)$ 加权重 $w_i$   \\
+含 $X$ & $Y_i\sim (1, Z_i ,X_i, Z_i X_i ) $ & $Y_i\sim (1, Z_i ,X_i, Z_i X_i )$ 加权重 $w_i$  \\
+\hline 
+\end{tabular}
+\end{table}
+
+
+
+\subsection{处理组的平均因果效应}
+
+$\tau_\textsc{T}$的结论与$\tau$类似。首先，$\tau_\textsc{T}$的 Hájek 估计量
+$$
+\hat{\tau}_\textsc{T}^\text{hajek} = \hat{\bar{Y}}(1) 
+- \frac{  \sumn \hat{o}(X_i) (1-Z_i) Y_i }{ \sumn \hat{o}(X_i) (1-Z_i) } ,
+$$
+其中$\hat{o}(X_i) = \hat{e}(X_i) / \{ 1- \hat{e}(X_i) \}$，等于下面将$Y_i$对$(1,Z_i)$作 WLS 回归所得的$Z_i$系数。
+
+
+\begin{proposition}
+\label{prop::hajek-att}
+$\hat\tau_\textsc{T}^{\text{hajek}}$与下面 WLS 中的$\hat{\beta}$数值相同：
+$$
+(\hat{\alpha}, \hat{\beta}) = \arg\min_{\alpha, \beta} \sum_{i=1}^n  w_{\textsc{T}i}  (Y_i - \alpha - \beta Z_i)^2
+$$
+权重为
+\begin{eqnarray}\label{eq::weight-hajek-att}
+w_{\textsc{T}i} = Z_i +(1-Z_i )  \hat{o}(X_i)
+= 
+\begin{cases}
+1 & \text{ if } Z_i=1;\\
+ \hat{o}(X_i)   & \text{ if } Z_i=0.
+\end{cases} 
+\end{eqnarray}
+\end{proposition}
+
+与命题\ref{prop::hajek-wls}一样，命题\ref{prop::hajek-att}也是纯粹的线性代数结论，证明留作习题\ref{hw::ate-hajek-wls}。 
+
+
+其次，若按$\hat{\bar{X}}(1) = 0$中心化协变量，则可将$Y_i$对$(1,Z_i, X_i, Z_iX_i)$作 WLS 回归，采用\eqref{eq::weight-hajek-att}的权重，用$Z_i$系数估计$\tau_\textsc{T}$。类似地，它等于结果回归估计量
+$$
+\hat{\tau}_{\textsc{T},\text{wls}}^\text{reg} = \hat{\bar{Y}}(1) - \frac{1}{n_1} \sumn Z_i \mu_0(X_i, \hat{\beta}_0),
+$$
+也等于双重稳健估计量
+$$
+\hat{\tau}_{\textsc{T},\text{wls}}^\text{dr} =\hat{\tau}_{\textsc{T},\text{wls}}^\text{reg} 
+- \frac{1}{n_1} \sumn  \hat{o}(X_i)  (1-Z_i) \{  Y_i- \mu_0(X_i, \hat{\beta}_0) \} .
+$$
+
+\begin{theorem}
+\label{thm::numerical-equivalence-wls-dr-att}
+若$\hat{\bar{X}}(1) = 0$，且$ \mu_0(X_i, \hat{\beta}_0) =  \hat \beta_{00} +   \hat\beta_{0x}\tran X_i$来自将$Y_i$对$(1,Z_i, X_i, Z_iX_i)$、采用权重\eqref{eq::weight-hajek-att}的 WLS 拟合，则
+$$
+\hat{\tau}_{\textsc{T},\textup{wls}}^\textup{dr}  = \hat{\tau}_{\textsc{T},\textup{wls}}^\textup{reg} 
+= \hat \beta_{10} - \hat \beta_{00} ,
+$$
+它就是 WLS 中$Z_i$的系数。 
+\end{theorem}
+
+
+\begin{myproof}{定理}{\ref{thm::numerical-equivalence-wls-dr-att}}根据处理组与对照组的 WLS 拟合，有
+\begin{eqnarray}
+\label{eq::wls-treated-att}
+\sumn Z_i ( Y_i -  \hat \beta_{10} -  \hat \beta_{1x}\tran X_i ) &=& 0 ,\\
+\label{eq::wls-control-att}
+ \sumn \hat{o}(X_i)  (1-Z_i) ( Y_i - \hat \beta_{00} - \hat\beta_{0x}\tran X_i ) &=& 0.
+\end{eqnarray}
+第二个结果\eqref{eq::wls-control-att}保证$\hat{\tau}_{\textsc{T},\text{wls}}^\text{dr}  = \hat{\tau}_{\textsc{T},\text{wls}}^\text{reg} $。二者均简化为
+$$
+ \hat{\bar{Y}}(1) 
+-  \frac{1}{n_1} \sumn Z_i   (\hat \beta_{00} +   \hat\beta_{0x}\tran X_i)
+= \frac{1}{n_1} \sumn  Z_i(Y_i - \hat \beta_{00} - \hat\beta_{0x}\tran X_i) .
+$$
+协变量按$\hat{\bar{X}}(1) = 0$中心化后，第一个结果\eqref{eq::wls-treated-att}给出$\hat{\bar{Y}}(1)  =  \hat \beta_{10} $，从而进一步简化为$ \hat \beta_{10} - \hat \beta_{00}$。 
+\end{myproof}
+
+
+
+
+
+
+\section{作业习题}
+
+\paragraph{Hajek估计量为WLS估计量}\label{hw::ate-hajek-wls}
+
+证明命题 \ref{prop::hajek-wls} 与 \ref{prop::hajek-att}。提示：此为单变量WLS问题的特殊情形。 
+
+注：这些都是一元 WLS 习题\ref{hw::wls-uni-binary}的特例。 
+
+ 
+\paragraph{预测型估计量与双重稳健估计量}\label{hw::dr-projective-estimator}
+
+另一个结果回归估计量是预测型估计量
+$$
+\hat{\tau}^\text{pred} = 
+\hat{\mu}_1^\text{pred} - \hat{\mu}_0^\text{pred} 
+$$
+其中
+$$
+\hat{\mu}_1^\text{pred} = 
+\frac{1}{n} \sumn \left\{  Z_i Y_i + (1-Z_i)  \mu_1(X_i, \hat{\beta}_1)   \right\}
+$$
+和
+$$
+\hat{\mu}_0^\text{pred}  = 
+\frac{1}{n} \sumn \left\{  Z_i \mu_0(X_i, \hat{\beta}_1) + (1-Z_i) Y_i  \right\} .
+$$
+它不同于前面的结果回归估计量：只预测反事实结果，不重新预测已经观测到的结果。 
+
+证明：若$(\mu_1(X_i, \hat{\beta}_1), \mu_0(X_i, \hat{\beta}_1) ) =  
+( \hat \beta_{10} +   \hat \beta_{1x}\tran X_i, \hat \beta_{00} +   \hat\beta_{0x}\tran X_i)$分别来自处理组与对照组中$Y_i$对$(1, X_i)$的 WLS 拟合，且权重为
+\begin{eqnarray}
+\label{eq::odds-weight-predictive}
+w_i =  Z_i/\hat{o}(X_i) + (1-Z_i) \hat{o}(X_i)
+= \begin{cases}
+\frac{1}{\hat{o}(X_i)} = \frac{ 1-  \hat{e}(X_i) }{ \hat{e}(X_i) } & \text{ if } Z_i=1;\\
+ \hat{o}(X_i) = \frac{  \hat{e}(X_i)  }{ 1-\hat{e}(X_i)} & \text{ if } Z_i=0.
+\end{cases} 
+\end{eqnarray}
+则双重稳健估计量等于$\hat{\tau}^\text{pred} $。
+
+注：\citet{cao2009improving}和\citet{vermeulen2015bias}从其他更理论化的角度论证了\eqref{eq::odds-weight-predictive}中的权重。 
+
+
+
+\paragraph{含二分结果变量的加权逻辑回归}
+\label{hw::wlogit-dr}
+对二元结果变量改用逻辑回归，证明在相应权重下双重稳健估计量仍等于结果回归估计量。此结论对 $\tau$ 与 $\tau_\textsc{T}$ 均适用。 
+
+
+
+\paragraph{模型设定错误的因果推断}
+
+
+
+
+将$Y$对$ (1, Z, X) $的总体 OLS 定义为
+$$
+(\beta_0, \beta_1, \beta_2) = \arg\min_{b_0, b_1, b_2}   E(Y - b_0 - b_1 Z - b_2\tran X)^2. 
+$$
+回顾$e(X) = \pr(Z=1\mid X)$为倾向得分，定义$\tilde{e}(X) = \gamma_0+\gamma_1\tran X$为$Z$在$X$上的 OLS 投影，其中% (see Chapter \ref{appendix::basic-linear-regression})
+$$
+(\gamma_0, \gamma_1) =  \arg\min_{c_0, c_1}   E(Z - c_0 -  c_1\tran X)^2. 
+$$
+
+\begin{enumerate}
+\item
+证明
+$$
+\beta_1 = \frac{    E [  \tilde{w}(X) \{ \mu_1(X) - \mu_0(X) \} ]  }{   E \{ \tilde{w}(X) \} }
++ \frac{  E [  \{  e(X) - \tilde{e}(X)  \}  \mu_0(X)  ] }{  E \{ \tilde{w}(X) \}  }
+$$
+其中$\tilde{w}(X) = e(X)\{ 1 - \tilde{e}(X)  \}$。 
+
+\item
+若$X$包含离散协变量的虚拟变量，证明
+$$
+\beta_1 = \frac{    E [  w(X) \{ \mu_1(X) - \mu_0(X) \} ]  }{   E \{ w(X) \} }
+$$
+其中$w(X) = e(X)\{ 1 - e(X)  \}$为第\ref{sec::other-estmand-overlap}节引入的重叠权重。 
+
+\end{enumerate}
+
+
+注：\citet{vansteelandt2021assumption}给出了第一部分的公式，但未详证。第二部分的结论在文献中已多次推导\citep[e.g.,][]{angrist1998estimating, ding2021frisch}。 
+
+
+\paragraph{分析 Karolinska 研究所的数据集}\label{hw::Karolinska-pscore}
+
+重做习题 \ref{hw::Karolinska-dr}，以本章方法估计 $\tau_\textsc{O}$ 与 $\tau$。 
+
+
+ 
+ 
+
+
+ \paragraph{推荐阅读}\citet{kang2007demystifying}通过模拟，将双重稳健估计量与多种其他估计量比较，作了批判性评述。\citet{robins2007comment}对\citet{kang2007demystifying}给出了富有洞见的评论。   
+ 
+ 
+ 
+

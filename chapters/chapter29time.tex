@@ -1,0 +1,967 @@
+ 
+\chapter{时变处理与混杂因素}
+ \label{chapter::timevarying}
+ 
+
+在生物医学与社会科学领域，涉及随时间变化的处理方式的研究十分常见。詹姆斯·罗宾斯大力推动了生物统计学领域的相关研究。
+
+一个典型的例子是：HIV感染者可能会随时间变化而间断性地服用叠氮胸苷这种抗逆转录病毒药物\citep{robins2000marginal, hernan2000marginal}。类似的问题也存在于其他领域。在教育领域，一个典型的例子是：学生可能会随时间变化而接受不同类型的教学指导\citep{hong2008causal}。在政治学领域，一个典型的例子是：候选人会依据随时变化的民意调查数据以及对手的动向来不断调整自身的竞选策略\citep{blackwell2013framework}。 
+
+
+涉及时间变化型处理的因果推断并非单一时间点处理下的因果推断的简单延伸。其主要难点在于时间变化的混杂因素。即便我们假设所有时间变化的混杂因素均可被观测到，我们在对这些混杂因素进行调整时仍会面临诸多统计难题。一方面，我们需要依据这些混杂因素进行分层处理以消除混杂影响；另一方面，若依据处理后的变量进行分层则会导致偏差。正是由于这两项目标相互冲突，涉及时间变化型处理及混杂因素的因果推断便需要更为复杂的统计方法。这也是本章要探讨的核心内容。 
+
+ 
+
+
+为尽量减轻符号负担，本章用两个时间点的处理来说明最重要的思想。推广到多个时间点在概念上并不困难，但在有限样本中会遇到技术上的复杂性。本章将讨论这些困难，并把一般性结果留在习题\ref{problem::g-formula-multiple-time}至\ref{problem::snm-multiple-time}中。 
+
+
+
+\section{基本设定与序贯可忽略性}
+
+
+首先考虑在两个时间点的处理情况。具有两个时间点的变量其时间顺序（而非因果图）如下所示：
+$$
+X_0 \rightarrow Z_1 \rightarrow X_1 \rightarrow Z_2 \rightarrow Y 
+$$
+其中 
+\begin{itemize}
+\item
+$X_0$ 表示处理前的基线协变量；
+\item
+$Z_1$ 表示时间点1时的处理情况；
+\item
+$X_1$表示时间点1的处理之后、时间点2的处理之前的时变协变量；
+\item
+$Z_2$ 表示时间点2时的处理情况；
+\item
+$Y$表示结果。 
+\end{itemize}
+
+
+对于具有二元处理方式 $(Z_1, Z_2 )$ 的情形，每个单位都存在四种潜在结果  
+$$
+Y(z_1, z_2)  \text{ for } z_1, z_2  = 0, 1.
+$$  
+实际观测到的结果则等于  
+$$
+Y = Y(Z_1,Z_2) = \sum_{z_1=0,1} \sum_{z_2=0,1}  1(Z_1=z_1) 1(Z_2=z_2) Y(z_1, z_2).
+$$  
+我将重点探讨满足序贯可忽略性这一典型情形，也就是说，处理方式的分配是依据已观测到的历史信息而依次进行随机化的。
+
+\begin{assumption}
+[序贯可忽略性]
+\label{assume::sr-time-varying} 
+(1)
+给定 $X_0$ 时，$Z_1$ 是随机分配的：
+$$
+Z_1 \ind Y(z_1, z_2) \mid X_0 \text{ for } z_1, z_2  = 0, 1.
+$$
+
+(2)
+在给定$( Z_1, X_1, X_0)$的条件下，$Z_2$是随机分配的：
+$$
+Z_2\ind Y(z_1, z_2) \mid (Z_1, X_1, X_0) \text{ for } z_1, z_2  = 0, 1.
+$$
+\end{assumption}
+ 
+ 
+ 图 \ref{fig::si-simple} 是一个与假设 \ref{assume::sr-time-varying} 相对应的简单因果图，该图中不存在任何未测量的混杂因素。 
+ 
+\begin{figure}
+\bigskip 
+$$
+ \xymatrix{
+ Z_1 \ar[r]  \ar@/^1.3pc/[rr]  \ar@/^2.0pc/[rrr] & X_1  \ar@/^1pc/[rr]\ar[r]  & Z_2  \ar[r] & Y
+ }
+ $$
+ \caption{假设\ref{assume::sr-time-varying}成立，且$X_1$与$Y$之间不存在未测量的混杂因素$U$。该因果图是以处理前协变量$X_0$为条件而建立的。}\label{fig::si-simple}
+\end{figure}
+
+
+
+  图 \ref{fig::si-complex} 是一个更为复杂的因果图，它对应于假设 \ref{assume::sr-time-varying}。序贯可忽略性仅排除了处理变量 $( Z_1, Z_2) $ 与结果 $Y$ 之间的混杂效应，却并未排除随时间变化的协变量 $X_1$ 与结果 $Y$ 之间存在的未测量混杂因素。即便在满足序贯可忽略性的条件下，$U$ 的存在仍会引发诸多微妙的问题。 
+
+\begin{figure}
+\bigskip 
+$$
+ \xymatrix{
+ Z_1 \ar[r] \ar@/^1.3pc/[rr] \ar@/^2.0pc/[rrr] & X_1  \ar@/^1pc/[rr]\ar[r]  & Z_2  \ar[r] & Y \\
+                                             &                                             &U\ar[lu]\ar[ru]
+ }
+ $$
+ \caption{假设\ref{assume::sr-time-varying}在存在$X_1$与$Y$之间未测量混杂因素的情况下仍然成立。该因果图是以处理前协变量$X_0$为条件而构建的。}\label{fig::si-complex}
+\end{figure}
+
+
+
+\section{g-公式与结果建模}
+\label{section:si-outcome-regression}
+
+
+
+请回忆一下在单一时间点进行处理时的基于结果的识别公式：
+$$
+E\{  Y(z) \}  = E\{  E(Y\mid Z=z, X) \} .
+$$
+当 $X$ 为离散变量时，该公式可简化为
+$$
+E\{  Y(z) \}  = \sum_x E(Y\mid Z=z, X=x) \pr(X=x) ;
+$$
+而当 $X$ 为连续变量时，该公式可简化为
+$$
+E\{  Y(z) \}  =  \int E(Y\mid Z=z, X=x) f (x) \text{d} x.
+$$
+下述结果将该公式进一步拓展至在两个时间点均进行处理的情形。 
+ 
+ 
+ 
+ \begin{theorem}
+\label{thm::sr-outcome}
+在假设\ref{assume::sr-time-varying}的条件下，  
+\begin{equation}\label{eq::identification-si-recursive}
+E\{ Y(z_1, z_2) \} 
+=  E\Big [   E\{    E(Y\mid  z_2, z_1, X_1, X_0)  \mid z_1, X_0 \}  \Big ].
+\end{equation}
+\end{theorem}
+
+
+在定理 \ref{thm::sr-outcome} 中，我将符号 `$Z_2=z_2$'' 简化为 ``$z_2$''。为避免本章出现复杂的公式，我将使用小写字母来表示随机变量取到对应值的事件。
+
+当 $X_0$ 与 $X_1$ 为离散型变量时，识别公式 \eqref{eq::identification-si-recursive} 可简化为
+\begin{equation}\label{eq::identification-si-g-formula-1}
+E\{ Y(z_1, z_2) \}  = \sum_{x_0} \sum_{x_1} E( Y \mid  z_2, z_1, x_1,  x_0) \pr(x_1\mid    z_1, x_0) \pr(x_0);
+\end{equation}
+
+当 $X_0$ 与 $X_1$ 为连续型变量时，识别公式 \eqref{eq::identification-si-recursive} 可简化为
+\begin{equation}\label{eq::identification-si-g-formula-2}
+E\{ Y(z_1, z_2) \}  =  \int \int E( Y \mid  z_2,  z_1, x_1,  x_0) f(x_1\mid    z_1, x_0) f(x_0) \text{d}x_1 \text{d}x_0.
+\end{equation}
+
+将 \eqref{eq::identification-si-g-formula-1} 与基于全概率定律的公式相比较，可获得更多有益的见解：
+\begin{eqnarray}
+E(Y)  &=& \sum_{x_0} \sum_{z_1} \sum_{x_1} \sum_{z_2} E( Y \mid  z_2, z_1, x_1,  x_0)  \nonumber   \\
+&& \qquad   \pr(z_2 \mid  z_1, x_1,  x_0)
+\pr(x_1\mid    z_1, x_0)  \pr(z_1\mid x_0)  \pr(x_0). \label{eq::identification-law-total-prob}
+\end{eqnarray}
+
+将 \eqref{eq::identification-law-total-prob} 中的 $Z_2$ 与 $Z_1$ 的概率项去除后，便可得到公式 \eqref{eq::identification-si-g-formula-2}。这一结果符合直觉，因为潜在结果 $Y(z_1, z_2)$ 的含义正是将 $Z_1$ 与 $Z_2$ 分别固定在 $z_1$ 与 $z_2$ 的值上。 
+
+
+罗宾斯将\eqref{eq::identification-si-g-formula-1}和\eqref{eq::identification-si-g-formula-2}称为g-公式。  
+现在我将证明定理\ref{thm::sr-outcome}。 
+ 
+
+\begin{myproof}{定理}{\ref{thm::sr-outcome}}
+根据塔性质，
+$$
+E\{ Y(z_1, z_2) \}  = E \Big[  E\{ Y(z_1, z_2) \mid X_0 \}  \Big ],
+$$
+因此我将重点讨论 $E\{ Y(z_1, z_2) \mid X_0 \}$。  
+根据假设\ref{assume::sr-time-varying}(1)以及塔性质，
+\begin{eqnarray*}
+E\{ Y(z_1, z_2) \mid X_0 \} &=& E\{ Y(z_1, z_2) \mid  z_1, X_0 \} \\
+&=& E\Big [ E\{ Y(z_1, z_2) \mid   z_1, X_1, X_0 \} \mid   z_1, X_0  \Big].
+\end{eqnarray*}
+根据假设\ref{assume::sr-time-varying}(2)，
+\begin{eqnarray*}
+E\{ Y(z_1, z_2) \mid X_0 \}  
+&=& E\Big [ E\{ Y(z_1, z_2) \mid z_2,   z_1,X_1, X_0 \} \mid  z_1, X_0  \Big] \\
+&=& E\Big [ E\{ Y \mid z_2, z_1, X_1, X_0 \} \mid   z_1, X_0  \Big] .
+\end{eqnarray*}
+由此可得公式\eqref{eq::identification-si-recursive}。 
+\end{myproof}
+
+
+
+\subsection{基于结果建模的插补估计}
+\label{section::si-plug-in-outcome}
+
+G公式\eqref{eq::identification-si-g-formula-1}和\eqref{eq::identification-si-g-formula-2}表明，为了估计潜在结果的均值，我们需要对$E(Y\mid z_2,z_1, x_1, x_0)$、$\pr(x_1\mid z_1,x_0)$以及$\pr(x_0)$进行建模。借助这些拟合好的模型，我们便能将其代入G公式中。 
+
+在某些特定的函数形式下，这一任务便可简化。下方的示例 \ref{example::linear-si} 展示了在结果的线性模型下所得到的结果。 
+
+\begin{example}\label{example::linear-si}
+假设存在一个线性结果模型
+$$
+E(Y\mid z_2,z_1,x_1, x_0) = \beta_0+ \beta_1 z_2 + \beta_2 z_1   + \beta_3  x_1  +\beta_4 x_0.
+$$
+我们可以验证：
+\begin{eqnarray*}
+E\{ Y(z_1, z_2) \}  &=& \sum_{x_0} \sum_{x_1} (\beta_0+ \beta_1 z_2 + \beta_2 z_1 + \beta_3 x_1  +\beta_4 x_0) \pr(x_1\mid   z_1, x_0) \pr(x_0)  \\
+&=& \beta_0 + \beta_1 z_2 + \beta_2  z_1  +  \beta_3 \sum_{x_0} E(X_1\mid z_1, x_0) \pr(x_0)  +\beta_4 E(X_0) .
+\end{eqnarray*}
+定义
+\begin{equation}\label{eq::si-x1-identification}
+E\{ X_1(z_1)\} = \sum_{x_0} E(X_1\mid z_1, x_0) \pr(x_0) 
+\end{equation}
+从而将公式简化为
+$$
+E\{ Y(z_1, z_2) \}  = \beta_0 + \beta_1 z_2 + \beta_2 z_1  + \beta_3 E\{ X_1(z_1)\}   +\beta_4 E(X_0) .
+$$
+在\eqref{eq::si-x1-identification}中，我介绍了在时间点1时，在处理$Z_1=z_1$作用下$X_1$的潜在结果。这样做是合理的，因为\eqref{eq::si-x1-identification}右侧的表达式正是基于可忽略性$X_1(z_1)\ind Z_1 \mid X_0$条件下对$z_1  = 0, 1$进行识别的公式$E\{ X_1(z_1)\} $。实际上我们并不需要用到潜在结果$X_1(z_1)$以及可忽略性条件，但这种记法较为方便，且与我们之前的讨论相吻合。
+ 
+ 
+定义$\tau_{Z_1\rightarrow X_1} = E\{ X_1(1)  - X_1(0)\}$。我们可以验证：
+\begin{eqnarray*}
+E\{ Y(1,0)  - Y(0,0)\} &=& \beta_2 +  \beta_3 \tau_{Z_1\rightarrow X_1},\\
+E\{ Y(0,1)  - Y(0,0)\} &=& \beta_1,\\
+E\{ Y(1,1)  - Y(0,0)\} &=& \beta_1 +  \beta_2 + \beta_3 \tau_{Z_1\rightarrow X_1}.
+\end{eqnarray*}
+因此，我们可以依据上述公式来估计$(Z_1,Z_2)$对$Y$的影响，具体做法为先运用标准方法估算出回归系数$\beta$以及$Z_1$对$X_1$的平均因果效应。 
+
+
+如果我们进一步假设$X_1$遵循线性模型，
+$$
+E(X_1\mid Z_1, X_0) = \gamma_0 + \gamma_1 z_1 + \gamma_2 x_0,
+$$
+那么$\tau_{Z_1\rightarrow X_1} = \gamma_1$，以及
+\begin{eqnarray} 
+E\{ Y(1,0)  - Y(0,0)\} &=& \beta_2 +  \beta_3 \gamma_1,  \label{eq::gformula-linear1}\\
+E\{ Y(0,1)  - Y(0,0)\} &=& \beta_1, \label{eq::gformula-linear2}\\
+E\{ Y(1,1)  - Y(0,0)\} &=& \beta_1 +  \beta_2 + \beta_3 \gamma_1. \label{eq::gformula-linear3} 
+\end{eqnarray}
+基于图\ref{fig::si-simple-coefficients}中箭头上的回归系数，\eqref{eq::gformula-linear1}至\eqref{eq::gformula-linear3}中的公式显得十分直观。在\eqref{eq::gformula-linear1}中，$Z_1$的效应等于路径$Z_1\rightarrow Y$与$Z_1\rightarrow X_1\rightarrow Y$上系数的总和；在\eqref{eq::gformula-linear2}中，$Z_2$的效应等于路径$Z_2\rightarrow Y$上的系数值；在\eqref{eq::gformula-linear3}中，$(Z_1,Z_2)$的总效应则等于路径$Z_1\rightarrow Y$、$Z_1\rightarrow X_1\rightarrow Y$与$Z_2\rightarrow Y$上系数的总和。 
+\end{example}
+
+
+\begin{figure}[t]
+\bigskip 
+$$
+ \xymatrix{
+ Z_1 \ar[r]^{\gamma_1}   \ar@/^1.3pc/[rr]  \ar@/^2.0pc/[rrr]^{\beta_2} & X_1  \ar@/^1pc/[rr]^{\beta_3}  \ar[r] & Z_2  \ar[r]^{\beta_1} & Y
+ }
+ $$
+ \caption{ 一个在箭头上标有系数的线性因果图，该图以预处理协变量$X_0$为条件。}\label{fig::si-simple-coefficients}
+\end{figure}
+ 
+ 
+ 
+
+
+然而，\citet{robinswasserman1997estimation}指出了基于结果建模的代入估计法存在一个令人意外的缺陷。他们证明：当该方法所使用的模型设定出现偏差时，数据分析者可能会错误地拒绝“$(Z_1,Z_2)$对$Y$不存在因果效应”这一零假设，即便在真实的数据生成过程中该效应确实为零。他们将此现象称为{\it g-零悖论}。或许令人意外的是，他们还证明：即便是在示例\ref{example::linear-si}中所描述的简单线性结果模型中，也可能会出现这种g-零悖论。\citet{mcgrath2021revisiting}后来重新探讨了这一悖论。更多细节可参见问题\ref{problem::g-null-paradox}。 
+
+ 
+
+\subsection{基于结果建模的递归估计}
+\label{section::recursive}
+
+第\ref{section::si-plug-in-outcome}节中所述的代入估计法需要对随时间变化的混杂因素$X_1$进行建模，这会引发令人困扰的g-零假设悖论。因此该方法并不可取。 
+
+请回忆一下基于$E\{  Y(z)  \} = E\{  E(Y\mid Z=z, X) \}$、针对单一时间点处理情况的结果回归估计量。我们首先利用满足$Z=z$条件的数据子集，针对$X$建立$Y$的模型，从而得到所有单位的拟合值$\hat{Y}_i(z)$。随后便可得到该估计量：
+$$
+\hat E\{  Y(z)  \}  = n^{-1} \sumn \hat{Y}_i(z).
+$$
+
+同样地，\eqref{eq::identification-si-recursive}中的递归期望公式也启发了我们一种更为简单的估计方法。首先处理内层条件期望，即$$
+\tilde Y_2(z_1, z_2) = E(Y\mid Z_2 = z_2,Z_1 = z_1, X_1,  X_0).
+$$我们可以利用满足$(Z_2 = z_2, Z_1 = z_1)$条件的数据子集，针对$(X_1,X_0)$拟合$Y$模型，从而得到所有单位的拟合值$\hat{Y}_{2i}(z_1, z_2) $。接着处理外层条件期望，即$$
+\tilde{Y}_1(z_1, z_2)  =  E\{  \tilde{Y}_2(z_1, z_2)  \mid Z_1=z_1, X_0 \}. 
+$$我们可再次利用满足$Z_1=z_1$条件的数据子集，针对$X_0$拟合$\hat{Y}_2(z_1, z_2) $模型，进而得到所有单位的拟合值$\hat{Y}_{1i}(z_1, z_2) $。最终，$E\{ Y(z_1, z_2) \} $的估计量即为$$
+\hat E\{ Y(z_1, z_2) \}  = n^{-1} \sumn \hat{Y}_{1i}(z_1, z_2) .
+$$
+
+上述递归估计法并不涉及针对$X_1$构建模型，从而避免了g-零假设悖论。关于其特例可参见问题\ref{problem::recursive-null}。不过，基于递归回归的估计量较难实现，因为它需要针对那些并不符合因果图自然结构的变量进行建模，例如$\tilde{Y}_2(z_1, z_2)$。 
+
+
+
+
+\section{逆倾向得分加权}\label{section::si-ipw}
+
+
+请回顾在单一时间点进行处理时的逆概率加权识别公式：
+$$
+E\{  Y(z) \} = E  \left\{   \frac{ 1(Z=z) Y  }{  \pr(Z=z\mid X) }  \right\}.
+$$
+下述结果将其扩展至在两个时间点均进行处理的情形。定义$$
+e(z_1, X_0) = \pr(Z_1=z_1\mid X_0) 
+$$以及$$
+e(z_2, Z_1, X_1, X_0) =  \pr(Z_2 = z_2 \mid Z_1, X_1,  X_0)
+$$分别为第1个和第2个时间点的倾向得分。 
+
+\begin{theorem}
+\label{thm::sr-ipw}
+在假设\ref{assume::sr-time-varying}之下，
+\begin{equation}
+E\{ Y(z_1, z_2) \} 
+= E\left\{    \frac{  1(Z_1=z_1) 1(Z_2=z_2) Y  }{   e(z_1, X_0)  e(z_2,Z_1, X_1,  X_0)     }   \right\} .
+\label{eq::si-ipw}
+\end{equation}
+\end{theorem}
+
+
+定理\ref{thm::sr-ipw}揭示了此前省略的重叠性假设：$$
+0< e(z_1, X_0)   <1,\quad
+0< e(z_2, Z_1, X_1,  X_0)   < 1
+$$对所有$z_1$和$z_2$均成立。若某些倾向得分为0或1，识别公式\eqref{eq::si-ipw}可能出现分母为零，因而不再适用。 
+
+
+
+\begin{myproof}{定理}{\ref{thm::sr-ipw}}
+以$(Z_1, X_1, X_0)$为条件并运用假设\ref{assume::sr-time-varying}(2)，我们可以将\eqref{eq::si-ipw}的右侧简化为
+\begin{eqnarray} 
+&&E\left\{    \frac{  1(Z_1=z_1) 1(Z_2=z_2) Y(z_1,z_2)  }{    \pr(Z_1=z_1\mid X_0)  \pr(Z_2 = z_2 \mid Z_1, X_1, X_0)    }   \right\} \nonumber  \\
+&=& E\left\{    \frac{  1(Z_1=z_1) \pr(Z_2=z_2\mid Z_1, X_1, X_0) E(Y(z_1,z_2) \mid Z_1, X_1, X_0)  }{    \pr(Z_1=z_1\mid X_0)  \pr(Z_2 = z_2 \mid Z_1, X_1, X_0)    }   \right\}  \nonumber    \\
+&=& E\left\{    \frac{  1(Z_1=z_1)    }{    \pr(Z_1=z_1\mid X_0)     }  E(Y(z_1,z_2) \mid Z_1, X_1, X_0)  \right\}   \nonumber   \\
+&=& E\left\{    \frac{  1(Z_1=z_1)    }{    \pr(Z_1=z_1\mid X_0)     }  Y(z_1,z_2)  \right\}, \label{eq::ipw-condition1}
+\end{eqnarray}
+其中\eqref{eq::ipw-condition1}是由塔性质所推导得出的。 
+
+
+以$X_0$为条件并运用假设\ref{assume::sr-time-varying}(1)，我们可以将\eqref{eq::ipw-condition1}的右侧简化为
+\begin{eqnarray*} 
+&& E\left\{    \frac{  \pr(Z_1=z_1\mid X_0)    }{    \pr(Z_1=z_1\mid X_0)     }  E(Y(z_1,z_2) \mid X_0)  \right\}\\
+&=& E\left\{    E(Y(z_1,z_2) \mid X_0)  \right\}\\
+&=&  E\{Y(z_1,z_2)\},
+\end{eqnarray*}
+同样，最后一行结果是由塔性质推导得出的。 
+\end{myproof}
+
+
+  
+ 
+  
+ 
+ 基于逆概率加权的估计量要简单得多，它仅需对两个二元处理指示变量进行建模。首先，我们可以在$X_0$上拟合$Z_1$的模型以得到拟合值$\hat{e}_{1}(z_1, X_{0i})$；接着在$(Z_1, X_1, X_0)$上拟合$Z_2$的模型以得到所有单位的拟合值$\hat{e}_{2}(z_2, Z_{1i}, X_{1i}, X_{0i})$。随后便可得到如下的逆概率加权估计量：
+$$
+\hat{E}^\textup{ht}\{ Y(z_1, z_2) \}  = n^{-1} \sumn 
+  \frac{  1(Z_{1i}=z_1) 1(Z_{2i}=z_2) Y_i  }{   \hat{e}_{1}(z_1, X_{0i}) \hat{e}_{2} (z_2, Z_{1i}, X_{1i}, X_{0i})   }  .
+$$
+与\ref{chapter::pscore-key}章中的讨论类似，HT估计量并不具备对结果变量位置平移的不变性，且在有限样本下稳定性较差。经过修正的Hajek型估计量为$\hat{E}^\textup{haj}\{ Y(z_1, z_2) \}  = \hat{E}^\textup{ht}\{ Y(z_1, z_2) \}   / \hat 1^\textup{ht}(z_1,z_2)$，其中
+$$
+\hat 1^\textup{ht}(z_1,z_2)  = n^{-1}  \sumn 
+  \frac{  1(Z_{1i}=z_1) 1(Z_{2i}=z_2)  }{   \hat{e}_{1} (z_1, X_{0i})\hat{e}_{2} (z_2, Z_{1i}, X_{1i}, X_{0i})   }  .
+$$
+%$$
+%\hat{E}^\textup{haj}\{ Y(z_1, z_2) \}  = \sumn 
+%  \frac{  1(Z_{1i}=z_1) 1(Z_{2i}=z_2) Y_i  }{   \hat{e}_{1} (z_1, X_{0i})\hat{e}_{2}  (z_2, Z_{1i}, X_{1i}, X_{0i})  }  
+%  \Big /
+%  \sumn 
+%  \frac{  1(Z_{1i}=z_1) 1(Z_{2i}=z_2)  }{   \hat{e}_{1} (z_1, X_{0i})\hat{e}_{2} (z_2, Z_{1i}, X_{1i}, X_{0i})   }  .
+%$$
+
+
+ 
+ 
+  
+ 
+ 
+ 
+ 
+
+\section{多个时间点}
+
+
+在存在多个时间点的情况下，直接沿用\ref{section:si-outcome-regression}节与\ref{section::si-ipw}节中所述的估计策略并不容易。即便处理仅为二值且仅有$K$个时间点，所有可能的处理组合数量也会随$K$呈指数级增长（例如$2^5 = 32$与$2^{10} = 1024$）。因此，\ref{section:si-outcome-regression}节与\ref{section::si-ipw}节中介绍的结果回归法及逆概率加权法在有限样本条件下并不可行，因为这些方法需要针对每一种处理水平组合均具备足够的数据支撑。 
+
+
+\subsection{边际结构模型}
+
+一种强有力的方法是基于边际结构模型（MSM）\citep{robins2000marginal, hernan2000marginal}。为简化符号表达，我仅介绍$K=2$情况下的边际结构模型，尽管该模型的主要应用场景其实是更一般的情形。 
+
+\begin{definition}
+[MSM]
+\label{def::si-msm}
+$Y(z_1, z_2)$的边际均值等于
+$$
+E\{  Y(z_1, z_2) \} = f(z_1,z_2; \beta). 
+$$
+\end{definition}
+
+
+定义\ref{def::si-msm}的一个典型示例即为$E\{  Y(z_1, z_2) \} = \beta_0 + \beta_1 z_1 + \beta_2 z_2$。在模型中加入基线协变量也相当简单。下文中的定义\ref{def::si-msm-with-x0}是对定义\ref{def::si-msm}的进一步扩展。 
+
+ \begin{definition}
+[包含基线协变量的边际结构模型]
+\label{def::si-msm-with-x0}
+在给定$X_0$的条件下，$Y(z_1, z_2)$的均值等于
+$$
+E\{  Y(z_1, z_2) \mid X_0 \} = f(z_1,z_2, X_0; \beta). 
+$$
+\end{definition}
+
+定义\ref{def::si-msm-with-x0}的一个典型例子就是\begin{equation}\label{eq::linear-msm}
+E\{  Y(z_1, z_2)  \mid X_0\} = \beta_0 + \beta_1 z_1 + \beta_2 z_2 + \beta_3\tran X_0 .
+\end{equation}  
+如果我们能够观测到所有的潜在结果，便可通过求解下述最小化问题来得到$\beta$：\begin{equation}
+\label{eq::beta-ols-msm}
+\beta = \arg\min_b \sum_{z_2}\sum_{z_1}  E \{  Y(z_1, z_2) -  f(z_1,z_2, X_0; b)   \}^2 .
+\end{equation}  
+为简便起见，我仅讨论最小二乘形式。当然我们也可以将讨论拓展至一般模型；关于逻辑回归模型的实例可参见习题\ref{hw::logistic-msm}。 
+
+
+
+在满足序贯可忽略性的条件下，我们可以通过仅涉及可观测变量的下述最小化问题来求解$\beta$。
+
+
+\begin{theorem}
+[在边际结构模型下采用逆概率加权法]
+\label{thm::si-msm-ipw}
+在假设\ref{assume::sr-time-varying}与定义\ref{def::si-msm-with-x0}的前提下，\eqref{eq::beta-ols-msm}中的$\beta$的值等于
+$$
+\beta = \arg\min_b \sum_{z_2}\sum_{z_1}  E\left[   \frac{  1(Z_1=z_1) 1(Z_2=z_2)   }{   e(z_1, X_0) e(z_2, Z_1, X_1, X_0)     }      
+\{ Y -  f(z_1,z_2, X_0; b)  \}^2 \right] .
+$$
+\end{theorem}
+
+定理\ref{thm::si-msm-ipw}的证明过程与定理\ref{thm::sr-ipw}类似。我将其留作习题\ref{problem::ipw-msm}供读者自行推导。
+
+
+ 定理\ref{thm::si-msm-ipw}提供了一种基于加权回归的简单估计策略。例如，在\eqref{eq::linear-msm}条件下，我们可利用权重$\hat{e}_{1}^{-1}(Z_{1i}, X_{0i})  \hat{e}_{2i}^{-1}(Z_{2i}, Z_{i1}, X_{1i}, X_{0i})$，对$(1,Z_{1i}, Z_{2i}, X_{0i})$中的变量$Y_i$进行加权最小二乘回归。 
+
+ 
+
+
+
+\subsection{结构嵌套模型}
+
+
+
+逆概率加权法的一个关键问题在于：一旦违反重叠性假设，该方法便不再适用。为应对这一难题，Robins提出了结构嵌套模型。同样为了简化阐述，此处仅介绍包含两个时间点的版本。
+
+\begin{definition}
+[结构嵌套模型]
+\label{def::snm}
+在时间点1的条件效应为
+$$
+E\{  Y(z_1,0) - Y(0,0) \mid  Z_1=z_1,  X_0 \} = g_1( z_1, X_0; \beta)   
+$$
+对所有$z_1$均成立；而在时间点2的条件效应为
+$$
+E\{  Y(z_1,z_2) - Y(z_1,0) \mid Z_2=z_2,Z_2=z_1,  X_1,  X_0 \} = g_2(z_2, z_1,  X_1,  X_0; \beta) 
+$$
+对所有$ z_1, z_2.$均成立。
+\end{definition}
+
+
+%Under sequential ignorability, Definition \ref{def::snm} simplifies to  $E\{  Y(z_1,0) - Y(0,0) \mid   X_0 \} = g_1( z_1, X_0; \beta) $ and $E\{  Y(z_1,z_2) - Y(z_1,0) \mid   X_1,  X_0 \} = g_2(z_2, z_1,  X_1,  X_0; \beta)$, which implies 
+%\begin{eqnarray*}
+%E\{  Y(z_1,z_2) - Y(0,0)  \}  &=&  E\{  Y(z_1,z_2) - Y(z_1,0) \} +E\{  Y(z_1,0) - Y(0,0)\}\\
+%&=& E\{g_2(z_2, z_1,  X_1,  X_0; \beta) \} +  E\{ g_1( z_1, X_0; \beta)\}.
+%\end{eqnarray*}
+%Therefore, if we can estimate the parameter $\beta$ by $\hat\beta$ based on the strategy discussed below, we can estimate the causal effect based on the empirical average
+%$$
+%\hat E\{  Y(z_1,z_2) - Y(0,0)  \}  =  n^{-1} \sumn  g_2(z_2, z_1,  X_{1i,}  X_{0i}; \hat \beta)  +  n^{-1} \sumn  g_1( z_1, X_{0i}; \hat \beta).
+%$$
+
+
+在定义\ref{def::snm}中，有两个逻辑限制条件，分别为$$
+g_1( 0, X_0; \beta)  = 0
+$$以及$$
+g_2(0, z_1,  X_1,  X_0; \beta) =0   \text{ for all } z_1.
+$$定义\ref{def::snm}主要有以下两种常见形式。
+
+\begin{example}
+\label{example::snm-leading1}
+假设
+$$
+    \begin{cases}
+g_1( z_1, X_0; \beta)  =  \beta_1 z_1, \\
+g_2(z_2, z_1,  X_1,  X_0; \beta) =  (\beta_2 + \beta_3 z_1  ) z_2 .
+    \end{cases}    
+  $$
+\end{example}
+
+\begin{example}
+\label{example::snm-leading2}
+假设
+$$
+    \begin{cases}
+g_1( z_1, X_0; \beta) = (\beta_1 + \beta_2\tran X_0) z_1, \\
+g_2(z_2, z_1,  X_1,  X_0; \beta) = (\beta_3 + \beta_4 z_1  + \beta_5\tran X_1 ) z_2.
+    \end{cases}    
+    $$
+\end{example}
+ 
+
+
+请对比定义\ref{def::si-msm-with-x0}与\ref{def::snm}。结构嵌套模型既能够调整基线协变量，也能够调整随时间变化的协变量；而边际结构模型仅能调整基线协变量。依据定义\ref{def::snm}进行估计的过程则更为复杂。一种可行的策略是借助估计方程来对参数进行估计。 
+
+我首先介绍两个用于讨论估计过程的重要基础构件。  
+定义  
+$$
+U_2(\beta) = Y- g_2(Z_2, Z_1, X_1, X_0;\beta) 
+$$  
+以及  
+$$
+U_1(\beta) = Y- g_2(Z_2, Z_1, X_1, X_0;\beta)  - g_1( Z_1, X_0;\beta) .
+$$  
+由于这些表达式依赖于参数$\beta$的真实值，因此无法直接从数据中计算得出。当参数取值为其真实值时，它们具备以下特性。 
+
+
+\begin{lemma}
+\label{lemma::snm-1}
+在假设\ref{assume::sr-time-varying}及定义\ref{def::snm}的前提下，我们有
+\begin{eqnarray*}
+E\{  U_2(\beta)  \mid Z_2, Z_1, X_1, X_0 \}  &=&  E\{  U_2(\beta)  \mid  Z_1, X_1, X_0 \}  \\
+&=&  E\{   Y(Z_1,0) \mid  Z_1, X_1, X_0 \}
+\end{eqnarray*}
+以及
+\begin{eqnarray*}
+E\{  U_1(\beta)  \mid  Z_1, X_0 \}  &=&  E\{  U_1(\beta)  \mid  X_0 \}  \\
+&=&  E\{   Y(0,0) \mid   X_0 \}.
+\end{eqnarray*}
+\end{lemma}
+
+
+引理\ref{lemma::snm-1}涉及一个较为微妙的符号表示$ Y(Z_1,0) $，因为$Z_1$具有随机性。该引理应当被理解为$  Y(Z_1,0) = Z_1 Y(1,0) +(1-Z_1) Y(0,0)$。
+基于相关定义以及引理\ref{lemma::snm-1}可知，$U_1(\beta)$代表未接受任何处理时的对照组潜在结果，而$U_2(\beta)  $则代表在时间点1接受处理后对照组的潜在结果。 
+
+
+\begin{myproof}{引理}{\ref{lemma::snm-1}}
+{\bf 第一部分}。
+我们有
+\begin{eqnarray*}
+&&E\{  U_2(\beta)  \mid Z_2=1, Z_1, X_1, X_0 \}  \\
+&=&    E\{  Y(Z_1,1)- g_2(1, Z_1, X_1, X_0;\beta)   \mid Z_2=1, Z_1, X_1, X_0 \}  \\
+&=& E\{  Y(Z_1,0)   \mid Z_2=1, Z_1, X_1, X_0 \} 
+\end{eqnarray*}
+以及
+\begin{eqnarray*}
+&&E\{  U_2(\beta)  \mid Z_2=0, Z_1, X_1, X_0 \} \\
+ &=&    E\{  Y(Z_1,0)- g_2(0, Z_1, X_1, X_0;\beta)   \mid Z_2=0, Z_1, X_1, X_0 \}   \\
+&=& E\{  Y(Z_1,0)   \mid Z_2=0, Z_1, X_1, X_0 \}
+\end{eqnarray*}
+因此
+\begin{eqnarray*}
+E\{  U_2(\beta)  \mid Z_2, Z_1, X_1, X_0 \}  &=&  E\{  Y(Z_1,0)   \mid Z_2, Z_1, X_1, X_0 \} \\
+&=& E\{  Y(Z_1,0)   \mid   Z_1, X_1, X_0 \}
+\end{eqnarray*}
+其中最后一个等式是由序贯可忽略性得出的。由于最后一项并不依赖于$Z_2$，我们还能得到
+$$
+E\{  U_2(\beta)  \mid Z_2, Z_1, X_1, X_0 \}  = E\{  U_2(\beta)  \mid  Z_1, X_1, X_0 \} . 
+$$
+
+{\bf 第二部分}。
+利用上述结果，我们得到
+\begin{eqnarray*}
+&&E\{  U_1(\beta)  \mid  Z_1, X_0 \}  \\
+&=&  E\{  U_2(\beta)  - g_1( Z_1, X_0;\beta)  \mid  Z_1, X_0 \} \qquad (\text{Definition } \ref{def::snm}) \\
+&=& E\left[    E\{  U_2(\beta)  - g_1( Z_1, X_0;\beta)  \mid X_1,  Z_1, X_0 \}   \mid  Z_1, X_0 \right]  \qquad (\text{tower property})  \\
+&=&  E\left[    E\{ Y(Z_1,0) - g_1( Z_1, X_0;\beta)  \mid X_1,  Z_1, X_0 \}   \mid  Z_1, X_0 \right]   \qquad (\text{part 1}) \\
+&=&  E\{ Y(Z_1,0) - g_1( Z_1, X_0;\beta)  \mid  Z_1, X_0 \} \qquad (\text{tower property})  \\
+&=& E\{ Y(0,0)  \mid  Z_1, X_0 \} \qquad (\text{Definition } \ref{def::snm}) \\
+&=&  E\{ Y(0,0)  \mid  X_0 \}  \qquad (\text{sequential ignorability}).
+\end{eqnarray*}
+由于最后一项并不依赖于$Z_1$，我们还能得到
+$$
+E\{  U_1(\beta)  \mid  Z_1, X_0 \}   = E\{  U_1(\beta)  \mid   X_0 \}.   
+$$
+\end{myproof}
+
+
+借助引理\ref{lemma::snm-1}，我们便可证明下文的定理\ref{thm::estimating-equation-snm}。 
+
+\begin{theorem}
+\label{thm::estimating-equation-snm}
+在假设\ref{assume::sr-time-varying}及定义\ref{def::snm}之下，
+$$
+E\Big[  h_2(Z_1, X_1, X_0)  \{ Z_2 - e(1, Z_1, X_1, X_0)  \}  U_2(\beta)   \Big] = 0
+$$
+以及
+$$
+E\Big[    h_1(X_0)  \{  Z_1 - e(1, X_0) \}  U_1(\beta) \Big] = 0 . 
+$$
+对于任意函数$h_1$与$h_2$均成立，前提是这些矩存在。 
+\end{theorem}
+
+ 
+
+\begin{myproof}{定理}{\ref{thm::sr-ipw}}
+以$(Z_2, Z_1, X_1, X_0)$为条件并利用引理\ref{lemma::snm-1}，可得到
+\begin{eqnarray*}
+%&&E\left[  h_2(Z_1, X_1, X_0)  \{ Z_2 - e(1, Z_1, X_1, X_0)  \}   \{Y- g_2(Z_2, Z_1, X_1, X_0;\beta) \}   \right]  \\
+&& E\left[  h_2(Z_1, X_1, X_0)  \{  Z_2 - e(1, Z_1, X_1, X_0)  \}   E\{U_2(\beta) \mid  Z_2, Z_1, X_1, X_0\}   \right] \\
+&=& E\left[  h_2(Z_1, X_1, X_0)  \{  Z_2 - e(1, Z_1, X_1, X_0)  \}   E\{U_2(\beta) \mid  Z_1, X_1, X_0\}   \right] .
+\end{eqnarray*}
+以$( Z_1, X_1, X_0)$为条件并运用塔性质，可证明上述等式等于0，其原因在于$E\{  Z_2 - e(1, Z_1, X_1, X_0) \mid  Z_1, X_1, X_0\} = 0. $
+ 
+同样地，以 $(Z_1, X_0)$ 为条件并运用引理 \ref{lemma::snm-1}，利用塔性质可得到
+\begin{eqnarray*}
+%&& E\left[    h_1(X_0)   \{  Z_1 - e(1, X_0) \}  \{Y- g_2(Z_2, Z_1, X_1, X_0;\beta)  - g_1( Z_1, X_0;\beta) \}  \right]  \\
+&& E\left[    h_1(X_0)   \{  Z_1 - e(1, X_0) \}  E \{U_1(  \beta) \mid Z_1, X_0\}  \right]  \\
+&=& E\left[    h_1(X_0)   \{  Z_1 - e(1, X_0) \} E \{U_1(  \beta) \mid X_0\}  \right] .
+ \end{eqnarray*}
+以 $X_0$ 为条件并运用塔性质，可证明上述等式等于 0，其原因在于 $E\{  Z_1 - e(1, X_0) \mid X_0 \} = 0.$
+\end{myproof}
+
+
+
+为运用定理 \ref{thm::estimating-equation-snm}，我们必须设定 $h_1$ 与 $h_2$，从而确保存在足够多的方程来求解 $\beta$。下文中的示例 \ref{example::g-estimation-snm} 重新探讨了示例 \ref{example::snm-leading1}。 
+
+
+\begin{example}
+\label{example::g-estimation-snm}
+在例子 \ref{example::snm-leading1} 中，我们可以选取 $h_1 = 1$ 与 $h_2 = (1,Z_1)$ 来得到
+\begin{eqnarray*}
+ E\left[    \{ Z_2 - e(1, Z_1, X_1, X_0)  \}  \{Y-  (\beta_2 + \beta_3 Z_1  ) Z_2\}   \right] &=& 0,
+\\
+ E\left[   Z_1 \{ Z_2 - e(1, Z_1, X_1, X_0)  \}  \{Y-  (\beta_2 + \beta_3 Z_1  ) Z_2\}   \right] &=& 0,
+ \\
+ E\left[    \{  Z_1 - e(1, X_0) \}  \{Y- (\beta_2 + \beta_3 Z_1  ) Z_2 - \beta_1  Z_1 \}  \right] &=& 0 . 
+ \end{eqnarray*}
+接着便可根据上述线性方程求解出各个 $\beta$ 的值；详见习题 \ref{problem::snm-estimation-example}。一个很自然的问题是：若选取其他不同的 $(h_1, h_2)$，是否能得到更为高效的估计量？答案是肯定的。例如，我们可以选取多种 $(h_1, h_2)$，并运用广义矩估计法 \citep{hansen1982large}。相关的技术细节已超出本书的讨论范围。  
+\end{example}
+
+ 
+\citet{naimi2017introduction}与\citet{vansteelandt2014structural}提供了关于结构嵌套模型的教程。 
+ 
+  
+  
+\section{作业习题}
+
+\paragraph{g-零假设悖论}\label{problem::g-null-paradox}
+
+
+考虑图 \ref{fig::si-g-null-paradox} 中所示的简单因果图，该图中不存在预处理协变量 $X_0$，也没有从 $(Z_1, Z_2)$ 指向 $Y$ 的箭头。因此，$(Z_1,Z_2)$ 对 $Y$ 的影响为零。
+
+\begin{figure}
+\bigskip 
+$$
+ \xymatrix{
+ Z_1 \ar[r]   & X_1   \ar[r]  & Z_2  & Y \\
+                                             &                                             &U\ar[lu]\ar[ru]
+ }
+ $$
+ \caption{由于$X_1$与$Y$之间存在未测量的混杂因素。该因果图忽略了处理前的协变量$X_0$。}\label{fig::si-g-null-paradox}
+\end{figure}
+
+
+重新考察示例 \ref{example::linear-si}。证明：若满足 $$
+\beta_1  = \beta_2 = 0  \text{ and }   \beta_3 = 0
+$$ 或 $$
+\beta_1 = \beta_2 = 0 \text{ and } E\{ X_1(z_1)\}  \text{ does not depend on } z_1.
+$$则期望值 $E\{ Y(z_1, z_2) \} $ 并不依赖于 $(z_1, z_2)$。 
+
+
+备注：  
+然而，第一个条件中的$\beta_3 = 0$排除了$Y$对$X_1$的依赖性，这与$X_1$和$Y$之间存在未测量混杂因素$U$的事实相矛盾；同时$E\{ X_1(z_1)\} $对$z_1$的独立性又排除了$X_1$对$Z_1$的依赖性，这也与从$Z_1$指向$X_1$的箭头存在的事实相矛盾。也就是说，如果$X_1$与$Y$之间存在未测量混杂因素$U$，且存在从$Z_1$指向$X_1$的箭头，那么例\ref{example::linear-si}中的$E\{ Y(z_1, z_2) \} $公式必然依赖于$(z_1, z_2)$，但这又与$(Z_1, Z_2)$和$Y$之间不存在箭头的事实产生矛盾。  
+
+
+\paragraph{零模型下的递归估计}\label{problem::recursive-null}
+
+
+考虑在问题\ref{problem::g-null-paradox}中的因果图条件下，\ref{section::recursive}中所述的递归估计方法。请证明：基于线性模型，该估计量会收敛至0。 
+
+
+
+\paragraph{基于边际结构模型的逆概率加权法}\label{problem::ipw-msm}
+
+
+证明定理 \ref{thm::si-msm-ipw}。 
+
+
+\paragraph{定义\ref{def::si-msm-with-x0}}的一个非线性示例\label{hw::logistic-msm}
+
+
+定义\ref{def::si-msm-with-x0}的另一个典型示例为\begin{equation}\label{eq::logistic-msm}
+\text{logit} \left[ \pr\{  Y(z_1, z_2)  =1  \mid X_0\}  \right] = \beta_0 + \beta_1 z_1 + \beta_2 z_2 + \beta_3\tran X_0 .
+\end{equation}  
+如果我们能够观测到所有潜在结果，便可通过最小化负对数似然函数的期望值来求解$\beta$（关于更简单的版本可参见第\ref{sec::mle-logistic}章）：  
+\begin{equation}
+\label{eq::beta-logistic}
+\beta = \arg\min_b   \sum_{z_2}\sum_{z_1}  E\left\{   \log (1 + e^{\ell })
+- Y(z_1, z_2)  \ell  \right\}
+\end{equation}  
+其中$\ell = \beta_0 + \beta_1 z_1 + \beta_2 z_2 + \beta_3\tran X_0.$  
+在满足序贯可忽略性条件的前提下，我们可借助仅涉及可观测变量的下述最小化问题来求解$\beta$。
+
+
+\begin{theorem}
+[在边际结构模型下采用逆概率加权法]
+\label{thm::si-msm-ipw-logistic}
+在假设\ref{assume::sr-time-varying}与定义\ref{def::si-msm-with-x0}的前提下，\eqref{eq::beta-logistic}中的$\beta$的值等于$$
+\beta = \arg\min_b \sum_{z_2}\sum_{z_1}  E\left[   \frac{  1(Z_1=z_1) 1(Z_2=z_2)   }{   e(z_1, X_0) e(z_2, Z_1, X_1, X_0)     }      
+\left\{   \log (1 + e^{\ell })
+- Y(z_1, z_2)  \ell  \right\} \right] .
+$$
+\end{theorem}
+
+证明定理 \ref{thm::si-msm-ipw-logistic}。 
+
+备注：  
+定理 \ref{thm::si-msm-ipw-logistic} 提供了一种基于加权回归的简单估计策略。例如，在条件 \eqref{eq::logistic-msm} 下，我们可以以 $\hat{e}_{1}^{-1}(Z_{1i}, X_{0i})  \hat{e}_{2i}^{-1}(Z_{2i}, Z_{i1}, X_{1i}, X_{0i})$ 为权重，对 $Y_i$ 与 $(1,Z_{1i}, Z_{2i}, X_{0i})$ 进行加权逻辑回归分析。 
+
+ 
+
+
+
+
+\paragraph{仅含单个时间点的结构嵌套模型}\label{problem::snm-single-time}
+
+ 
+
+请回忆一下从$\{ X,Z, Y(1), Y(0)\}$中抽取独立同分布数据的观测研究标准设定。将倾向得分定义为$e(X) = \pr(Z=1\mid X)$。现假设$$
+Z\ind Y(0)\mid X
+$$以及如下的结构嵌套模型。
+
+
+\begin{definition}
+[仅含单个时间点的结构嵌套模型]
+\label{definition::snm-single}
+个体效应的条件均值为
+$$
+E\{  Y(z) - Y(0)\mid Z=z, X \} = g(z,X;\beta).
+$$
+\end{definition}
+
+在定义\ref{definition::snm-single}中，一个逻辑限制条件为$g(0,X;\beta) = 0$。请证明下述结果。
+
+
+\begin{enumerate}
+\item
+我们有
+$$
+E\{  Y - g(Z,X;\beta) \mid X, Z\} = E\{  Y - g(Z,X;\beta) \mid X\}  = E\{  Y(0) \mid X\}. 
+$$
+
+
+\item
+我们有
+\begin{eqnarray}\label{eq::Estimating-equation-snm-1}
+E\Big [  h(X)  \{ Z-e(X) \}   \{  Y - g(Z,X;\beta) \}  \Big ] = 0
+\end{eqnarray}
+对于任意函数$h$，只要其矩存在即可。
+\end{enumerate}
+
+ 
+
+
+备注：方程\eqref{eq::Estimating-equation-snm-1}是参数估计的基础。  
+考虑定义\ref{definition::snm-single}中当$g(z,X;\beta) = \beta z$时的特殊情况。选取$h(X) = 1$可得到  
+$$
+E\{   (Z-e(X))   (Y-  \beta Z) \}  = 0.
+$$  
+解出$\beta$后可得  
+$$
+\beta = \frac{   E\{ (Z-e(X)) Y \}   }{   E\{ (Z-e(X))  Z\}   }.
+$$  
+因此，$\beta$的值即相当于$Z$在$Y$对$Z$进行两阶段最小二乘法回归时的系数，其中$Z-e(X)$为$Z$的工具变量。通过一些基础计算我们还能证明：  
+$$
+\beta = \frac{   \cov\{ Z-e(X), Y\}   }{ \cov\{ Z-e(X) \}  }.
+$$  
+于是$\beta$的值也等于$Z-e(X)$在$Y$对$Z-e(X)$进行普通最小二乘法回归时的系数，该结果在前面第\ref{sec::regress-on-pscore}章中已出现过。 
+
+考虑定义\ref{definition::snm-single}在$g(z,X;\beta) = (\beta_0 + \beta_1\tran X) z$情形下的另一个特例。选取$h(X) = (1,X)$可得到
+$$
+E\left\{   \begin{pmatrix}
+Z-e(X)\\
+(Z-e(X)) X
+\end{pmatrix}  
+(Y-  \beta_0 Z - \beta_1\tran XZ) \right\}  = 0.
+$$
+也就是说，$(\beta_0,\beta_1)$即为以$(Z-e(X),  (Z-e(X)) X )$作为$(Z, XZ)$的工具变量时，对$Y$关于$(Z, XZ)$进行两阶段最小二乘法回归所得出的系数。 
+
+
+
+\paragraph{示例\ref{example::g-estimation-snm}}下的估计方法\label{problem::snm-estimation-example}
+ 
+
+我们可以通过求解示例\ref{example::g-estimation-snm}中所列估计方程的经验版本来估计$\beta$的值。首先，我们估算出两个倾向得分，进而得到时间点1处的中心化处理值$$
+\check{Z}_{1i} = Z_{1i} - \hat{e}(1,X_{0i})
+$$以及时间点2处的中心化处理值$$
+ \check{Z}_{2i} = Z_{2i}  - \hat{e}(1, Z_{1i}, X_{1i}, X_{0i})
+ $$ 
+
+
+可以证明：通过对$Y_i$以$(Z_{2i}, Z_{1i} Z_{2i} )$为因变量、$( \check{Z}_{2i} ,  Z_{1i}\check{Z}_{2i} )$作为$(Z_{2i}, Z_{1i} Z_{2i} )$的工具变量来进行两阶段最小二乘法估计，我们便能估算出$\beta_2$与$\beta_3$；随后，再通过对$Y_i - (\hat{\beta}_2+\hat{\beta}_3 Z_{1i}) Z_{2i}$以$Z_{1i}$为因变量、$\check{Z}_{1i} $作为$Z_{1i}$的工具变量来进行两阶段最小二乘法估计，我们便能估算出$\beta_1$。 
+ 
+ 
+ 
+ 
+\paragraph{在多个时间点进行处理时的g-公式}\label{problem::g-formula-multiple-time}
+
+
+
+将讨论范围扩展至具有$K$个时间点的情形。各变量之间的时间顺序（而非因果图）如下所示：
+$$
+X_0 \rightarrow Z_1 \rightarrow X_1 \rightarrow Z_2 \rightarrow \cdots  \rightarrow  X_{K-1}  \rightarrow Z_K .
+$$
+引入记号$\overline{Z}_k = (Z_1, \ldots, Z_k)$与$\overline{X}_k = (X_0, X_1, \ldots, X_k)$，并用小写字母$\overline{z}_k $与$\overline{x}_k$来表示相应的实际实现值。当$k=0$时，有$\overline{X}_0 = X_0$，而$\overline{Z}_0$为空集。
+每个单位均存在$2^K$种潜在结果：
+$$
+Y(\overline{z}_K) \text{ for all } z_1,\ldots, z_K = 0,1.
+$$
+下文假设满足序贯可忽略性。
+
+\begin{assumption}
+[序贯可忽略性在多个时间点上的表现]\label{assume::si-multiple}
+我们有
+$$
+Z_k \ind Y(\overline{z}_K) \mid (\overline{Z}_{k-1}, \overline{X}_{k-1})
+$$
+对所有$k=1,\ldots, K$以及所有$z_1,\ldots, z_K = 0,1.$均成立。
+\end{assumption}
+
+
+请证明下文的定理\ref{thm::g-formula-multiple}。 
+
+
+\begin{theorem}
+[多时间点的g公式]
+\label{thm::g-formula-multiple}
+在假设\ref{assume::si-multiple}的条件下，
+$$
+E\{ Y(\overline{z}_K)  \} = E\left[ \cdots    
+E\{   E(Y\mid \overline{z}_K, \overline{X}_{K-1}) \mid \overline{z}_{K-1}, \overline{X}_{K-2} \}
+\cdots \mid z_1,  X_0 \right] .
+$$
+\end{theorem}
+
+
+备注：  
+在定理\ref{thm::g-formula-multiple}中，我使用简化的记号“$\overline{z}_k$”来表示“$\overline{Z}_k = \overline{z}_k $”。  
+当$X$为离散变量时，定理\ref{thm::g-formula-multiple}可简化为  
+\begin{eqnarray*}
+ E\{ Y(\overline{z}_K)  \}  
+&=& 
+\sum_{x_0} \sum_{x_1} \cdots   \sum_{x_{K-1}} 
+ E(Y\mid \overline{z}_K, \overline{x}_{K-1})   \\
+ && 
+\qquad \qquad \cdot  \pr(x_{K-1}\mid \overline{z}_{K-1}, \overline{x}_{K-2}) 
+ \cdots
+ \pr(x_1\mid z_{1}, x_0)
+ \pr(x_0) ; 
+\end{eqnarray*}  
+而当$X$为连续变量时，定理\ref{thm::g-formula-multiple}可简化为  
+\begin{eqnarray*}
+  E\{ Y(\overline{z}_K)  \}  
+&=& 
+\int 
+ E(Y\mid \overline{z}_K, \overline{x}_{K-1})   \\
+ && \cdot 
+ f(x_{K-1}\mid \overline{z}_{K-1}, \overline{x}_{K-2}) 
+ \cdots
+ f(x_1\mid z_{1}, x_0)
+ f(x_0)
+ \d \overline{x}_{K-1}   . 
+\end{eqnarray*} 
+
+
+
+
+
+ 
+ \paragraph{在多个时间点进行处理时的逆概率加权法}\label{problem::ipw-multiple-time}
+
+沿用问题\ref{problem::g-formula-multiple-time}中的设定。定义在$K$个时间点上的倾向得分为\begin{eqnarray*}
+e(z_1, X_0) &=& \pr(Z_1 = z_1\mid X_0) ,\\
+\vdots \\
+e(z_k, \overline{Z}_{k-1},  \overline{X}_{k-1}) &=&  \pr(Z_k = z_k \mid \overline{Z}_{k-1},  \overline{X}_{k-1}) ,\\
+\vdots \\
+e(z_K, \overline{Z}_{K-1},  \overline{X}_{K-1}) &=&  \pr(Z_K = z_K \mid \overline{Z}_{K-1},  \overline{X}_{K-1}) .
+\end{eqnarray*}
+
+
+请证明下述定理\ref{thm::ipw-multiple}，并默认满足重叠性条件。 
+
+
+\begin{theorem}
+[具有多个时间点的逆概率加权法]\label{thm::ipw-multiple}
+在假设\ref{assume::si-multiple}之下，
+$$
+  E\{ Y(\overline{z}_K)  \}   = E\left\{  
+  \frac{1(Z_1 = z_1) \cdots  1( Z_K = z_K) Y}{    e(z_1, X_0)  \cdots  e(z_K, \overline{Z}_{K-1},  \overline{X}_{K-1})   }
+  \right\}.
+$$
+\end{theorem}
+
+
+基于定理\ref{thm::ipw-multiple}，构造Horvitz–Thompson估计量与Hajek估计量。 
+
+
+ \paragraph{在多个时间点进行处理的边际结构模型}\label{problem::msm-multiple-time}
+
+
+潜在结果的数量随$K$呈指数级增长。问题\ref{problem::g-formula-multiple-time}与\ref{problem::ipw-multiple-time}中的公式无法直接应用于有限样本情形。我们可以对潜在结果施加如下结构性假设。
+
+
+\begin{definition}
+[包含多个时间点的边际结构模型]\label{definition::msm-multiple}
+假设  
+$$
+  E\{ Y(\overline{z}_K)  \mid X_0\}  = f(\overline{z}_K, X_0 ; \beta  ).
+$$
+\end{definition}
+
+
+定义\ref{definition::msm-multiple}的两个典型示例分别为
+$$
+  E\{ Y(\overline{z}_K)  \mid X_0\}   = \beta_0 + \beta_1 \sum_{k=1}^K z_k + \beta_2\tran X_0 
+  $$
+以及
+$$ 
+ E\{ Y(\overline{z}_K)  \mid X_0\}   = \beta_0 +  \sum_{k=1}^K \beta_k z_k + \beta_{K+1}\tran X_0 .
+ $$
+
+倘若我们知晓所有的潜在结果，便可借助下述最小化问题来求解$\beta$：
+$$
+\beta = \arg \min_b  \sum_{  \overline{z}_K  }  E\{   Y(\overline{z}_K) -  f(\overline{z}_K, X_0 ; \beta  )\}^2.
+$$
+下文中的定理\ref{thm::msm-ipw-multiple}表明：在假设\ref{assume::si-multiple}成立的前提下，我们能够通过仅涉及可观测变量的最小化问题来求解$\beta$。 
+
+
+\begin{theorem}
+[针对含多个时间点的边际结构模型的逆概率加权法]\label{thm::msm-ipw-multiple}
+在假设\ref{assume::si-multiple}之下，
+$$
+\beta = \arg \min_b  \sum_{  \overline{z}_K  }    E\left[ 
+  \frac{1(Z_1 = z_1) \cdots 1( Z_K = z_K) }{    e(z_1, X_0)  \cdots  e(z_K, \overline{Z}_{K-1},  \overline{X}_{K-1})    }
+  \{ Y -  f(\overline{z}_K, X_0 ; \beta  )\} ^2
+  \right] .
+$$
+\end{theorem}
+
+
+
+  
+   \paragraph{多时间点处理的结构嵌套模型}\label{problem::snm-multiple-time}
+
+
+请沿用问题\ref{problem::g-formula-multiple-time}中的设定以及问题\ref{problem::ipw-multiple-time}中的符号标记。本问题阐述了一个通用的结构嵌套模型。 
+
+\begin{definition}
+[具有多个时间点的结构嵌套模型]
+\label{def::snm-multiple}
+在时间点$k$处的条件效应为
+$$
+E\{  Y(\overline{z}_k,0) - Y( \overline{z}_{k-1},0) \mid \overline{z}_k , \overline{X}_{k-1} \} = g_k( \overline{z}_k, \overline{X}_{k-1}; \beta) 
+$$
+对所有$\overline{z}_k$以及所有$k=1,\ldots, K$均成立。 
+\end{definition}
+
+
+ 
+在定义\ref{def::snm-multiple}中，存在一个逻辑限制条件：
+$$
+g_k(0,  \overline{z}_{k-1}, \overline{X}_{k-1}; \beta)    = 0
+$$
+该条件适用于所有的$\overline{z}_{k-1}$以及所有的$k=1,\ldots, K$。 
+
+
+定义
+$$
+U_k(\beta) = Y - \sum_{s=1}^k  g_s( \overline{Z}_s, \overline{X}_{s-1}; \beta) 
+$$
+对所有$k=1,\ldots, K$均成立。下方的定理\ref{thm::snm-estimating-equation-multiple}是对定理\ref{thm::estimating-equation-snm}的扩展。
+
+
+
+\begin{theorem}
+\label{thm::snm-estimating-equation-multiple}
+在假设\ref{assume::si-multiple}与定义\ref{def::snm-multiple}的前提下，对于任意函数$h_k$$(k=1,\ldots, K)$，只要其矩存在，我们便有
+$$
+E\left[    h_k( \overline{Z}_{k-1}, \overline{X}_{k-1} ) \{  Z_k - e(1, \overline{Z}_{k-1}, \overline{X}_{k-1}) \}  U_k(\beta) 
+\right] = 0
+$$ 
+\end{theorem}
+
+
+
+备注：通过选择合适的$h_k$值，我们便可通过求解定理\ref{thm::snm-estimating-equation-multiple}的经验版本来估计$\beta$。 
+
+
+  
+  \paragraph{推荐阅读} 
+
+\citet{robins2000marginal} 对边际结构模型进行了评述。\citet{naimi2017introduction} 对g-方法进行了评述。  

@@ -1,0 +1,638 @@
+ 
+\chapter{分解混合分布与工具变量不等式}
+ \label{chapter::iv-inequalities}
+
+ 
+ 第\ref{chapter::iv-experiment}章中的IV模型需要满足假设\ref{assume::random}至\ref{assume::ER}：
+ \begin{enumerate}
+ \item
+ $Z\ind \{D(1), D(0) ,Y(1), Y(0)   \}$;
+ \item
+ $\pr(U = \df) = 0$;
+ \item 
+ 对于$U=\at$或$\nt$，有$Y(1) = Y(0)$。 
+ \end{enumerate}
+
+
+表\ref{table::obs-latent}总结了在单调性假设下可观测的组别及其对应的潜在组别。 
+
+
+\begin{table}[h]
+\centering
+\caption{假设\ref{assume::Mono}下的可观测组别与潜在组别}\label{table::obs-latent}
+\begin{tabular}{cccc}
+\hline 
+$Z$ & $D$ & $D(1)$ & 潜在组别 \\
+\hline 
+$Z=1$ & $D=1$ & $D(1) = 1$ & $U = \cp$或$\at$ \\
+$Z=1$ & $D=0$ & $D(1) = 0$ & $U = \nt$ \\ 
+$Z=0$ & $D=1$ & $D(0) = 1$ & $U = \at$  \\ 
+$Z=0$ & $D=0$ & $D(0) = 0$ & $U = \cp$或$\nt$ \\
+\hline 
+\end{tabular}
+\end{table}
+
+
+有趣的是，假设\ref{assume::random}至\ref{assume::ER}联合起来具有一些可检验的推论。\citet{balke1997bounds}将其称为{\it 工具变量不等式}。本章直观地推导这些不等式的一个特例。只要识别出由$U$定义的各潜在组内的潜在结果均值，即可直接得到证明。 
+
+\section{分解混合分布}
+\label{sec::disentangle-mixtures}
+
+
+我们在下面的定理\ref{thm::cace-mixture-components}中总结了主要结果。
+定义
+$$
+\pi_u = \pr(U = u) \quad  \quad  (u=\at, \nt, \cp) 
+$$ 
+为类型为$U=u$的个体的比例；同时定义
+$$
+\mu_{zu} = E\{  Y(z) \mid U = u\}\quad  \quad (z=0,1;u=\at, \nt, \cp) .
+$$ 
+为类型$U=u$下潜在结果$Y(z) $的均值。
+排除限制假设意味着$\mu_{1\nt} = \mu_{0\nt} $且$\mu_{1\at} = \mu_{0\at} $。令$\mu_{\nt}$与$\mu_{\at} $分别表示这两种均值。
+
+\begin{theorem}
+\label{thm::cace-mixture-components}
+在假设\ref{assume::random}至\ref{assume::ER}下，我们可以通过以下方式确定各类潜在类型的比例：
+\begin{eqnarray*}
+ \pi_\nt &=& \pr(D=0\mid Z=1)  ,\\
+  \pi_\at &=&\pr(D=1\mid Z=0) , \\
+  \pi_\cp &=& E(D\mid Z=1) - E(D\mid Z=0) ,
+\end{eqnarray*}
+同时可以确定各类型下潜在结果的均值：
+\begin{eqnarray*}
+  \mu_{\nt} &=& E(Y\mid Z=1, D=0) ,\\
+ \mu_{\at} &=& E(Y\mid Z=0, D=1),\\
+ \mu_{1\cp} &=& \pi_\cp^{-1}\left\{   E(DY\mid Z=1 )  -  E(DY\mid Z=0)    \right\}, \\
+  \mu_{0\cp}  &=& \pi_\cp^{-1} \big[   E\{ (1-D)Y\mid Z=0 \}  -  E\{(1-D)Y\mid Z=1 \}    \big]. 
+\end{eqnarray*}
+\end{theorem}
+ 
+ 
+\begin{myproof}{定理}{\ref{thm::cace-mixture-components}}
+第一部分：我们首先确定各类潜在顺从类型的比例。
+ never-takers类型的比例可通过下式计算：
+\begin{eqnarray*}
+\pr(D=0\mid Z=1) 
+%&=& \pr\{ D(1) = 0\mid Z=1 \} = \pr\{ D(1) = 0, D(0) = 0 \mid Z=1 \} \\
+&=& \pr(U=\nt \mid Z=1)  \\
+&=& \pr(U=\nt) \\
+&=&  \pi_\nt ,
+\end{eqnarray*}
+Always-takers类型的比例则为：
+\begin{eqnarray*}
+\pr(D=1\mid Z=0) 
+%&=& \pr\{  D(0) = 1\mid Z=0 \} =  \pr\{ D(1)=1,  D(0) = 1\mid Z=0 \} \\
+&=& \pr(U=\at \mid Z=0)  \\
+&=& \pr(U=\at) =  \pi_\at . 
+\end{eqnarray*}
+因此，Compliers类型的比例即为：
+\begin{eqnarray*}
+\pi_\cp &=& \pr(U=\cp) \\
+&=& 1-  \pi_\nt -  \pi_\at  \\
+&=& 1 - \pr(D=0\mid Z=1)  - \pr(D=1\mid Z=0) \\
+%&=&\pr(D=1\mid Z=1)  - \pr(D=1\mid Z=0) 
+&=& E(D\mid Z=1) - E(D\mid Z=0) \\
+&=& \tau_D,
+\end{eqnarray*}
+该结果与之前的讨论一致。尽管我们无法得知每个个体的潜在类型，但我们能够确定各类别的比例。 
+
+
+第二部分：接下来识别各潜在依从类型内的潜在结果均值。 
+%Under Assumption \ref{assume::ER}, 
+%$$
+%\mu_{1\at} = \mu_{0\at} \equiv \mu_{\at},\quad \mu_{1\nt} = \mu_{0\nt} \equiv \mu_{\nt} .
+%$$
+观测组$(Z=1,D=0)$仅包含从不接受者，因此$$
+E(Y\mid Z=1, D=0) = E\{  Y(1) \mid Z=1, U=\nt \} = E\{  Y(1) \mid   U=\nt \}  =
+\mu_{\nt}  . 
+$$观测组$(Z=0,D=1)$仅包含始终接受者，因此$$
+E(Y\mid Z=0, D=1) = E\{  Y(0) \mid Z=0, U=\at \} = E\{  Y(0) \mid   U=\at \}  =
+\mu_{\at} . 
+$$观测组$(Z=1,D=1)$既包含依从者，也包含始终接受者，因此\begin{eqnarray*}
+E(Y\mid Z=1, D=1) &=& E\{ Y(1)\mid Z=1, D(1)=1\} \\
+&=& E\{ Y(1)\mid D(1)=1\}  \\   
+&=& \pr\{  D(0)=1 \mid D(1)=1 \} E\{ Y(1)\mid D(1)=1, D(0)=1\}  \\
+&&+ \pr\{  D(0)=0 \mid D(1)=1 \}E\{ Y(1)\mid D(1)=1, D(0)=0\}   \\
+&=& \frac{\pi_\cp}{\pi_\cp + \pi_\at} \mu_{1\cp} +  \frac{\pi_\at}{\pi_\cp + \pi_\at} \mu_{\at}.
+\end{eqnarray*}求解上述线性方程得到\begin{eqnarray*}
+\mu_{1\cp} &=& \pi_\cp^{-1} \left\{  (\pi_\cp + \pi_\at)  E(Y\mid Z=1, D=1)  - \pi_\at    E(Y\mid Z=0, D=1)    \right\} \\
+&=& \pi_\cp^{-1} \left\{  \pr(D=1\mid Z=1)  E(Y\mid Z=1, D=1) \right.\\
+&&\left. \qquad  -\pr(D=1\mid Z=0) E(Y\mid Z=0, D=1)    \right\} \\
+&=&  \pi_\cp^{-1}\left\{   E(DY\mid Z=1 )  -  E(DY\mid Z=0)    \right\}.
+\end{eqnarray*}观测组$(Z=0,D=0)$既包含依从者，也包含从不接受者，因此\begin{eqnarray*}
+E(Y\mid Z=0,D=0) &=& E\{ Y(0)\mid Z=0, D(0)=0\} \\
+&=& E\{ Y(0)\mid D(0)=0\} \\ 
+&=& \pr\{  D(1)=1 \mid D(0)=0 \} E\{ Y(0)\mid D(1)=1, D(0)=0\}  \\
+&&+ \pr\{  D(1)=0 \mid D(0)= 0\}E\{ Y(0)\mid D(1)=0, D(0)=0\}   \\
+&=& \frac{\pi_\cp}{\pi_\cp + \pi_\nt} \mu_{0\cp} +  \frac{\pi_\nt}{\pi_\cp + \pi_\nt} \mu_{\nt}.
+\end{eqnarray*}求解上述线性方程得到\begin{eqnarray*}
+\mu_{0\cp}  &=& \pi_\cp^{-1} \left\{  (\pi_\cp + \pi_\nt)  E(Y\mid Z=0, D=0)  - \pi_\nt    E(Y\mid Z=1, D=0)    \right\} \\
+&=& \pi_\cp^{-1} \left\{ \pr(D=0\mid Z=0)  E(Y\mid Z=0, D=0)  \right.\\
+&&\left. \qquad  -\pr(D=0\mid Z=1)   E(Y\mid Z=1, D=0)    \right\} \\
+&=& \pi_\cp^{-1} \big[   E\{ (1-D)Y\mid Z=0 \}  -  E\{(1-D)Y\mid Z=1 \}    \big]. 
+\end{eqnarray*}
+\end{myproof}
+
+根据定理\ref{thm::cace-mixture-components}中$\mu_{1\cp} $和$\mu_{0\cp} $的公式，可以将$\tau_\cp = \mu_{1\cp}  - \mu_{0\cp}  $简化为$$
+\tau_\cp =  \{  E(Y\mid Z=1) - E(Y\mid Z=0) \}/\pi_\cp ,
+$$与此前定理\ref{thm::CACE-identification}的公式一致。 
+
+定理\ref{thm::cace-mixture-components}的核心目标是确定各类潜在结果均值$\mu_{zu} $。\citet{imbens1997estimating}推导出了更为通用的潜在结果分布识别公式；具体细节由习题\ref{hw::disentangle-mixture-distrubution}阐述。
+
+
+
+\section{可检验推论：工具变量不等式}
+
+
+通过定理\ref{thm::cace-mixture-components}绕道推导$\tau_\cp$的公式，还有额外价值吗？有。对于二元结果，以下不等式必然成立：$$
+0\leq \mu_{1\cp} \leq 1, \quad 
+0\leq \mu_{0\cp} \leq 1, 
+$$进而得到四个不等式\begin{eqnarray*}
+E(DY\mid Z=1 )  -  E(DY\mid Z=0) &\geq & 0 ,\\
+E(DY\mid Z=1 )  -  E(DY\mid Z=0) &\leq  & E(D\mid Z=1) - E(D\mid Z=0)  ,\\ 
+E\{ (1-D)Y\mid Z=0 \}  -  E\{(1-D)Y\mid Z=1 \}   &\geq & 0,\\
+E\{ (1-D)Y\mid Z=0 \}  -  E\{(1-D)Y\mid Z=1 \}  &\leq & E(D\mid Z=1) - E(D\mid Z=0) . 
+\end{eqnarray*}移项后可得到以下统一形式的不等式。
+
+
+\begin{theorem}[工具变量不等式]\label{thm::iv-inequality}
+当结果变量$Y$为二元变量时，假设\ref{assume::random}至\ref{assume::ER}意味着：
+\begin{eqnarray}\label{eq::iv-inequalities}
+E(Q\mid Z=1) - E(Q\mid Z=0) \geq 0,  
+\end{eqnarray}
+其中$Q = DY, D(1-Y), (D - 1)Y$以及$D+Y-DY$。
+\end{theorem}
+
+
+在IV假设\ref{assume::random}至\ref{assume::ER}下，$Q = DY, D(1-Y), (D - 1)Y$及$D+Y-DY$的均值差均必须非负。值得注意的是，上述推论仅涉及观测变量的分布特性。任何违反IV不等式的观测结果都会引发对IV假设本身的质疑。 
+
+
+\citet{balke1997bounds}推导出了含或不含单调性假设时的广义IV不等式；本证明思路源自\citet{jiang2020measurement}提出的针对稍复杂情境的推导方法。定理\ref{thm::iv-inequality}仅针对二元结果变量展开了讨论；习题\ref{hw::ivineq-binary}提供了等价形式，习题\ref{hw::ivineq-general-Y}则给出了适用于一般结果变量的结论。
+
+
+
+\section{实例分析}\label{section::binary-y-ivineq}
+
+
+对于二元结果变量，我们可以利用矩估计法估算所有参数。
+
+
+\begin{lstlisting}
+IVbinary = function(n111, n110, n101, n100, 
+                    n011, n010, n001, n000){
+  
+  n_tr = n111 + n110 + n101 + n100
+  n_co = n011 + n010 + n001 + n000
+  n    = n_tr + n_co
+  
+  ## proportions of the latent strata
+  pi_n = (n101 + n100)/n_tr
+  pi_a = (n011 + n010)/n_co
+  pi_c = 1 - pi_n - pi_a
+  
+  ## four observed means of the outcomes (Z=z,D=d)
+  mean_y_11 = n111/(n111 + n110)
+  mean_y_10 = n101/(n101 + n100)
+  mean_y_01 = n011/(n011 + n010)
+  mean_y_00 = n001/(n001 + n000)
+  
+  ## means of the outcomes of two strata
+  mu_n1 = mean_y_10
+  mu_a0 = mean_y_01
+  ## ER implies the following two means
+  mu_n0 = mu_n1
+  mu_a1 = mu_a0
+  ## stratum (Z=1,D=1) is a mixture of c and a
+  mu_c1 = ((pi_c + pi_a)*mean_y_11 - pi_a*mu_a1)/pi_c
+  ## stratum (Z=0,D=0) is a mixture of c and n
+  mu_c0 = ((pi_c + pi_n)*mean_y_00 - pi_n*mu_n0)/pi_c
+  
+  ## identifiable quantities from the observed data
+  list(pi_c = pi_c, 
+       pi_n = pi_n, 
+       pi_a = pi_a, 
+       mu_c1= mu_c1,
+       mu_c0= mu_c0,
+       mu_n1= mu_n1,
+       mu_n0= mu_n0,
+       mu_a1= mu_a1,
+       mu_a0= mu_a0,
+       tau_c= mu_c1 - mu_c0)
+}
+\end{lstlisting}
+
+
+下面我们重新分析两个经典的二元数据实例。 
+
+\begin{example}\label{eg::1-iv-inequalities}
+\citet{improve2014endovascular}评估了对临床诊断为主动脉瘤破裂的患者实施急诊腔内修复或开放手术修复策略的效果。患者被随机分配至两种策略之一，主要结果为30天后的生存状态。令$Z$表示分配的处理，其中$Z=1$表示腔内修复策略，$Z=0$表示开放修复策略；令$D$表示实际接受的处理。令$Y$表示生存状态，$Y=1$表示死亡，$Y=0$表示存活。表\ref{tab::data1}汇总了观测数据。
+%The estimate of $\tau_\cp $ is $0.131$ with 95\% confidence interval $(-0.036, 0.298)$ including $0$.
+使用上述\ri{IVbinary}函数，可得到以下估计结果：
+\begin{lstlisting}
+> investigators_analysis = IVbinary(n111 = 107,
++                                   n110 = 42,
++                                   n101 = 68,
++                                   n100 = 42,
++                                   n011 = 24,
++                                   n010 = 8,
++                                   n001 = 131,
++                                   n000 = 79)
+>                         
+> investigators_analysis
+$pi_c
+[1] 0.4430582
+
+$pi_n
+[1] 0.4247104
+
+$pi_a
+[1] 0.1322314
+
+$mu_c1
+[1] 0.7086064
+
+$mu_c0
+[1] 0.6292042
+
+$mu_n1
+[1] 0.6181818
+
+$mu_n0
+[1] 0.6181818
+
+$mu_a1
+[1] 0.75
+
+$mu_a0
+[1] 0.75
+
+$tau_c
+[1] 0.07940223
+\end{lstlisting}
+没有证据表明工具变量假设被违反。 
+\end{example}
+
+
+\begin{example}\label{eg::2-iv-inequalities}
+在\citet{hirano2000assessing}的研究中，医生被随机选中接收一封鼓励其为流感高风险患者接种疫苗的信。处理为实际接种流感疫苗，结果为是否因流感相关问题到医院就诊的指示变量。然而，一些患者并不依从分配。令$Z_i$为鼓励接种的指示变量：医生收到鼓励信时$Z=1$，否则$Z=0$。令$D$为实际接受的处理。令$Y$为结果：冬季因流感相关原因住院时$Y=0$，否则$Y=1$。数据的更多细节见习题\ref{problem::flushot}，观测数据汇总于表\ref{tab::data2}。
+%The estimate of $\tau_\cp $ is $0.116$ with 95\% confidence interval $(-0.061, 0.293)$ including $0$.
+使用上述\ri{IVbinary}函数，可得到以下估计结果：
+\begin{lstlisting}
+> flu_analysis = IVbinary(n111 = 31,
++                         n110 = 422,
++                         n101 = 84,
++                         n100 = 935,
++                         n011 = 30,
++                         n010 = 233,
++                         n001 = 99,
++                         n000 = 1027)
+> flu_analysis
+$pi_c
+[1] 0.1183997
+
+$pi_n
+[1] 0.6922554
+
+$pi_a
+[1] 0.1893449
+
+$mu_c1
+[1] -0.004548064
+
+$mu_c0
+[1] 0.1200094
+
+$mu_n1
+[1] 0.08243376
+
+$mu_n0
+[1] 0.08243376
+
+$mu_a1
+[1] 0.1140684
+
+$mu_a0
+[1] 0.1140684
+
+$tau_c
+[1] -0.1245575
+\end{lstlisting}
+由于$\hat\mu_{1\cp} < 0$，表明IV假设可能被违反。 
+\end{example} 
+
+
+
+
+ \begin{table}[t]
+\caption{二元数据与IV不等式}
+\begin{center}
+\begin{subtable}{0.5\textwidth}
+\caption{ \citet{improve2014endovascular}研究数据}
+\begin{tabular}{cccccc} 
+\hline 
+      &   \multicolumn{2}{c}{$Z=1$}  &  &  \multicolumn{2}{c}{$Z=0$}  \\  \cline{2-3} \cline{5-6} 
+      & $D=1$  &  $D=0$           &       &  $D=1$  &  $D=0$\\
+ $Y=1$ &   107    &      68         &      &    24       &    131        \\
+ $Y=0$ &   42    &     42            &      &     8         &     79           \\  
+ \hline
+\end{tabular}
+\label{tab::data1}
+\end{subtable}% 
+\vspace{0.1in}
+\begin{subtable}{0.5\textwidth}
+\caption{ \citet{hirano2000assessing}研究数据}
+\begin{tabular}{cccccc}
+\hline 
+      &   \multicolumn{2}{c}{$Z=1$}  &  &  \multicolumn{2}{c}{$Z=0$}  \\  \cline{2-3} \cline{5-6} 
+      & $D=1$  &  $D=0$           &       &  $D=1$  &  $D=0$\\
+ $Y=1$ &   31    &     85         &      &     30       &    99       \\
+ $Y=0$ &   424   &     944            &      &     237         &    1041           \\  
+ \hline
+\end{tabular}
+\label{tab::data2}
+\end{subtable}
+\end{center}
+\end{table}%
+
+ 
+ 
+\section{作业习题}
+
+\paragraph{更细致的数据分析}\label{hw::more-data-binary}
+
+实例\ref{eg::1-iv-inequalities}与\ref{eg::2-iv-inequalities}均未涉及估计值的不确定性。请尝试为真实参数计算相应的置信区间。 
+ 
+
+
+
+\paragraph{Compliers群体的风险比}\label{hw::rr-compliers}
+
+
+对于二元结果变量，可定义Compliers群体的风险比为：
+$$
+\textsc{rr}_\cp = \frac{  \pr\{  Y(1) = 1\mid U = \cp \}  }{ \pr\{  Y(0) = 1\mid U = \cp \}   } .
+$$
+
+试证明：在假设\ref{assume::random}至\ref{assume::ER}下，该值可表示为：
+$$
+\textsc{rr}_\cp =  \frac{  E(DY\mid Z=1)  - E(DY\mid Z=0)  }{  E\{  (D-1)Y\mid Z=1 \}   - E\{ (D-1)Y\mid Z=0 \} }.
+$$
+
+
+
+提示：依据定理\ref{thm::cace-mixture-components}，可求得任何$E\{  Y(1) \mid U = \cp \} $与$E\{  Y(0) \mid U = \cp \} $间的对比值。 
+
+
+\paragraph{分解混合分布：分布层面的结果}\label{hw::disentangle-mixture-distrubution}
+
+
+本习题是对定理\ref{thm::cace-mixture-components}的拓展。定义
+$$
+f_{zu}(y) = \pr\{  Y(z) = y  \mid U=u \},  \quad  (z=0,1;u=\at, \nt, \cp)
+$$
+为潜在类型$U=u$下结果变量$Y(z)$的概率密度函数；同时令
+$$
+g_{zd}(y) = \pr(Y = y\mid Z=z, D=d)
+$$
+为观测组$(Z=z, D=d)$中结果变量的条件密度。排除限制假设促使$f_{1\nt}(y) = f_{0\nt} (y) $且$f_{1\at}(y) = f_{0\at}(y) $，令$f_{\nt}(y)$与$ f_{\at} (y) $分别为这两种分布。 
+
+
+
+请证明定理\ref{thm::cace-mixture-components-distribution}的内容。  
+
+
+ 
+\begin{theorem}
+\label{thm::cace-mixture-components-distribution}
+在假设\ref{assume::random}至\ref{assume::ER}之下，各类潜在类型下的结果变量概率密度可由下式确定：
+\begin{eqnarray*}
+  f_{\nt}(y) &=& g_{10}(y) ,\\
+  f_{\at} (y) &=& g_{01}(y),\\
+f_{1\cp}(y) &=& \pi_\cp^{-1} \{   \pr(D=1\mid Z=1 )g_{11}(y)  -  \pr(D=1\mid Z=0) g_{01}(y)   \} , \\
+f_{0\cp} (y) &=& \pi_\cp^{-1} \{  \pr(D=0\mid Z=0)  g_{00}(y)  -  \pr(D=0\mid Z=1)  g_{10}(y)    \} . 
+\end{eqnarray*}
+\end{theorem}
+
+
+
+ 
+
+
+
+
+
+\paragraph{定理\ref{thm::iv-inequality}的等价表达}
+\label{hw::ivineq-binary}
+
+\eqref{eq::iv-inequalities}中的不等式可改写为\begin{eqnarray*}
+\pr(D=1, Y=y\mid Z=1) &\geq & \pr(D=1, Y=y\mid Z=0), \\
+\pr(D=0, Y=y\mid Z=0) &\geq & \pr(D=0, Y=y\mid Z=1)
+\end{eqnarray*}对$y=0,1$均成立。 
+
+
+
+\paragraph{一般结果变量的IV不等式}
+\label{hw::ivineq-general-Y}
+
+对于一般型结果变量$Y$，试证明假设\ref{assume::random}至\ref{assume::ER}能推导出：
+\begin{eqnarray*}
+\pr(D=1, Y\geq y\mid Z=1) &\geq & \pr(D=1, Y\geq y\mid Z=0), \\
+\pr(D=1, Y <  y\mid Z=1) &\geq & \pr(D=1, Y <  y\mid Z=0), \\
+\pr(D=0, Y\geq y\mid Z=0) &\geq & \pr(D=0, Y\geq y\mid Z=1),\\
+\pr(D=0, Y <  y\mid Z=0) &\geq & \pr(D=0, Y <  y\mid Z=1)
+\end{eqnarray*}
+对所有$y$值均成立。 
+ 
+提示：\citet{imbens1997estimating}与\citet{kitagawa2015test}探讨了类似结论。可借助Kolmogorov-Smirnov统计量构建检验形式：
+$$
+\text{KS}_1 = \max_{y} \Big |
+\frac{  \sumn Z_i D_i  1(Y_i \leq y)  }{ \sumn Z_i D_i  } - \frac{  \sumn (1-Z_i) D_i  1(Y_i \leq y)  }{ \sumn (1-Z_i) D_i  }
+\Big |.
+$$
+
+
+
+\paragraph{IV不等式的实例演示}
+
+请分别给出满足全部IV不等式以及不满足全部IV不等式的两个实例。需具体描述二元变量$(Z,D,Y)$的联合分布特征。 
+
+ 
+ 
+ \paragraph{关键假设的违背情形}\label{eq::violations-of-IV}
+
+定理\ref{thm::CACE-identification}的成立依赖于随机化、单调性与排除限制三个假设，后两者在随机实验中也无法直接检验。当这些假设被违背时，IV估计法同样无法得到正确的CACE估计值。习题要求论证以下两种违背情形，对应\citet{angrist1996identification}的两个命题。记$\pi_u = \pr(U=u)$且$\tau_u = E\{  Y(1) - Y(0) \mid U=u \}$（$u=\at, \nt, \cp, \df$）。 
+
+
+\begin{theorem}
+\label{theorem::wald-violation-assumptions}
+(a) 在假设\ref{assume::random}和\ref{assume::Mono}成立、而不要求排除限制时，有$$
+\frac{ E(Y\mid Z=1) - E(Y\mid Z=0) }{ E(D\mid Z=1) - E(D \mid Z=0) } - \tau_\cp 
+= \frac{  \pi_\at \tau_\at + \pi_\nt \tau_\nt  }{  \pi_\cp } .
+$$
+ 
+
+(b) 在假设\ref{assume::random}和\ref{assume::ER}成立、而不要求单调性时，有$$
+\frac{ E(Y\mid Z=1) - E(Y\mid Z=0) }{ E(D\mid Z=1) - E(D \mid Z=0) } - \tau_\cp 
+= \frac{  \pi_\df (\tau_\cp + \tau_\df )  }{   \pi_\cp - \pi_\df   }.
+$$
+\end{theorem}
+ 
+请证明定理\ref{theorem::wald-violation-assumptions}的内容。 
+
+ 
+ \paragraph{其他分析方法的局限}\label{problem::as-treated-analysis}
+
+第\ref{sec::disentangle-mixtures}节推导工具变量不等式时，通过识别各潜在层的比例及其潜在结果的条件均值，解开了混合分布。这些结果有助于理解其他看似合理的分析方法的缺陷。下面回顾三种估计量，并假设\ref{assume::random}至\ref{assume::ER}成立。   
+
+
+\begin{enumerate}
+\item 
+{\it 按实际治疗分析}比较实际接受处理和对照的单位的结果均值，得到$$
+\tau_\textsc{at} = E(Y\mid D=1) - E(Y\mid D=0).
+$$证明$$
+\tau_\textsc{at} = \frac{  \pi_\at \mu_\at + \pr(Z=1)\pi_\cp \mu_{1\cp}   }{   \pr(D=1) } 
+- \frac{  \pi_\nt \mu_\nt + \pr(Z=0) \pi_\cp \mu_{0\cp}   }{   \pr(D=0) } .
+$$
+
+
+\item 
+{\it 符合方案分析}比较处理组和对照组中依从所分配处理的单位，得到$$
+\tau_\textsc{pp} = E(Y\mid Z=1, D=1) - E(Y\mid Z=0, D=0).
+$$证明$$
+\tau_\textsc{pp} =\frac{  \pi_\at \mu_\at + \pi_\cp \mu_{1\cp} }{  \pi_\at   + \pi_\cp }
+- \frac{  \pi_\nt \mu_\nt + \pi_\cp \mu_{0\cp} }{  \pi_\nt   + \pi_\cp }.
+$$
+
+
+\item 
+亦可考察实际接受干预与未接受干预组之间的条件均值差，即
+\begin{eqnarray*}
+\tau_{Z=1} &=& E(Y\mid Z=1, D=1) - E(Y\mid Z=1, D=0),\\ 
+\tau_{Z=0} &=& E(Y\mid Z=0, D=1) - E(Y\mid Z=0, D=0).
+\end{eqnarray*}
+试证明：
+$$
+\tau_{Z=1}  = \frac{  \pi_\at \mu_\at + \pi_\cp \mu_{1\cp} }{  \pi_\at   + \pi_\cp } - \mu_\nt,\quad
+\tau_{Z=0} = \mu_\at - \frac{  \pi_\nt \mu_\nt + \pi_\cp \mu_{0\cp} }{  \pi_\nt   + \pi_\cp }.
+$$
+\end{enumerate}
+ 
+ 
+\paragraph{总体平均因果效应的界限}\label{para::bounds-ACE}
+
+
+使用第\ref{eq::interpret-iv-double}节的记号，推广第\ref{sec::disentangle-mixtures}节的讨论。以潜在结果$Y(d)$定义实际接受的处理对结果的平均因果效应为$$
+\delta = E\{  Y(d=1) - Y(d=0) \},
+$$由于记号变化，将$\mu_{zu} $的定义相应改为$$
+m_{du} = E\{  Y(d) \mid U = u\},\quad  (z=0,1;u=\at, \nt, \cp) 
+$$它们满足$$
+\delta = \sum_{u = \at, \nt, \cp}  \pi_u  (m_{1u} - m_{0u}).
+$$
+
+第\ref{sec::disentangle-mixtures}节已确定$\pi_\at$、$\pi_\nt$、$\pi_\cp$、$m_{1\at} = \mu_{1 \at}$、$m_{0\nt} = \mu_{0\nt }$、$m_{1\cp} = \mu_{1\cp}$及$m_{0\cp} = \mu_{0\cp}$的值，但$m_{0 \at}$与$m_{1\nt }$未知，因此无法直接测定$\delta$。若结果变量有界，则可界定$\delta$的取值区间。  
+
+\begin{theorem}
+\label{thm::bound-on-ACE}
+在假设\ref{assume::Mono}至\ref{assume::ER-double-index}成立、且结果有界于$[\underline{y}, \overline{y}]$时，有$\underline{\delta} \leq  \delta  \leq \overline{\delta}$，其中$$
+\underline{\delta} =  \delta'  - \overline{y} \pr(D=1\mid Z=0) + \underline{y} \pr(D=0\mid Z=1)
+$$和$$
+\overline{\delta} = \delta'  -   \underline{y} \pr(D=1\mid Z=0) +  \overline{y}  \pr(D=0\mid Z=1) 
+$$并记$\delta' = E(DY\mid Z=1) - E(Y-DY\mid Z=0) .$
+\end{theorem}
+
+试证明定理\ref{thm::bound-on-ACE}的内容。 
+ 
+ 
+说明：在结果为二元变量的特殊情形下，这些界限简化为$$
+\underline{\delta} =   E(DY\mid Z=1) - E( D+Y-DY\mid Z=0)  
+$$和$$
+\overline{\delta} =  E(DY+1-D\mid Z=1) - E(Y-DY\mid Z=0) .
+ $$
+ 
+ 
+ \paragraph{单侧不遵从现象与统计推断}\label{para::15-onesidednoncompliance}
+ 
+考虑一种随机激励实验：对照组个体不可取得干预措施。记个体$i$的干预分配变量为$Z_i$，实际干预接受状况为$D_i$，观测结果为$Y_i$。所谓单侧不遵从现象，即满足：
+$$
+Z_i=0 \Longrightarrow  D_i = 0 \quad (i=1,\ldots, n). 
+$$
+假定假设\ref{assume::random}成立。 
+ 
+ 
+\begin{enumerate}
+[(1)]
+\item 
+在该情境下，单调性假设\ref{assume::Mono}是否成立？该情境下由$\{ D_i(1), D_i(0)  \}$可定义的潜在类型共有几种？怎样通过观测数据测定其占比？  
+
+\item 
+请具体表述排除限制假设内容。在该假设下，证明$E\{  Y(z) \mid U = u \}$可由观测数据确定。给出所有可能的$z$与$u$值对应的公式。在此情境下如何测定CACE？  
+
+ 
+
+\item
+如果观测到所有单位$i$的处理前协变量$X_i$，如何利用协变量信息提高CACE的估计效率？  
+ 
+ 
+ \item 
+ 在假设\ref{assume::random}下，排除限制假设\ref{assume::ER}具有可检验的推论，即单侧不依从情形的工具变量不等式。写出这些不等式。
+ 
+\item
+\citet{sommer1991estimating}报告了如下数据集： 
+ 
+ \begin{center}
+\begin{tabular}{cccccc} 
+\hline 
+      &   \multicolumn{2}{c}{$Z=1$}  &  &  \multicolumn{2}{c}{$Z=0$}  \\  \cline{2-3} \cline{5-6} 
+      & $D=1$  &  $D=0$           &       &  $D=1$  &  $D=0$\\
+ $Y=1$ &   9663    &     2385         &      &     0       &    11514       \\
+ $Y=0$ &   12   &     34            &      &     0         &    74           \\  
+ \hline 
+\end{tabular}
+ \end{center}
+ 
+此实验中$Z$为是否分配维生素A补充剂的指示变量，$D$为实际接受补充剂的状况，$Y$为存活与否的指示变量。该试验在印度尼西亚实施。请重新分析该数据。 
+ \end{enumerate}
+ 
+ 
+说明：\citet{bloom1984accounting}最早讨论单侧不依从，并提出估计量$\hat\tau_\cp = \hat\tau_Y / \hat\tau_D$，有时称为Bloom估计量。\citet{bloom1984accounting}的记号与本章不同。 
+
+ 
+ 
+ 
+ 
+  \paragraph{单侧不遵从与部分遵从现象}
+\label{para::one-sided-partial-adherence}
+ 
+\citet[][Table 3]{sanders2021incorporating}报告了以下随机对照试验数据，该试验旨在估计针对精神病性障碍患者的戒烟干预效果。 
+
+\begin{center}
+\begin{tabular}{cccc}
+\hline  
+分配组别& 实际接受的处理 &组别人数& \# 阳性结果人数 \\
+\hline  
+对照 & 无& 151 &25 \\
+处理& 无& 35 & 7 \\
+处理& 部分& 42& 17 \\
+处理& 全部& 70& 40\\
+\hline 
+\end{tabular}
+\end{center}
+
+实际接受的处理分为三级：“完全”指参加全部$8$次治疗，“部分”指参加$5$至$7$次，“无”指参加$<5$次。结果是在三个月时测量的二元指标，表示吸烟量是否相对基线减少至少$50\%$。
+
+
+本题中，处理分配$Z$为二元变量，而实际接受的处理$D$取$0, 0.5, 1$三个值，分别对应“无”“部分”和“完全”。三级$D$使问题更复杂，但被分配到对照组时它只能为0。此时有多少个潜在层$U = \{ D(1), D(0) \} $？能否识别它们的比例？
+
+如何将排除限制推广到本题？可以关注哪些因果效应？能否识别这些效应？ 
+
+根据上述问题分析数据。 
+
+
+
+  
+
+ \paragraph{推荐阅读}
+
+\citet{balke1997bounds}推导了更一般的工具变量不等式。 
+

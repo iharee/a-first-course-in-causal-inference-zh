@@ -1,0 +1,711 @@
+
+\chapter{主分层法}
+ \label{chapter::principal-stratification}
+
+本书的第\ref{part::rcts}至第\ref{part::instrumentalvariables}部分着重探讨干预措施对结果变量的因果效应，有时也会对观测到的干预前协变量加以调整。许多实际应用中还存在某种干预后变量 $M$，它出现在干预之后且与结果变量相关联。一个重要的问题就是如何恰当地利用这个干预后变量 $M$。我将先给出几个具有启发意义的实例，之后介绍 \citet{frangakis2002principal} 基于潜在结果模型对该问题的论述。 
+ 
+
+
+\section{启发示例}
+
+
+
+\begin{example}[不遵从干预者]\label{eg::noncompliance}
+在存在不依从的随机实验中，可用$M$表示实际接受的处理。它受到处理分配$Z$的影响，并影响结果$Y$。这里的$M$与第\ref{chapter::iv-experiment}章中的$D$含义相同。
+\end{example}
+
+
+\begin{example}[因死亡导致的数据截断]\label{eq::truncationbydeath}
+在针对重症患者的随机试验中，部分患者可能在测定结果变量 $Y$（如生活质量指标）之前便已死亡。此例中的干预后变量 $M$ 即为表示存活状态的二元指标。 
+\end{example}
+
+
+
+
+\begin{example}[失业问题]\label{eg::unemployment}
+在职业培训项目中，受试者被随机分配到干预组或对照组，并报告自身的就业状态 $M$ 与工资水平 $Y$。此时，$M$ 即为表示就业状况的二元指标。 
+\end{example}
+
+
+
+
+\begin{example}
+[替代终点]\label{eg::surrogate-endpoints}
+在临床试验中，真正感兴趣的结局指标（如30年生存率）需要长期且成本高昂的随访才能获得。因此研究人员通常选择一些易于测量的替代变量。这些变量即被称作“替代终点”。一个实际例子是：在针对HIV感染者的试验中，候选的替代终点 $M$ 即为CD4细胞计数（CD4细胞属于负责抵御感染的白细胞）。 
+\end{example}
+
+
+
+上面的例\ref{eg::noncompliance}至\ref{eg::surrogate-endpoints}有一个共同点：变量$M$发生在处理之后，且与结果有关。$M$可能位于从$Z$到$Y$的因果路径上，如图\ref{fig::intermediate-diagram}(a) 所示；例\ref{eg::noncompliance}就对应图\ref{fig::intermediate-diagram}(a)。$M$也可能不在从$Z$到$Y$的因果路径上，如图\ref{fig::intermediate-diagram}(b) 所示；例\ref{eq::truncationbydeath}和\ref{eg::unemployment}对应图\ref{fig::intermediate-diagram}(b)。例\ref{eg::surrogate-endpoints}则可能对应图\ref{fig::intermediate-diagram}(a) 或 (b)，取决于所选择的替代终点。 
+
+ 
+
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}[]{\textwidth}
+                \centering
+$$
+\begin{xy}
+\xymatrix{
+&& & U \ar[dl]   \ar[dr] \\
+Z \ar[rr] \ar@/_1.5pc/[rrrr] & & M\ar[rr] & & Y\\
+}
+\end{xy}
+$$ 
+               \caption{$M$ 位于从 $Z$ 到 $Y$ 的因果路径上；$Z$ 为随机分配变量，$U$ 代表未观测到的混杂因子}
+        \end{subfigure}%
+        
+        \begin{subfigure}[]{\textwidth}
+                \centering
+$$
+\begin{xy}
+\xymatrix{
+&& & U \ar[dl]   \ar[dr] \\
+Z \ar[rr] \ar@/_1.5pc/[rrrr] & & M  & & Y\\
+}
+\end{xy}
+$$
+                \caption{$M$ 并非位于从 $Z$ 到 $Y$ 的因果路径上；$Z$ 为随机分配变量，$U$ 代表未观测到的混杂因子}
+        \end{subfigure}%
+        
+\caption{包含干预后变量 $M$ 的因果图}\label{fig::intermediate-diagram}
+\end{figure}
+
+
+实际应用中，实际的因果图结构往往比图\ref{fig::intermediate-diagram}所示要复杂得多。本章内容以 \citet{frangakis2002principal} 的论述为基础，且不预先假设具体的因果图结构。
+
+
+
+
+
+\section{基于干预后变量的条件化处理问题}
+
+处理干预后变量 $M$ 的一种直观方法是将其视为干预前协变量并基于其观测值进行条件化处理。然而，$M$ 与 $X$ 存在本质区别：$M$ 一般会受到干预影响，而 $X$ 则不会。统计实践中亦有经验法则：为评估干预对结果的平均因果效应，数据分析者不应以任何干预后变量作为条件变量 \citep{cochran1957analysis, rosenbaum1984consquences}。基于潜在结果模型理论，\citet{frangakis2002principal} 对此现象作出了如下精辟解释。 
+
+为简化讨论，本章仅以完全随机实验（CRE）情形为例。
+
+\begin{assumption}
+[完全随机实验条件下含中间变量]
+\label{assume::complete-randomization-withM}
+满足以下条件：
+$$
+Z \ind  \{ M(1), M(0), Y(1), Y(0), X \} . 
+$$
+\end{assumption}
+
+ 
+在给定$M= m$后，比较
+\begin{equation}
+\pr(Y\mid Z=1, M=m)\label{eq::proby|z1m}
+\end{equation}
+与
+\begin{equation}
+\pr(Y\mid Z=0, M=m).\label{eq::proby|z0m}
+\end{equation}
+看似很直观，因为它衡量了处理后变量取值相同时，处理组与对照组结果分布的差异。若$M$是处理前协变量，这样比较可得到合理的亚组效应；但若$M$是处理后变量，解释就会出现问题。在假设\ref{assume::complete-randomization-withM}下，可将\eqref{eq::proby|z1m}和\eqref{eq::proby|z0m}中的概率改写为
+\begin{eqnarray*}
+\pr(Y\mid Z=1, M=m)  &=& \pr\{ Y(1)\mid Z=1, M(1) = m  \} \\
+&=& \pr\{ Y(1)\mid   M(1) = m  \}
+\end{eqnarray*}
+以及
+\begin{eqnarray*}
+\pr(Y\mid Z=0, M=m) &=&  \pr\{ Y(0)\mid Z=0, M(0) = m  \} \\
+&=& \pr\{ Y(0)\mid   M(0) = m  \} . 
+\end{eqnarray*}
+因此，在完全随机实验中，比较\eqref{eq::proby|z1m}与\eqref{eq::proby|z0m}，等价于在不同单位子集中比较$Y(1)$与$Y(0)$的分布：只要$Z$影响$M$，满足$M(1) = m$的单位就与满足$M(0) = m$的单位不同。故除非$M(1) = M(0)$，否则给定$M=m$后的比较一般没有因果解释。\footnote{从因果图也能得到相同结论。在图\ref{fig::intermediate-diagram}中，虽然随机化$Z$保证了$Z\ind U$，但以$M$为条件会引入“碰撞点偏差”，导致$Z\nind U$。} 
+
+
+再来看示例\ref{eg::noncompliance}。在符合单调性假设 $M(1) \geq M(0)$ 的前提下，比较 $\pr(Y\mid Z=1, M=1)$ 与 $\pr(Y\mid Z=0, M=1)$ 相当于比较“遵从者”与“始终接受干预者”在干预组中的潜在结果，而对照组中“始终接受干预者”的潜在结果则作为基准值。这正是问题\ref{problem::as-treated-analysis}第三部分所探讨的内容。 
+
+
+再看示例\ref{eq::truncationbydeath}。若干预措施能改善患者的生存状况，那么干预组存活病例数将多于对照组。此时，$M(1)=1$ 的患者群体必定比 $M(0)=1$ 的群体更为虚弱，因此仅使用上述条件比较法得出的结果反而会偏向“对照组更有利”的错误结论。 
+
+\section{基于潜在值的条件化处理法}
+
+
+\citet{frangakis2002principal}提出，以处理后变量的联合潜在取值$U = \{ M(1), M(0) \}$为条件，对某个$(m_1, m_0)$比较
+$$
+\pr\{  Y(1) \mid M(1) = m_1, M(0) = m_0 \}
+$$
+和
+$$
+\pr\{  Y(0) \mid M(1) = m_1, M(0) = m_0 \}
+$$
+这样比较的是满足$M(1) = m_1$和$ M(0) = m_0$的同一组单位在处理与对照下的潜在结果。\citet{frangakis2002principal}将这种策略称为{\it 主分层}，把$\{ M(1), M(0) \}$看作处理前协变量。据此，定义
+$$
+\tau(m_1, m_0) = E\{  Y(1) - Y(0) \mid M(1) = m_1, M(0) = m_0\}
+$$
+为满足$M(1) = m_1, M(0) = m_0$的亚组的主分层平均因果效应。若$M$为二元变量，共有四个亚组：
+\begin{equation}
+\label{eq::psace}
+\left\{ \begin{array}{rcl}
+\tau(1,1) &=& E\{  Y(1) - Y(0) \mid M(1) = 1, M(0) =1\} ,\\
+\tau(1,0) &=&E\{  Y(1) - Y(0) \mid M(1) = 1, M(0) =0\},\\
+\tau(0,1) &=&E\{  Y(1) - Y(0) \mid M(1) = 0, M(0) =1\},\\
+\tau(0,0) &=&E\{  Y(1) - Y(0) \mid M(1) = 0, M(0) = 0 \}.
+\end{array} 
+\right.
+\end{equation}
+由于$\{ M(1), M(0) \}$不受处理影响，它是协变量，故$\tau(m_1, m_0) $是亚组因果效应。对于满足$M(1) = M(0)$的亚组，处理中间变量的取值不变，所以$\tau(1,1) $与$\tau(0,0)$衡量{\it 非关联效应}。对于$m_1 \neq m_0$的其他亚组，主分层平均因果效应$\tau(m_1, m_0) $衡量{\it 关联效应}。这些名称来自\citet{frangakis2002principal}，并不假设$M$位于$Z$到$Y$的因果路径上。在图\ref{fig::intermediate-diagram}(a) 的情况下，可将非关联效应解释为$Z$对$Y$不经由$M$产生的直接效应，但不能简单地把关联效应解释为$Z$对$Y$的直接或间接效应。 
+
+ 
+
+\setcounter{example}{0}
+\begin{example}[不遵从干预者]
+在不遵从干预现象存在的情形下，\eqref{eq::psace} 中的四个效应值分别对应“始终遵从者”、“遵从者”、“逆向遵从者”与“从不遵从者”的平均因果效应 \citep{imbens1994identification, angrist1996identification}。 
+\end{example}
+
+
+
+\begin{example}[因死亡导致的数据截断]
+结果只有在患者存活时才有明确含义，因此\eqref{eq::psace}中的三个亚组因果效应没有意义，唯一有明确定义的亚组效应是
+\begin{eqnarray}
+\label{eq::survivor}
+\tau(1,1) = E\{  Y(1) - Y(0) \mid M(1) = 1, M(0) =1\} .
+\end{eqnarray}
+这称为存活者平均因果效应\citep{rubin2006causal}，即无论是否接受处理都会存活的单位中，处理对结果的平均因果效应。 
+\end{example}
+
+
+
+\begin{example}[失业问题]
+失业问题与死亡截断问题同构，因为只有首先就业，工资才有明确含义。因此，唯一有明确定义的亚组效应是\eqref{eq::survivor}，即就业者平均因果效应。此前，\citet{heckman1979sample}提出了现称为 Heckman 选择模型的方法，在工资建模中将失业者的工资视为缺失值。\footnote{Heckman 因“发展了用于分析选择性样本的理论和方法”而获得 2000 年诺贝尔经济学奖。其模型分两阶段：第一阶段用潜在线性模型决定就业状态，
+$$
+M_i = 1(X_i\tran \beta + u_i \geq 0).
+$$
+第二阶段用线性模型决定潜在对数工资，
+$$
+Y_i^* = W_i\tran \gamma + v_i
+$$
+仅当$M_i = 1$时，$Y_i^*$才作为$Y_i$被观测到。两阶段模型中的协变量$X_i$与$W_i$可以不同，误差$(u_i , v_i)$服从相关的二元正态分布。}不过，\citet{zhang2003estimation}和\citet{zhang2009likelihood}认为，在潜在结果框架下，$\tau(1,1)$是更有意义的研究对象。 
+\end{example} 
+
+
+
+\begin{example}[替代终点]
+直观上，我们希望通过处理对替代终点的效应，评价处理对结果的效应。因此，一个好的替代终点应满足两点：第一，若处理不影响替代终点，就也不影响结果；第二，若处理影响替代终点，就也影响结果。\citet{frangakis2002principal}将第一点称为“因果必要性”，\citet{gilbert2008evaluating}将第二点称为“因果充分性”。根据\eqref{eq::psace}，对于二元替代终点，因果必要性要求$\tau(1,1)$和$\tau(0,0)$为零，因果充分性要求$\tau(1,0)$和$\tau(0,1)$不为零。 
+\end{example}
+
+
+
+
+
+\section{统计推断及其难点}
+\label{sec::difficulty-of-PS}
+
+在示例\ref{eg::noncompliance}中，若满足完全随机实验、单调性及排除限制假设，即可测得 $\tau(1, 0)$ 的值，此即第\ref{chapter::iv-experiment}章的核心结论。 
+
+
+但在其他例子中，不能施加排除限制。例如，例\ref{eq::truncationbydeath}和\ref{eg::unemployment}的主要研究参数是$\tau(1,1)$，例\ref{eg::surrogate-endpoints}则同时关心$\tau(1,1)$与$\tau(0,0)$。没有排除限制，要识别主分层平均因果效应非常困难。有时甚至不能作单调性假设，因而连各潜在主层的比例也无法识别。 
+
+
+
+
+\subsection{特例：二元结果的死亡截断问题}下面用二元处理、二元存活状态和二元结果这一简单设定，说明基于主分层进行统计推断的思路，尤其是其中的困难。
+
+
+除假设\ref{assume::complete-randomization-withM}外，再施加单调性假设。
+
+\begin{assumption}
+[单调性]\label{assume::monotonicity-ps}
+$M(1) \geq M(0)$.
+\end{assumption}
+
+
+定理\ref{thm::cace-mixture-components}表明，在假设\ref{assume::complete-randomization-withM}与\ref{assume::monotonicity-ps}下，三个潜在主层的比例可识别为
+\begin{eqnarray*} 
+ \pi_{(1,1)} &=& \pr(M=1\mid Z=0), \\
+ \pi_{(0,0)} &=& \pr(M=0\mid Z=1), \\
+ \pi_{(1,0)} &=& \pr(M=1\mid Z=1) - \pr(M=1\mid Z=0). 
+\end{eqnarray*} 
+
+
+目标是识别存活者平均因果效应$\tau(1,1)$。首先，$E\{ Y(0)\mid M(1) = 1, M(0)=1 \}$容易识别，因为观测组$(Z=0,M=1)$只包含无论是否接受处理都会存活的单位：
+$$
+E\{ Y(0)\mid M(1) = 1, M(0)=1 \} = E(Y\mid Z=0, M=1). 
+$$
+关键在于识别$E\{ Y(1)\mid M(1) = 1, M(0)=1 \}$。观测组$(Z=1,M=1)$是主层$(1,1)$与$(1,0)$的混合，故
+\begin{eqnarray} 
+E(Y\mid Z=1,M=1) 
+&=& \frac{ \pi_{(1,1)}}{ \pi_{(1,1)} + \pi_{(1,0)}} E\{  Y(1)\mid   M(1)=1, M(0)=1 \} \nonumber  \\
+&&+ \frac{ \pi_{(1,0)}}{ \pi_{(1,1)} + \pi_{(1,0)}} E\{  Y(1)\mid  M(1)=1, M(0)=0 \}. \nonumber  \\
+&& \label{eq::bound-equation-basic}
+\end{eqnarray}
+\eqref{eq::bound-equation-basic}只有一个方程，却有两个未知参数，因此不能由\eqref{eq::bound-equation-basic}唯一确定$E\{  Y(1)\mid   M(1)=1, M(0)=1 \}$。不过，\eqref{eq::bound-equation-basic}仍包含有关目标量的信息。也就是说，根据定义\ref{def::partial-identification}，$E\{  Y(1)\mid   M(1)=1, M(0)=1 \}$是部分识别的。 
+
+
+
+若结果$Y$为二元变量，$E\{  Y(1)\mid  M(1)=1, M(0)=0 \}$必介于 0 与 1 之间，因而$E\{  Y(1)\mid   M(1)=1, M(0)=1 \}$介于以下两个方程的解之间：
+\begin{eqnarray*}
+E(Y\mid Z=1,M=1) &=& \frac{ \pi_{(1,1)}}{ \pi_{(1,1)} + \pi_{(1,0)}} E\{  Y(1)\mid   M(1)=1, M(0)=1 \}  \\
+&&\qquad + \frac{ \pi_{(1,0)}}{ \pi_{(1,1)} + \pi_{(1,0)}}  
+\end{eqnarray*}
+以及
+$$
+E(Y\mid Z=1,M=1) = \frac{ \pi_{(1,1)}}{ \pi_{(1,1)} + \pi_{(1,0)}} E\{  Y(1)\mid   M(1)=1, M(0)=1 \} .
+$$
+因此，$E\{  Y(1)\mid   M(1)=1, M(0)=1 \}$的下界为
+$$
+\frac{  \{  \pi_{(1,1)} + \pi_{(1,0)} \} E(Y\mid Z=1,M=1) - \pi_{(1,0)}}{ \pi_{(1,1)}},
+$$
+上界为
+$$
+\frac{  \{  \pi_{(1,1)} + \pi_{(1,0)} \} E(Y\mid Z=1,M=1)  }{ \pi_{(1,1)}} . 
+$$
+进一步可推导$\tau(1,1)$的界，见下面的定理\ref{thm::bounds-on-SACE-binary-Y}。
+
+
+
+\begin{theorem}
+\label{thm::bounds-on-SACE-binary-Y}
+在假设\ref{assume::complete-randomization-withM}与\ref{assume::monotonicity-ps}下，若$Y$为二元变量，则
+\begin{eqnarray*}
+&&\frac{  \{  \pi_{(1,1)} + \pi_{(1,0)} \} E(Y\mid Z=1,M=1) - \pi_{(1,0)}}{ \pi_{(1,1)}} - E(Y\mid Z=0, M=1) \\
+&\leq & \tau(1,1) \\
+& \leq &\frac{  \{  \pi_{(1,1)} + \pi_{(1,0)} \} E(Y\mid Z=1,M=1)  }{ \pi_{(1,1)}}  - E(Y\mid Z=0, M=1). 
+\end{eqnarray*}
+\end{theorem}
+
+
+
+
+可以采用\citet{imbens2004confidence}的方法构造$\tau(1,1)$的置信区间，分为两步：先估计上下界$[\hat{l}, \hat{u}]$及其标准误$(\text{se}_l, \text{se}_u)$；再构造区间$[ \hat{l} - z_{1-\alpha}  \text{se}_l, \hat{u} + z_{1-\alpha}    \text{se}_u]$，其中$z_{1-\alpha} $是标准正态分布的$1-\alpha$分位数。\citet{imbens2004confidence}置信区间的有效性依赖于一些正则条件。在多数死亡截断问题中，上下界相距较远，且都与极端值$-1$和$1$保持一定距离，因此这些条件成立。这里略去技术细节。 
+
+
+
+总之，这是一个困难的问题：即使样本量无限大，也不能由观测数据识别参数。虽然能推导$\tau(1,1)$的大样本界，基于这些界的统计推断却不是标准问题。若不作单调性假设，大样本界的形式更复杂，参见\citet{zhang2003estimation}和\citet[][Appendix A]{jiang2016principal}。 
+
+
+
+
+\subsection{实例分析}\label{section::ps-application}
+
+
+现使用 \citet{yang2016using} 提供的急性呼吸窘迫综合征网络研究数据：共861名肺损伤伴急性呼吸窘迫患者，随机分配至低潮气量通气组或常规潮气量通气组。结局为28天时能否无需辅助呼吸的二元指标。表\ref{tb::truncationbydeath}汇总观测数据。 
+
+
+\begin{table} 
+\centering 
+\caption{因死亡导致截断的数据，星号代表死亡个体的结果}\label{tb::truncationbydeath}
+\begin{tabular}{cccc}
+\hline 
+\multicolumn{4}{c}{ 干预组 $Z=1$ } \\
+\hline 
+ & $Y=1$ & $Y=0$ &  合计\\
+$M=1$ &    54 & 268& 322 \\
+$M=0$  & * & * & 109 \\
+\hline 
+\end{tabular}
+~~~~~
+\begin{tabular}{cccc}
+\hline 
+\multicolumn{4}{c}{ 对照组 $Z=0$ } \\
+\hline 
+ & $Y=1$ & $Y=0$ &合计 \\
+$M=1$ &    59 & 218&  277 \\
+$M=0$  & * & *& 152 \\
+\hline 
+\end{tabular}
+\end{table}
+
+% yang and small data
+% (Z, M, Y) = (1, 1, 1): 29 + 26 = 54
+% (Z, M Y) = (1, 1, 0): 258 + 10 = 268
+% (Z, M, Y) = (1, 0, *): 109
+% (Z, M, Y) = (0, 1, 1): 34 + 25 = 59
+% (Z, M, Y) = (0, 1, 0): 211 + 7 = 218
+% (Z, M, Y) = (0, 0, *): 152
+
+先得到潜在主层比例的点估计：
+\begin{eqnarray*} 
+ \hat{\pi}_{(1,1)} &=& \frac{277}{277+152} = 0.646, \\
+  \hat{\pi}_{(0,0)} &=&  \frac{109}{109+322} = 0.253,  \\ 
+\hat{\pi}_{(1,0)} &=& 1 -0.646 -  0.253 =   0.101. 
+\end{eqnarray*}
+存活患者的结果样本均值为
+\begin{eqnarray*} 
+\hat{E}(Y\mid Z=1,M=1) &=& \frac{54}{302} = 0.168, \\ 
+\hat{E}(Y\mid Z=0, M=1) &=& \frac{59}{277} = 0.213.
+\end{eqnarray*}
+$E\{  Y(1)\mid   M(1)=1, M(0)=1 \}$的界的估计值为
+$$
+\left[ \frac{  ( 0.646 + 0.101 )\times  0.168-  0.101 }{  0.101 },  
+\frac{ ( 0.646 + 0.101 )\times  0.168}{0.101} \right]
+= [  0.037, 0.194],
+$$
+因此$\tau(1,1)$的界为
+$$
+[0.037- 0.213, 0.194- 0.213] = 
+[  -0.176, -0.019 ] . 
+$$
+用自助法计入抽样不确定性后，按照\citet{imbens2004confidence}方法构造的置信区间为$[-0.267,  0.039]$，其中包含 0。
+
+
+
+
+\subsection{推广}
+
+
+\citet{zhang2003estimation}开创了大样本界的研究，\citet{imai2008sharp}和\citet{lee2009training}是两篇后续论文。\citet{cheng2006bounds}推导了多处理组下的界。\citet{yang2016using}利用次要结果，\citet{yang2018using}利用更详细的存活信息，收紧了存活者平均因果效应的界。 
+
+ 
+ 
+ 
+\section{主得分方法} 
+ 
+ 
+ 
+ 
+若不作额外假设，一般只能给出主层内因果效应的界，不能点识别这些效应。要非参数识别各$\tau(m_1, m_0)$，必须引入额外假设。对此尚无公认选择。这些额外假设不可检验，其合理性取决于具体应用。 
+
+一类研究利用{\it 主得分}，并施加{\it 主可忽略性}假设，其思路与无混杂观察性研究的因果推断相似。为简化讨论，先考虑强单调性成立的情形。 
+
+
+
+\subsection{强单调性下的主得分方法}
+
+\begin{assumption}
+[强单调性]\label{assume::strong-monotonicity}
+ $M(0) = 0$. 
+\end{assumption}
+
+
+类似于可忽略性假设，现在施加{\it 主可忽略性}假设。 
+
+
+\begin{assumption}
+[主可忽略性]\label{assume::principal-ignorability-SM}
+有
+$$
+E\{  Y(0) \mid M(1) = 1, X \} = E\{  Y(0) \mid M(1) = 0, X \} .
+$$ 
+\end{assumption}
+
+
+假设\ref{assume::principal-ignorability-SM}蕴含
+$
+E\{  Y(0) \mid M(1)  , X \} = E\{  Y(0) \mid   X \} 
+$
+或等价地，
+\begin{eqnarray}
+\label{eq::mean-independent}
+E\{  Y(0)  M(1)  \mid  X \}  =  E\{  Y(0) \mid   X \}  E\{     M(1)  \mid  X \}  ,
+\end{eqnarray}
+即给定$X$后，$Y(0)$与$M(1)$均值独立（或不相关）。 
+
+假设\ref{assume::complete-randomization-withM}、\ref{assume::strong-monotonicity}和\ref{assume::principal-ignorability-SM}保证主层内的因果效应可以非参数识别，见下面的定理\ref{thm::identification-PCEs-pscore}。 
+
+
+\begin{theorem}
+\label{thm::identification-PCEs-pscore}
+在假设 \ref{assume::complete-randomization-withM}、\ref{assume::strong-monotonicity} 和 \ref{assume::principal-ignorability-SM} 下， 
+\begin{enumerate}
+[(a)]
+\item 
+$M(1)$的条件概率$\pi(X) =  \pr\{ M(1)=1\mid X \}  $与边际概率$\pi =  \pr\{ M(1)=1\} $分别可识别为
+$$
+\pi(X)   =  \pr(M=1\mid Z=1, X ) 
+$$
+和
+$$
+\pi  =   \pr(M=1\mid Z=1 ) 
+$$ 
+\item
+主分层平均因果效应可识别为
+$$
+\tau(1,0) = E(Y\mid Z=1, M=1)  - E\{  \pi(X) Y  \mid Z=0 \}/\pi 
+$$
+和
+$$
+\tau(0,0) = E(Y\mid Z=1, M=0)  - E\{ (1-\pi(X)) Y  \mid Z=0 \}/(1-\pi) . 
+$$
+\end{enumerate}
+\end{theorem}
+
+
+条件概率$\pi(X) =  \pr\{ M(1)=1\mid X \} $称为{\it 主得分}。定理\ref{thm::identification-PCEs-pscore}指出，采用依赖于主得分的适当权重后，$\tau(1,0) $和$\tau(0,0)$均可由加权均值差识别。 
+
+
+
+ \begin{myproof}{定理}{\ref{thm::identification-PCEs-pscore}}这里只证明$\tau(1,0) $的结论。有
+$$
+ E(Y\mid Z=1, M=1)  = E\{ Y(1) \mid Z=1, M(1) = 1 \} =  E\{ Y(1) \mid   M(1) = 1 \} .
+ $$
+此外，
+\begin{eqnarray*}
+&& E  \{\pi(X) Y\mid Z=0   \}  /\pi  \\
+ &=& E  \{\pi(X) Y(0)  \mid Z=0 \}  /\pi  \\
+ &=&  E  \{\pi(X) Y(0)   \}  /\pi \qquad   (\text{Assumption } \ref{assume::complete-randomization-withM}) \\
+ &=&  E \left[    E\{\pi(X) Y(0) \mid X  \} \right]/\pi  \qquad (\text{tower property}) \\ 
+ &=& E \left[  \pi(X)  E\{ Y(0) \mid X  \} \right]/\pi  \\ 
+ &=& E \left[  E\{    M(1) \mid X\} E\{ Y(0) \mid X  \} \right]/\pi \\
+ &=&  E \left[  E\{    M(1)  Y(0) \mid X  \} \right]/\pi  \qquad  (\text{by } \eqref{eq::mean-independent}) \\
+ &=&  E\{    M(1) Y(0)  \}/\pi   \\
+ &=&  E\{ Y(0) \mid M(1) = 1 \}  .
+ \end{eqnarray*}
+% 
+%$$
+%E\{ Y(0) \mid M(1) = 1 \} = 
+%E\{  \pi(X) Y  \mid Z=0 \}/\pi 
+%$$
+%holds because 
+%\begin{eqnarray*}
+% E\{ Y(0) \mid M(1) = 1 \}  &=&   E\{    M(1) Y(0)  \}/\pi   \\
+%&=& E \left[  E\{    M(1) \mid X\} E\{ Y(0) \mid X  \} \right]/\pi   \qquad  (\text{by } \eqref{eq::mean-independent}) \\
+%&=& E \left[  \pi(X)  E\{ Y(0) \mid X  \} \right]/\pi  \\
+%&=& E \left[    E\{\pi(X) Y(0) \mid X  \} \right]/\pi  \\
+%&=& E  \{\pi(X) Y(0)   \}  /\pi  \qquad (\text{by the tower property}) \\
+%&=&  E  \{\pi(X) Y\mid Z=0   \}  /\pi. 
+%\end{eqnarray*}
+$\tau(0,0) $的证明留作习题\ref{hw::proof-part2-identification-PCEs}。 
+ \end{myproof}
+
+ 
+由定理\ref{thm::identification-PCEs-pscore}，分别得到$\tau(1,0)$和$\tau(0,0) $的如下简单估计量：
+\begin{enumerate}
+\item
+仅使用处理组数据，将$M$对$X$作逻辑回归，得到$\hat \pi(X_i)$；
+\item
+用$\hat \pi =  \sumn Z_i M_i / \sumn Z_i$估计$\pi$； 
+\item
+得到矩估计量：
+$$
+\hat \tau(1,0) =  \frac{  \sumn Z_iM_iY_i  }{ \sumn Z_iM_i }   -   \frac{   \sumn (1-Z_i) \hat \pi(X_i) Y_i  }{ \hat \pi   \sumn (1-Z_i) }   
+$$
+和
+$$
+\hat \tau(0,0) =  \frac{  \sumn Z_i(1-M_i)Y_i  }{ \sumn Z_i (1-M_i) }  - \frac{  \sumn (1-Z_i)(1-\hat \pi(X_i)\} Y_i  }{  (1- \hat \pi )\sumn (1-Z_i)  }
+;
+$$
+\item
+用自助法近似$\hat \tau(1,0) $和$\hat \tau(0,0) $的方差。 
+\end{enumerate}
+ 
+ 
+ 
+ 
+ \subsection{一个例子}
+
+下面的函数计算$\hat \tau(1,0) $和$\hat \tau(0,0) $的点估计。 
+
+  \begin{lstlisting}
+psw = function(Z, M, Y, X) {
+  ## probabilities of 10 and 00
+  pi.10 = mean(M[Z==1])
+  pi.00 = 1 - pi.10
+  
+  ## conditional probabilities of 10 and 00
+  ps.10 = glm(M ~ X, family = binomial, 
+              weights = Z)$fitted.values
+  ps.00 = 1 - ps.10
+  
+  ## PCEs 10 and 00 
+  tau.10 = mean(Y[Z==1&M==1]) - mean(Y[Z==0]*ps.10[Z==0])/pi.10
+  tau.00 = mean(Y[Z==1&M==0]) - mean(Y[Z==0]*ps.00[Z==0])/pi.00
+  c(tau.10, tau.00)
+}
+   \end{lstlisting}
+
+下面的函数计算点估计及其自助法标准误。
+  \begin{lstlisting}
+psw.boot = function(Z, M, Y, X, n.boot = 500){
+  ## point estimates
+  point.est = psw(Z, M, Y, X)
+  ## bootstrap standard errors
+  n = length(Z)  
+  boot.est = replicate(n.boot, {
+    id.boot = sample(1:n, n, replace = TRUE)
+    psw(Z[id.boot], M[id.boot], Y[id.boot], X[id.boot, ])
+  })
+  boot.se    = apply(boot.est, 1, sd)
+  ## results
+  res        = rbind(point.est, boot.se)
+  rownames(res) = c("est", "se")
+  colnames(res) = c("tau10", "tau00")
+  return(res)
+}
+    \end{lstlisting}
+    
+    
+重新考虑第\ref{sec::cace-application}节的数据。此前工具变量分析采用了排除限制，现在去掉排除限制，改为施加主可忽略性假设。结果如下。 
+
+
+ \begin{lstlisting}
+> jobsdata = read.csv("jobsdata.csv")
+> getX     = lm(treat ~ sex + age + marital 
++               + nonwhite + educ + income,
++               data = jobsdata)
+> X = model.matrix(getX)[, -1]
+> Z = jobsdata$treat
+> M = jobsdata$comply
+> Y = jobsdata$job_seek
+> table(Z, M)
+   M
+Z     0   1
+  0 299   0
+  1 228 372
+> psw.boot(Z, M, Y, X)
+        tau10       tau00
+est 0.1694979 -0.09904909
+se  0.1042405  0.15612983
+\end{lstlisting}
+        
+
+点估计$\hat \tau(1,0) $与工具变量分析的结果相差不大。点估计$\hat \tau(0,0) $接近零，且标准误很大。在这个例子中，排除限制似乎是合理的。 
+        
+               
+    
+\subsection{推广}
+
+ 
+ 
+ 
+ \citet{follmann2000effect}、\citet{hill2002differential}、\citet{jo2009use}、\citet{jo2011use}和\citet{stuart2015assessing}开创了利用主得分识别主层内因果效应的研究。\citet{ding2017principal}为这一策略提供了理论基础，证明了定理\ref{thm::identification-PCEs-pscore}以及单调性下的更一般版本，见习题\ref{para::prinpscore-mono}。  
+
+ 
+
+\section{其他方法}
+
+
+为在不作排除限制的情况下估计主分层平均因果效应，\citet{zhang2009likelihood}提出使用正态混合模型。但基于正态混合模型的推断可能很脆弱。一种策略是在施加一定限制的同时，利用额外信息改进推断\citep{ding2011identifiability, mealli2013using, mattei2013exploiting, jiang2016principal}。  
+ 
+ 
+从概念上讲，主分层框架适用于一般的$M$。多值$M$会产生许多潜在主层，连续$M$则会产生无穷多个潜在主层。在这些情况下，识别各主层的概率本身已非易事，更不用说识别主分层平均因果效应。\citet{jiang2020identification}回顾了若干有用的策略。 
+ 
+
+
+\section{作业习题}
+
+
+\paragraph{补全定理\ref{thm::identification-PCEs-pscore}的证明}\label{hw::proof-part2-identification-PCEs}
+
+证明定理\ref{thm::identification-PCEs-pscore}中关于$\tau(0,0) $的结论。 
+
+
+ 
+\paragraph{单调性下的主得分方法}\label{para::prinpscore-mono}
+
+
+
+本题推广定理\ref{thm::identification-PCEs-pscore}：将假设\ref{assume::strong-monotonicity}替换为假设\ref{assume::monotonicity-ps}，将假设\ref{assume::principal-ignorability-SM}替换为下面的假设\ref{assume::principal-ignorability-M}。 
+
+\begin{assumption}
+[主可忽略性]\label{assume::principal-ignorability-M}
+有
+$$
+E\{  Y(1) \mid M(1) = 1, M(0) =0, X \} = E\{  Y(1) \mid M(1) = 1, M(0) =1, X \}
+$$
+和
+$$
+E\{  Y(0) \mid M(1) = 1, M(0) =0, X \} = E\{  Y(0) \mid M(1) = 0, M(0) =0, X \}. 
+$$
+\end{assumption}
+
+
+\begin{theorem}
+\label{thm::identification-PCEs-pscore-general-ding-lu}
+在假设 \ref{assume::complete-randomization-withM}、\ref{assume::monotonicity-ps} 和 \ref{assume::principal-ignorability-M} 下， 
+\begin{enumerate}
+[(a)]
+\item
+ 条件主得分和边际主得分分别可识别为
+\begin{eqnarray*}
+\pi_{(0,0)}(X) &=& \pr(M=0\mid Z=1, X),\\
+\pi_{(1,1)}(X) &=& \pr(M=1\mid Z=0, X),\\
+\pi_{(1,0)}(X) &=& \pr(M=1\mid Z=1, X) - \pr(M=1\mid Z=0, X).
+\end{eqnarray*}
+和
+\begin{eqnarray*}
+\pi_{(0,0)} &=& \pr(M=0\mid Z=1),\\
+\pi_{(1,1)} &=& \pr(M=1\mid Z=0),\\
+\pi_{(1,0)} &=& \pr(M=1\mid Z=1) - \pr(M=1\mid Z=0)
+\end{eqnarray*}
+\item
+主分层平均因果效应可识别为
+\begin{eqnarray*}
+\tau(1,0) &=& E\left\{w_{1, (1,0)}(X) Y \mid Z=1, M=1\right\}  \\
+&& -E\left\{w_{0, (1,0)}(X) Y \mid Z=0, M=0\right\} , \\
+\tau(0,0) &=& E(Y \mid Z=1, M=0)-E\left\{w_{0, (0,0)}( X ) Y \mid Z=0, M=0\right\}, \\
+\tau(1,1) &=& E\left\{w_{1,  (1,1)}( X ) Y \mid Z=1, M=1\right\}-E(Y \mid Z=0, M=1)
+\end{eqnarray*}
+其中
+\begin{eqnarray*}
+w_{1, (1,0)}(X) &=&\frac{\pi_{(1,0)}(X)}{\pi_{(1,0)}(X)+\pi_{(1,1)}(X)} \Big / \frac{\pi_{(1,0)}}{\pi_{(1,0)}+\pi_{(1,1)}} , \\
+w_{0, (1,0)}(X) &=& \frac{\pi_{(1,0)}(X)}{\pi_{(1,0)}(X)+\pi_{(0,0)}(X)} \Big / \frac{\pi_{(1,0)}}{\pi_{(1,0)}+\pi_{(0,0)}} ,  \\
+w_{0, (0,0)}(X) &=&\frac{\pi_{(0,0)}(X)}{\pi_{(1,0)}(X)+\pi_{(0,0)}(X)} \Big / \frac{\pi_{(0,0)}}{\pi_{(1,0)}+\pi_{(0,0)}} , \\
+w_{1, (1,1)}(X) &=&\frac{\pi_{(1,1)}(X)}{\pi_{(1,0)}(X)+\pi_{(1,1)}(X)} \Big / \frac{\pi_{(1,1)}}{\pi_{(1,0)}+\pi_{(1,1)}} .
+\end{eqnarray*}
+\end{enumerate}
+\end{theorem}
+
+
+
+注：根据定理\ref{thm::identification-PCEs-pscore-general-ding-lu}可以构造加权估计量。定理\ref{thm::identification-PCEs-pscore-general-ding-lu}即\citet{ding2017principal}中的命题 2，该文还给出了更多估计细节。 
+
+
+
+\paragraph{观察性研究中的主得分方法}
+\label{hw::principalscore-observational}
+
+本题推广定理\ref{thm::identification-PCEs-pscore}，用下面的可忽略性假设替代假设\ref{assume::complete-randomization-withM}。
+
+
+\begin{assumption}
+\label{assume::ignorabilitywithM}
+$
+Z\ind \{ M(1), M(0), Y(1) , Y(0) \} \mid X.
+$
+\end{assumption}
+
+回顾倾向得分的定义$e(X) = \pr(Z=1\mid X)$。有如下识别结论。 
+
+
+\begin{theorem}
+\label{thm::identification-PCEs-pscore-obs}
+在假设 \ref{assume::ignorabilitywithM}、\ref{assume::strong-monotonicity} 和 \ref{assume::principal-ignorability-SM} 下， 
+\begin{enumerate}
+[(a)]
+\item 
+$M(1)$的条件概率$\pi(X) =  \pr\{ M(1)=1\mid X \}  $和边际概率$\pi =  \pr\{ M(1)=1\} $分别可识别为
+$$
+\pi(X)   =  \pr(M=1\mid Z=1, X ) 
+$$
+和
+$$
+\pi  =  E\{\pr(M=1\mid Z=1, X ) \}
+$$ 
+\item
+主分层平均因果效应可识别为
+$$
+\tau(1,0) = E\left\{   \frac{M}{\pi}   \frac{Z}{e(X)} Y \right\}
+- E\left\{   \frac{ \pi(X)  }{\pi}   \frac{1-Z}{1-e(X)} Y    \right\} 
+$$
+和
+$$
+\tau(0,0) = E\left\{   \frac{1-M}{1-\pi}   \frac{Z}{e(X)} Y \right\}
+- E\left\{   \frac{ 1- \pi(X)  }{1 - \pi}   \frac{1-Z}{1-e(X)} Y    \right\} .
+$$
+\end{enumerate}
+\end{theorem}
+
+
+证明定理 \ref{thm::identification-PCEs-pscore-obs}。 
+
+
+ 
+
+
+\paragraph{一般主得分方法}
+\label{hw::general-principal-score-jiangetal}
+
+在假设\ref{assume::ignorabilitywithM}、\ref{assume::monotonicity-ps}和\ref{assume::principal-ignorability-M}下推广定理\ref{thm::identification-PCEs-pscore-general-ding-lu}和\ref{thm::identification-PCEs-pscore-obs}。 
+
+
+注：参见 \citet{jiang2020multiply}。 
+
+
+\paragraph{推荐阅读}
+
+\citet{frangakis2002principal}提出了主分层框架。\citet{zhang2003estimation}推导了存活者平均因果效应的大样本界。\citet{jiang2020identification}回顾了识别主层内因果效应的多种策略。\citet{jiang2020multiply}统一讨论了这一策略在观察性研究中的应用，并提出了主层内因果效应的多重稳健估计量。  
+ 

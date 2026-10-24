@@ -1,0 +1,418 @@
+
+\chapter{存在未测混杂因素时平均因果效应的敏感性分析}
+\chaptermark{平均因果效应的敏感性分析}\label{chapter::sensitivity-ACE}
+
+
+ 
+ 
+ 
+ 
+在给定观测协变量后，Cornfield 型敏感性分析最适合处理以风险比衡量效应的二元结果。尽管\citet{ding2016sensitivity}也提出了针对平均因果效应的 Cornfield 型敏感性分析方法，这些方法仍不够一般，应用起来也不方便。下面基于潜在结果的条件期望介绍一种更直接的方法，其优点是在敏感性分析框架下能够处理常用的平均因果效应估计量。这个思路已见于\citet{robins1999association}和\citet{scharfstein1999adjusting}的早期工作。本章采用\citet{luding2023flexible}近期提出的表述。  
+ 
+ 
+ 
+ 
+ 该方法与推导平均潜在结局最坏情况界限的思路密切相关。我将先介绍界限推导这一较为简单的思路，随后将其扩展至敏感性分析领域。 
+
+
+
+\section{引言}
+
+
+回顾典型观测研究场景：观测数据满足 $\{  Z_i, X_i,  Y_i(1), Y_i(0) \}_{i=1}^n \iidsim  \{ Z, X, Y(1), Y(0) \}$，重点关注平均因果效应：
+$$
+\tau = E\{ Y(1) - Y(0) \}.
+$$
+该值可分解为：
+\begin{eqnarray*}
+\tau &=& \left[  E(Y\mid Z=1) \pr(Z=1) + E\{ Y(1)\mid Z=0 \} \pr(Z=0) \right]  \\
+&&- \left[   E\{ Y(0)\mid Z=1\} \pr(Z=1) + E(Y\mid Z=0)  \pr(Z=0)  \right] . 
+\end{eqnarray*}
+因此核心难点在于估计反事实均值：
+$$
+E\{ Y(1)\mid Z=0 \}  ,\quad \quad E\{ Y(0)\mid Z=1\}.
+$$
+理论上存在两种极端估计策略。
+
+
+
+第一种策略即前文 \ref{part::observational-studies} 所述方法，其成立前提是忽略性假设：
+\begin{eqnarray*}
+E\{ Y(1)\mid Z=1, X \} &=& E\{ Y(1)\mid Z=0, X \} ,\\ 
+E\{ Y(0)\mid Z=1, X \} &=& E\{ Y(0)\mid Z=0, X \}, 
+\end{eqnarray*}
+在此前提下可通过观测数据确定反事实均值：
+$$
+E\{ Y(1)\mid Z=0 \}  
+%= E\left[ E\{ Y(1)\mid Z=0, X \}  \mid Z=0 \right] 
+%= E\left[ E\{ Y(1)\mid Z=1, X \}  \mid Z=0\right] 
+= E\left\{  E( Y\mid Z=1, X )  \mid Z=0\right\}
+$$
+同理：
+$$
+E\{ Y(0)\mid Z=1\} = E\left\{  E( Y\mid Z=0, X )  \mid Z=1\right\} . 
+$$
+
+
+
+下一节介绍的第二种策略只假定结果位于$\underline{y}$与$\overline{y}$之间。对于取$\underline{y} = 0$和$\overline{y} = 1$的二元结果，这个假设自然成立。此时两个反事实均值也位于$\underline{y}$与$\overline{y}$之间，从而得到$\tau$的最坏情形界。表\ref{table::manski-bounds}说明了基本思路，第\ref{sec::manski-bounds}节将作更详细的回顾。 
+
+
+ 
+
+
+ 
+
+
+
+\begin{table}
+\centering
+\caption{结局值受限 $ [\underline{y}, \overline{y}]$ 时的分析表格，$\underline{y}$ 与 $\overline{y}$ 为给定常数}\label{table::manski-bounds}
+\begin{tabular}{ccccccc}
+\hline 
+$Z$ & $Y(1)$ & $Y(0)$ &  $Y(1)$ 下限 & $Y(1)$ 上限 & $Y(0)$ 下限 & $Y(0)$ 上限 \\
+\hline 
+$1$ & $Y_1(1)$ & ? & $Y_1(1)$  & $Y_1(1)$ & $\underline{y}$ & $\overline{y}$ \\
+$\vdots$&$\vdots$&$\vdots$&$\vdots$&$\vdots$&$\vdots$&$\vdots$   \\
+$1$ & $Y_{n_1}(1)$ & ? &  $Y_{n_1}(1)$  & $Y_{n_1}(1)$ & $\underline{y}$ & $\overline{y}$ \\
+\hline 
+$0$ & ? & $Y_{n_1+1}(0)$ & $\underline{y}$ & $\overline{y}$& $Y_{n_1+1}(0)$ & $Y_{n_1+1}(0)$ \\ 
+$\vdots$&$\vdots$&$\vdots$&$\vdots$&$\vdots$&$\vdots$&$\vdots$ \\ 
+$0$ & ? & $Y_{n}(0)$ & $\underline{y}$ & $\overline{y}$& $Y_{n}(0)$ & $Y_{n}(0)$ \\
+\hline 
+\end{tabular}
+\end{table}
+
+
+\section{无需额外假设的Manski型平均因果效应最坏情况界限}\label{subsection::manski-bounds}
+\label{sec::manski-bounds}
+
+
+
+假设结果有界，取值介于$\underline{y}$与$\overline{y}$之间。根据分解
+$$
+E\{  Y(1) \} = E\{  Y(1) \mid Z=1\} \pr(Z=1)  +  E\{  Y(1) \mid Z=0\} \pr(Z=0)  ,
+$$
+可得$E\{  Y(1) \}$的下界
+$$
+E\{  Y \mid Z=1\} \pr(Z=1)  +   \underline{y} \pr(Z=0) 
+$$
+和上界
+$$
+E\{  Y \mid Z=1\} \pr(Z=1)  +  \overline{y} \pr(Z=0).
+$$
+类似地，根据分解
+$$
+E\{  Y(0) \} = E\{  Y(0) \mid Z=1\} \pr(Z=1)  +  E\{  Y(0) \mid Z=0\} \pr(Z=0)  ,
+$$
+可得$E\{  Y(0) \}$的下界
+$$
+\underline{y}\pr(Z=1)  +  E\{  Y \mid Z=0\} \pr(Z=0) 
+$$
+和上界
+$$
+ \overline{y} \pr(Z=1)  +  E\{  Y \mid Z=0\} \pr(Z=0). 
+$$
+结合这些界，可得平均因果效应$\tau = E\{  Y(1) \} - E\{  Y(0) \}$的下界
+$$
+E\{  Y \mid Z=1\} \pr(Z=1)  +   \underline{y} \pr(Z=0) - \overline{y} \pr(Z=1)  -  E\{  Y \mid Z=0\} \pr(Z=0) 
+$$
+和上界
+$$
+ E\{  Y \mid Z=1\} \pr(Z=1)  +  \overline{y} \pr(Z=0) - \underline{y}\pr(Z=1)  -   E\{  Y \mid Z=0\} \pr(Z=0). 
+$$
+该区间的长度为$\overline{y}-\underline{y}$。这些界提供的信息有限，但仍优于长度为$2(\overline{y}-\underline{y})$的先验界$[\underline{y}-\overline{y}, \overline{y}-\underline{y}]$。若不作进一步假设，观测数据的分布无法唯一确定$\tau$。此时称$\tau$是{\it 部分识别的}，其正式定义如下。 
+
+
+\begin{definition}
+[部分可识别]\label{def::partial-identification}
+若观测数据分布可对应多个 $\theta$ 取值，则称参数 $\theta$ 为部分可识别。 
+\end{definition}
+
+
+对比定义 \ref{def::nonparametric-identification} 与 \ref{def::partial-identification}。若参数 $\theta$ 能由观测数据唯一确定则为可识别，否则仅为部分可识别。故在忽略性假设成立时 $\tau$ 可识别，否则仅为部分可识别。 
+
+
+
+
+\citet{cochran1953}曾在存在缺失数据的调查中使用最坏情形界，但由于结果往往过于保守而放弃了这一思路。同样，上述$\tau$的最坏情形界通常包含$0$，因而在实践中往往意义不大。此外，这种策略不适用于结果无界的情形。 
+
+
+
+Manski将此思路成功应用于因果推断 \citep{manski1990nonparametric} 及多种计量经济模型 \citep{manski2003partial}。在辅以其他定性假设的前提下，这种基于最小假设的界限推导法极具实用价值。\citet{manski2003partial} 系统梳理了多种适用策略。例如可引入单调性假设：
+$
+Y(1)\geq Y(0) . 
+$
+此时 $\tau$ 下界降为零而上界不变。亦可设定：
+$Z = I\{  Y(1) \geq Y(0) \}$，即治疗选择基于潜在结局差值。此类假设均能优化 $\tau$ 的界限估计。更多细节探讨已超出本书范围。 
+
+ 
+ 
+
+
+ 
+\section{平均因果效应的敏感性分析}
+
+
+ 
+第一种策略持乐观态度，假设给定观测协变量时处理组与对照组的潜在结局无差异。第二种策略则较悲观，完全不依赖观测数据推断反事实均值。下文介绍的方法介于二者之间。 
+
+
+
+\subsection{识别公式推导}
+
+定义：
+\begin{eqnarray*}
+\frac{ E\{ Y(1)\mid Z=1, X \} }{ E\{ Y(1)\mid Z=0, X \} } = \varepsilon_1(X), \\
+\frac{ E\{ Y(0)\mid Z=1, X \} }{ E\{ Y(0)\mid Z=0, X \} } = \varepsilon_0(X) ,
+\end{eqnarray*}
+上述参数即敏感性参数。为简化分析可假定二者与 $X$ 无关。实际应用时需预先设定其取值范围。令 $\mu_1(X) = E(Y\mid Z=1, X)$ 与 $\mu_0(X) = E(Y\mid Z=0, X)$ 分别为处理组与对照组的条件均值函数。此时可推导出： 
+
+\begin{theorem}
+\label{thm::outcome-reg-sensitivity}
+已知$\varepsilon_1(X)$和$ \varepsilon_0(X) $时，有
+\begin{eqnarray*}
+E\{ Y(1)\mid Z=0 \}   &=& E\left\{\mu_1(X)   / \varepsilon_1(X)  \mid Z=0\right\},\\ 
+E\{ Y(0)\mid Z=1 \}   &=& E\left\{\mu_0(X)    \varepsilon_0(X)  \mid Z=1\right\}
+\end{eqnarray*}
+因而
+\begin{eqnarray}
+\tau & = & E\{ ZY + (1-Z) \mu_1(X)   / \varepsilon_1(X)\}  \nonumber  \\
+ && - E\{ Z \mu_0(X)    \varepsilon_0(X) + (1-Z)Y\}  \label{eq::predictive}\\
+& = & E\{ Z \mu_1(X) + (1-Z) \mu_1(X)   / \varepsilon_1(X)\}  \nonumber \\
+&&- E\{ Z \mu_0(X)    \varepsilon_0(X) + (1-Z) \mu_0(X)\}. \label{eq::projective}
+\end{eqnarray}
+\end{theorem}
+
+
+ 
+
+
+定理\ref{thm::outcome-reg-sensitivity}的证明留作习题\ref{hw::proof-theorem-1-sa}。根据拟合的结果模型，\eqref{eq::predictive}和\eqref{eq::projective}给出$\tau$的如下预测型和投影型估计量：
+\begin{eqnarray*}
+\hat\tau^{\textup{pred}} &=&\left\{  n^{-1}\sumn Z_i Y_i + n^{-1} \sumn (1-Z_i) \hat{\mu}_1(X_i)   / \varepsilon_1(X_i)  \right\} \\
+&&- \left\{ n^{-1}  \sumn Z_i \hat{\mu}_0(X_i)    \varepsilon_0(X_i) + n^{-1} \sumn (1-Z_i) Y_i \right\},
+\end{eqnarray*}
+以及
+\begin{eqnarray*}
+\hat{\tau}^{\textup{proj}}&=&\left\{ n^{-1}\sumn Z_{i}\hat{\mu}_{1}(X_{i})+n^{-1}\sumn(1-Z_{i})\hat{\mu}_{1}(X_{i})/\varepsilon_{1}(X_{i})\right\} \\
+&&-\left\{ n^{-1}\sumn Z_{i}\hat{\mu}_{0}(X_{i})\varepsilon_{0}(X_{i})+n^{-1}\sumn(1-Z_{i})\hat{\mu}_{0}(X_{i})\right\}.
+\end{eqnarray*}
+“预测型”和“投影型”的名称来自抽样调查文献\citep{firth1998robust, ding2018causal}；另见第\ref{sec::understand-lin-predict}章。估计量$\hat\tau^{\textup{pred}} $与$\hat{\tau}^{\textup{proj}}$略有不同：前者在观测结果可用时使用观测值，后者则用拟合值替代观测结果。 
+
+
+
+
+
+更有价值的是基于逆概率加权法推导 $\tau$ 估计量：
+
+\begin{theorem}\label{thm::ipw-sensitivity}
+已知 $\varepsilon_1(X)$ 与 $ \varepsilon_0(X) $ 时，有
+\begin{eqnarray*} 
+E\{ Y(1) \} = 
+E\left\{ w_1(X) \frac{Z}{e(X)}  Y  \right\}  ,\quad
+ E\{Y(0)\} = E\left\{ w_0(X) \frac{1-Z}{1-e(X)} Y \right\},
+\end{eqnarray*}
+此处
+$$
+w_1(X) = e(X) + \{1-e(X)\}/ \varepsilon_1(X) ,\quad
+w_0(X) = e(X)  \varepsilon_0(X) + 1- e(X). 
+$$
+\end{theorem}
+
+
+ 
+ 
+
+定理\ref{thm::ipw-sensitivity}的证明留作习题\ref{hw::proof-theorem-2-sa}。定理\ref{thm::ipw-sensitivity}在经典 IPW 公式中加入了$w_1(X) $和$w_0(X) $两个因子，它们均依赖于倾向得分和敏感性参数。利用拟合的倾向得分，定理\ref{thm::ipw-sensitivity}给出$\tau$的如下估计量：
+\begin{eqnarray*} 
+\hat\tau^{\textup{ht}} &=&  n^{-1} \sumn \frac{ \{ \hat{e}(X_i)\varepsilon_1(X_i) + 1-\hat{e}(X_i) \} Z_iY_i     }{  \varepsilon_1(X_i)  \hat e(X_i)  } \\
+&&- n^{-1} \sumn  \frac{ \{  \hat e(X_i)  \varepsilon_0(X_i) + 1- \hat e(X_i)  \} (1-Z_i) Y_i }{ 1- \hat e(X_i)} 
+\end{eqnarray*}
+以及
+\begin{eqnarray*} 
+\hat\tau^{\textup{haj}} &=&   \sumn \frac{ \{ \hat{e}(X_i)\varepsilon_1(X_i) + 1-\hat{e}(X_i) \} Z_iY_i     }{  \varepsilon_1(X_i)  \hat  e(X_i)  }  \Big / \sumn \frac{Z_i}{ \hat{e}(X_i)  }   \\
+&&- n^{-1} \sumn  \frac{ \{  \hat  e(X_i)  \varepsilon_0(X_i) + 1- \hat e(X_i)  \} (1-Z_i) Y_i }{ 1- \hat e(X_i)} \Big / \sumn \frac{1-Z_i}{ 1- \hat{e}(X_i)  } .
+\end{eqnarray*}
+
+
+
+
+
+更有意思的是，利用拟合的倾向得分和结果模型，下列$\tau$的估计量具有双重稳健性：
+\begin{eqnarray*}
+\hat{\tau}^{\textup{ht}} = \hat\tau^{\textup{ht}} 
+- n^{-1} \sumn \{Z_i- \hat e(X_i)\}  \left\{   \frac{  \hat  \mu_1(X_i) }{  \hat e(X_i) \varepsilon_1(X_i)  }    + \frac{  \hat  \mu_0(X_i)\varepsilon_0(X_i)  }{ 1-  \hat  e(X_i) } \right\}.
+\end{eqnarray*}
+也就是说，在$\varepsilon_1(X_i) $和$\varepsilon_0(X_i) $已知时，只要倾向得分模型或结果模型中至少一个设定正确，$\hat{\tau}^{\textup{dr}} $就是$\tau$的一致估计量。上述估计量的方差可用自助法近似，技术细节参见\citet{luding2023flexible}。 
+
+
+
+
+当 $\varepsilon_1(X_i)  =  \varepsilon_0(X_i) = 1$ 时上述估计量分别退化为前文 \ref{part::observational-studies} 所述预测型、IPW型及双重稳健估计法。 
+
+
+
+\subsection{实例演示}
+\label{sec::eg-sensitivity-tau}
+
+
+\subsubsection{敏感性分析的R语言实现}
+
+
+下面的\ri{R}函数计算敏感性分析所需的点估计。 
+
+\begin{lstlisting}
+OS_est_sa = function(z, y, x, out.family = gaussian, 
+                     truncps = c(0, 1), e1 = 1, e0 = 1)
+{
+     ## fitted propensity score
+     pscore   = glm(z ~ x, family = binomial)$fitted.values
+     pscore   = pmax(truncps[1], pmin(truncps[2], pscore))
+     
+     ## fitted potential outcomes
+     outcome1 = glm(y ~ x, weights = z, 
+                    family = out.family)$fitted.values
+     outcome0 = glm(y ~ x, weights = (1 - z), 
+                    family = out.family)$fitted.values
+     
+     ## outcome regression estimator
+     ace.reg  = mean(z*y) + mean((1-z)*outcome1/e1) - 
+                   mean(z*outcome0*e0) - mean((1-z)*y) 
+     ## IPW estimators
+     w1 = pscore + (1-pscore)/e1
+     w0 = pscore*e0 + (1-pscore)
+     ace.ipw0 = mean(z*y*w1/pscore) - 
+                   mean((1 - z)*y*w0/(1 - pscore))
+     ace.ipw  = mean(z*y*w1/pscore)/mean(z/pscore) - 
+                   mean((1 - z)*y*w0/(1 - pscore))/mean((1 - z)/(1 - pscore))
+     ## doubly robust estimator
+     aug = outcome1/pscore/e1 + outcome0*e0/(1-pscore)
+     ace.dr   = ace.ipw0 + mean((z-pscore)*aug)
+
+     return(c(ace.reg, ace.ipw0, ace.ipw, ace.dr))     
+}
+\end{lstlisting}
+
+标准误计算方式则留作习题 \ref{hw::sensitivity-se} 探讨。 
+
+\subsubsection{重访实例 \ref{eg::chan-bmi-ATE}}
+
+
+令
+$$
+\varepsilon_1(X) = \varepsilon_0(X) \in \{1/2, 1/1.7, 1/1.5, 1/1.3, 1, 1.3, 1.5, 1.7, 2\},
+$$
+用下面的\ri{R}代码可得到一组$\tau$的双重稳健估计：
+\begin{lstlisting}
+> nhanes_bmi = read.csv("nhanes_bmi.csv")[, -1]
+> z = nhanes_bmi$School_meal
+> y = nhanes_bmi$BMI
+> x = as.matrix(nhanes_bmi[, -c(1, 2)])
+> x = scale(x)
+> 
+> 
+> E1 = c(1/2, 1/1.7, 1/1.5, 1/1.3, 1, 1.3, 1.5, 1.7, 2)
+> E0 = c(1/2, 1/1.7, 1/1.5, 1/1.3, 1, 1.3, 1.5, 1.7, 2)
+> EST = outer(E1, E0)
+> ll1 = length(E1)
+> ll0 = length(E0)
+> for(i in 1:ll1)
++   for(j in 1:ll0)
++     EST[i, j] = OS_est_sa(z, y, x, e1 = E1[i], e0 = E0[j])[4]
+\end{lstlisting}
+
+
+
+
+\begin{table}[ht]
+\centering
+\caption{平均因果效应的敏感性分析结果}\label{table::sensitivity-ACE}
+\begin{tabular}{rrrrrrrrrr}
+  \hline
+ & 1/2 & 1/1.7 & 1/1.5 & 1/1.3 & 1 & 1.3 & 1.5 & 1.7 & 2 \\ 
+  \hline
+1/2 & 11.62 & 10.44 & 9.40 & 8.03 & 4.96 & 0.97 & -1.69 & -4.35 & -8.34 \\ 
+  1/1.7 & 9.22 & 8.05 & 7.00 & 5.64 & 2.57 & -1.42 & -4.08 & -6.75 & -10.74 \\ 
+  1/1.5 & 7.63 & 6.45 & 5.41 & 4.05 & 0.97 & -3.02 & -5.68 & -8.34 & -12.33 \\ 
+  1/1.3 & 6.03 & 4.86 & 3.81 & 2.45 & -0.62 & -4.61 & -7.27 & -9.94 & -13.93 \\ 
+  1 & 3.64 & 2.47 & 1.42 & 0.06 & -3.01 & -7.01 & -9.67 & -12.33 & -16.32 \\ 
+  1.3 & 1.80 & 0.63 & -0.42 & -1.78 & -4.85 & -8.85 & -11.51 & -14.17 & -18.16 \\ 
+  1.5 & 0.98 & -0.19 & -1.24 & -2.60 & -5.67 & -9.66 & -12.33 & -14.99 & -18.98 \\ 
+  1.7 & 0.36 & -0.82 & -1.86 & -3.23 & -6.30 & -10.29 & -12.95 & -15.61 & -19.60 \\ 
+  2 & -0.35 & -1.52 & -2.57 & -3.93 & -7.00 & -10.99 & -13.65 & -16.32 & -20.31 \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+
+表 \ref{table::sensitivity-ACE} 列出了各敏感性参数组合下的估计值。当敏感性参数大于1时估计值符号趋于稳定，小于1时则变化剧烈。若参与计划者BMI值偏高（即 $\varepsilon_1(X) >1$ 且 $ \varepsilon_0(X)  > 1$），则计划对BMI具有负向影响。反之若参与群体BMI偏低，此结论则需谨慎对待。 
+
+
+
+\section{作业习题}
+
+
+\paragraph{定理 \ref{thm::outcome-reg-sensitivity} 证明}\label{hw::proof-theorem-1-sa}
+
+请证明定理 \ref{thm::outcome-reg-sensitivity}。 
+
+\paragraph{定理 \ref{thm::ipw-sensitivity} 证明}\label{hw::proof-theorem-2-sa}
+
+请证明定理 \ref{thm::ipw-sensitivity}。 
+
+
+\paragraph{敏感性分析的标准误计算}\label{hw::sensitivity-se}
+
+\ref{sec::eg-sensitivity-tau} 章节仅给出点估计值，请补充计算相应的自助法标准误。 
+
+  
+
+
+\paragraph{处理组平均因果效应$\tau_\textsc{T}$的敏感性分析}\label{hw::att-sentivity-analysis}
+
+本题推广第\ref{chapter::ATT-and-other}章，在允许存在未测量混杂的条件下估计
+$$
+\tau_\textsc{T} = E\{  Y(1) - Y(0)  \mid Z=1  \} 
+= E(Y\mid Z=1) - E\{  Y(0)  \mid Z=1  \} .
+$$
+$E(Y\mid Z=1)$可以直接用样本矩$\hat{\mu}_{\textsc{t}1} =   \sumn Z_i Y_i / \sumn Z_i$估计。唯一的反事实项是$E\{  Y(0)  \mid Z=1  \}$，因此只需引入敏感性参数$ \varepsilon_0(X) $。当$\varepsilon_0(X) .$已知时，有以下两个识别公式：
+
+\begin{theorem}
+\label{thm::att-reg-ipw}
+已知$\varepsilon_0(X) $时，
+\begin{eqnarray*}
+E\{  Y(0)  \mid Z=1  \}  &=& E\left\{  Z \mu_0(X)  \varepsilon_0(X)    \right\} /e \\
+&=& E\left\{  e(X)\varepsilon_0(X) \frac{ 1-Z}{1-e(X)}  Y      \right\} /e,
+\end{eqnarray*}
+其中$e = \pr(Z=1)$。
+\end{theorem}
+
+
+证明定理\ref{thm::att-reg-ipw}。 
+
+注：由定理\ref{thm::att-reg-ipw}，可用$\hat{\tau}_{\textsc{t}}^* = \hat{\mu}_{\textsc{t}1}  - \hat{\mu}_{\textsc{t}0}^*$估计$\tau_{\textsc{t}}$，其中
+\begin{eqnarray*}
+\hat{\mu}_{\textsc{t}0}^\text{reg} &=& n_1^{-1} \sumn Z_i  \varepsilon_0(X_i) \hat  \mu_0(X_i) ,   \\
+\hat{\mu}_{\textsc{t}0}^\text{ht} &=& n_1^{-1} \sumn   \varepsilon_0(X_i) \hat  o(X_i) (1-Z_i) Y_i ,   \\
+\hat{\mu}_{\textsc{t}0}^\text{haj} &=&  \sumn   \varepsilon_0(X_i) \hat  o(X_i) (1-Z_i) Y_i  /  \sumn   \hat  o(X_i) (1-Z_i) , 
+\end{eqnarray*}
+$  \hat  o(X_i) = \hat  e(X_i) / \{1- \hat  e(X_i)\}$是在给定观测协变量后估计的处理条件优势。此外，可以构造$\tau_{\textsc{t}}$的双重稳健估计量$\hat{\tau}_{\textsc{t}}^\text{dr} = \hat{\mu}_{\textsc{t}1}  - \hat{\mu}_{\textsc{t}0}^\text{dr}$，其中
+$$
+\hat{\mu}_{\textsc{t}0}^\text{dr} = 
+\hat{\mu}_{\textsc{t}0}^\text{ht}  - n_1^{-1} \sumn \varepsilon_0(X_i) \frac{\hat e(X_i) - Z}{1-\hat e(X_i)}  \hat \mu_0(X_i)  . 
+$$
+更详细的讨论参见\citet{luding2023flexible}。 
+
+
+
+\paragraph{R语言实现}
+
+实现习题\ref{hw::att-sentivity-analysis}中的估计量，并分析第\ref{sec::eg-sensitivity-tau}节使用的数据。 
+
+
+\paragraph{推荐阅读}
+
+ \citet{Rosenbaum::1983JRSSB} 与 \citet{imbens2003sensitivity} 为敏感性分析领域的奠基性文献，但所用方法相对复杂，建议读者在掌握基础概念后再行参阅。 
+
+

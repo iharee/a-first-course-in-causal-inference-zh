@@ -1,0 +1,329 @@
+\chapter{潜在结果}
+ \label{chapter::potential-outcomes}
+
+
+\section{实验主义者对因果推断的观点}
+
+
+
+
+
+
+\citet{rubin1975bayesian}与\citet{holland1986statistics}提出了这样一句格言：
+\begin{quote}
+“没有干预就没有因果关系。”
+\end{quote}
+并非所有人都认同这一观点，但它有助于澄清因果思考中的歧义。本书采用这一视角，以潜在结果框架定义因果效应\citep{Neyman:1923, Rubin:1974}。在此框架中，实验或至少思想实验包含一项处理，研究者关心它对一个或多个结果的效应。{\it 处理}有时也称{\it 干预}或{\it 操纵}。 
+
+
+\begin{example}\label{eg::aspirin}
+如果我们想了解服用阿司匹林与否对缓解头痛的效果，那么干预措施就是“服用阿司匹林与否”。 
+\end{example}
+
+
+
+\begin{example}\label{eg::jobtraining}
+如果我们想了解参加职业培训与否对就业率与工资水平的影响，那么干预措施就是“参加职业培训与否”。 
+\end{example}
+
+
+\begin{example}\label{eg::classroom}
+如果我们想了解在小班还是大班上课对标准化考试成绩的影响，那么干预措施就是“在小班上课与否”。 
+\end{example} 
+
+\begin{example}\label{eg::gotv}
+\citet{gerber2008social}研究的是各类鼓励投票的宣传信息对投票行为的影响。此时，干预措施便是这些不同的鼓励投票宣传信息。 
+\end{example} 
+
+
+\begin{example}\label{eg::bmi}
+\citet{pearl2018does}指出，我们可以推断肥胖症对寿命的影响。衡量肥胖的常见指标是体质指数（BMI），其定义为身体质量除以身高的平方，单位采用千克/米$^2$。因此，此处的干预措施可以理解为不同水平的BMI值。 
+\end{example} 
+
+
+上述干预的歧义程度不同：例\ref{eg::aspirin}至\ref{eg::gotv}的干预较明确，例\ref{eg::bmi}中干预 BMI 的含义却不够明确。降低 BMI 可以有多种方式，例如改善饮食、增加运动或减重手术，它们对结果的效应可能很不一样。本书认为，若不进一步澄清，例\ref{eg::bmi}中的干预就没有良好定义。
+
+ 
+
+另一个定义模糊的干预措施便是“种族”。种族歧视是劳动力市场中的一个重要问题，但要设计试验来改变实验对象的种族却并非易事。\citet{bertrand2004emily}设计了一项有趣的实验，部分回应了这一问题。 
+
+\begin{example}\label{eg::race}
+回顾例\ref{eg::bertrand2004emily-chapter1}。\citet{bertrand2004emily}随机改变简历上的姓名，比较带有听起来像非洲裔美国人姓名与白人姓名的简历的回访率。对每份简历，干预是姓名听起来像黑人还是白人的二元指标，结果是是否收到回访的二元指标。第\ref{sec::twobytwotables-withresume}节分析了如下二乘二表： 
+
+\begin{center} 
+\begin{tabular}{ccc}
+\hline 
+ &   获得回电 & 未获得回电 \\
+ \hline 
+非洲裔美国人风格姓氏  & 157 & 2278\\
+欧洲裔美国人风格姓氏   & 235 & 2200\\
+\hline 
+\end{tabular}
+\end{center}
+
+根据此表，我们可以计算两种姓氏获得回电的概率之差：
+$$
+\frac{157}{2278 + 157} - \frac{235}{  2200 + 235 } = 6.45\% - 9.65\% = - 3.20\% < 0
+$$
+费舍尔精确检验得到的$p$值也显著小于$0.001$。 
+\end{example}
+
+在\citet{bertrand2004emily}的实验中，处理是实验者能够操纵的{\it 被感知的种族}，从而回答一个定义明确的因果问题。但批评者可能指出，对被感知种族的干预，其因果效应未必等于实际种族的因果效应。 
+
+
+
+\section{潜在结果的正式记号}
+\label{sec::po-sciencetable}
+
+考虑一项有$n$个实验单位的研究，编号为$i= 1, \ldots, n$。先讨论二水平处理：$1$表示处理，$0$表示对照。每个单位$i$的目标结果$Y$有两个版本：
+$$
+Y_i(1)  \text{ and } Y_i(0),
+$$
+即假想干预 1 和 0 下的潜在结果。 
+%The founding father of the Statistics Department at the University of California Berkeley, Professor Jerzy Neyman, first used this notation in his thesis written in Polish \citep{Neyman:1923}. 
+\citet{Neyman:1923}首次使用了这一记号。它看似直观，却隐含一些假设，\citet{Rubin:1980}对此作了如下澄清。
+
+\begin{assumption}
+[无相互干扰]
+\label{sutva1}
+单位$i$的潜在结果不依赖其他单位接受的处理，有时称为{\it 无干扰}假设。 
+\end{assumption}
+
+
+\begin{assumption}
+[一致性]
+\label{sutva2}
+处理不存在未区分的其他版本。等价地，要求处理水平定义明确，至少对所关心的结果没有歧义。这有时称为{\it 一致性}假设。\footnote{这种一致性与第\ref{chapter::basic-prob-append}章定义\ref{def::consistency}中估计量的一致性完全不同。} 
+\end{assumption}
+
+
+%\begin{enumerate}
+%[(1)]
+%\item\label{sutva1}
+%Unit $i$'s potential outcomes do not depend on other units' treatments. This is sometimes called the {\it no-interference} assumption. 
+%
+%\item\label{sutva2}
+%There are no other versions of the treatment. Equivalently, we require that the treatment level be well-defined, or have no ambiguity at least for the outcome of interest. This is sometimes called the {\it consistency} assumption. 
+%
+%\end{enumerate}
+
+上述假设\ref{sutva1}在传染病研究或网络实验中可能被违反。例如，如果我的某些朋友接种了流感疫苗，即便我没有接种，我患流感的可能性也会降低；如果我的朋友们看到了脸书上的广告，即便我没看到该广告，我购买相应产品的可能性也会提高。在现代因果推断文献中，研究存在相互干扰的实验对象这一情形属于一个活跃的研究领域\citep[e.g.,][]{hudgens2008toward}。 
+
+
+假设\ref{sutva2}则可能在涉及多种成分的复杂干预措施下被违反。例如，在研究吸烟对肺癌的影响时，香烟的种类可能是个重要因素；在考察高等教育对收入的影响时，大学教育的类型与专业也可能发挥关键作用。 
+
+
+\citet{Rubin:1980}将上述假设\ref{sutva1}与\ref{sutva2}合称为“稳定单元处理值假设”（Stable Unit Treatment Value Assumption，简称SUTVA）。
+
+
+\begin{assumption}
+[SUTVA]
+\label{sutva-complete}
+假设\ref{sutva1}与\ref{sutva2}均成立。
+\end{assumption}
+
+
+在SUTVA成立的前提下，\citet{Rubin:2005}将包含所有潜在结果的$n\times 2$矩阵称为“科学表格”：
+\begin{center}
+\begin{tabular}{ccc}
+\hline 
+$i$ & $Y_i(1)$ &  $Y_i(0)$ \\
+ \hline 
+$1$ & $Y_1(1)$ &  $Y_1(0)$ \\
+$2$ & $Y_2(1)$ &  $Y_2(0)$ \\
+\vdots  &\vdots & \vdots   \\
+$n$ & $Y_n(1)$ &  $Y_n(0)$ \\
+\hline 
+\end{tabular}
+\end{center}  
+
+
+由于Neyman与Rubin对统计因果推断做出了奠基性贡献，潜在结果框架有时也被称作“Neyman模型”“Neyman-Rubin模型”或“Rubin因果模型”。不过在本书及其他科学著作中，我更倾向于使用“潜在结果框架”这一称呼。 
+ 
+ 
+因果效应是科学表的函数。推断个体因果效应
+$$
+\tau_i =  Y_i(1) - Y_i(0) ,\quad (i=1, \ldots, n)
+$$
+存在根本困难：对每个单位$i$，只能观测$Y_i(1)$或$Y_i(0)$之一，也就是科学表的一半。作为起点，本书多数部分关注平均因果效应（ACE）：
+\begin{eqnarray*}
+\tau  &=&  n^{-1} \sumn \{  Y_i(1) - Y_i(0) \}  \\
+&=&  n^{-1} \sumn  Y_i(1) -  n^{-1} \sumn  Y_i(0).
+\end{eqnarray*}
+也可推广到许多其他参数，亦称{\it 估计目标}，例子见习题\ref{hw::nonlinear-causal-estimands}。 
+
+
+\subsection{因果效应、子组以及尤尔-辛普森悖论的不可能性}
+
+
+若由二元变量$X_i $定义两个亚组，可定义亚组因果效应
+$$
+\tau_x = \frac{  \sumn  I(X_i = x) \{  Y_i(1) - Y_i(0) \}    }{   \sumn  I(X_i = x)    },\quad (x=0,1) 
+$$
+其中$I(\cdot)$为指示函数。有简单恒等式
+$$
+\tau =  \pi_1 \tau_1  +  \pi_0 \tau_0
+$$
+其中$\pi_x =  \sumn  I(X_i = x)  / n$是满足$X_i = x$的单位比例，$(x=0,1)$。因此，若$\tau_1  > 0$且$ \tau_0 > 0$，必有$\tau > 0$。所以 Yule--Simpson 悖论不会发生在这种因果效应的汇总中。  
+
+
+
+\subsection{实验单位定义中的细微之处}
+
+实验单位的定义有一个微妙之处：实验单位未必等同于物理对象。例如，我之前未服阿司匹林，头痛没有消失；现在服药，头痛消失。你可能以为观察到了我在对照和处理下的两个潜在结果。用$i$表示我，令$Y=1$表示无头痛，似乎$Y_i(0) = 0$、$Y_i(1) = 1$，所以阿司匹林治好了头痛。但这一逻辑误解了实验单位。同一个人在不同时间点，是两个不同的实验单位，编号为“$i,\textup{before}$”与“$i,\textup{after}$”。因此共有四个潜在结果
+$$
+Y_{i,\textup{before}}(0)=0, \quad  Y_{i,\textup{before}}(1)=?,\quad
+Y_{i,\textup{after}}(0)=?, \quad  Y_{i,\textup{after}}(1)=1,
+$$
+其中两个已观测，两个缺失，个体因果效应
+$$
+Y_{i,\textup{before}}(1) -  Y_{i,\textup{before}}(0) = ? - 0 \text{ and } Y_{i,\textup{after}}(1)  - Y_{i,\textup{after}}(0) = 1 - ?
+$$
+仍未知。即使不服药，头痛也可能自行消失：
+$$
+Y_{i,\textup{after}}(0)=1, \quad  Y_{i,\textup{after}}(1)=1
+$$
+此时效应为零；也可能不服药就不会消失：
+$$
+Y_{i,\textup{after}}(0)=0, \quad  Y_{i,\textup{after}}(1)=1
+$$
+此时阿司匹林效应为正。 
+
+若前后两期的对照潜在结果稳定，
+$$
+Y_{i,\textup{before}}(0) = Y_{i,\textup{after}}(0) = 0 .
+$$
+上述错误的直观推理也可能碰巧得到正确答案。但这是很强且根本不可检验的假设。\citet{rubin2001comment}在因果效应的自我实验背景下作了相关讨论。
+
+
+
+\section{干预措施分配机制}\label{sec::Treatment-ScienceTable}
+
+令$Z_i$为单位$i$的二元处理指标，组成向量$\bm{Z} = (Z_1, \ldots, Z_n)$。单位$i$的观测结果是潜在结果与处理指标的函数：
+\begin{eqnarray} 
+Y_i &=& \begin{cases}
+   Y_i(1),& \text{if } Z_i = 1\\
+   Y_i(0), & \text{if } Z_i = 0
+\end{cases} \label{eq::yobsdef} \\
+&=& Z_i Y_i(1) + (1-Z_i)Y_i(0) \label{eq::fundamentalbridge} \\
+&=& Y_i(0)  + Z_i\{  Y_i(1) - Y_i(0)  \} \label{eq::teh} \\
+&=&Y_i(0)  + Z_i\tau_i . \label{eq::teh2} 
+\end{eqnarray}
+\eqref{eq::yobsdef}定义观测结果，\eqref{eq::fundamentalbridge}与\eqref{eq::yobsdef}等价。虽然这是简单事实，\citet{pearl2010brief}将其视为连接潜在结果与观测结果的基本桥梁。公式\eqref{eq::teh}与\eqref{eq::teh2}表明，个体因果效应$\tau_i =  Y_i(1) - Y_i(0)  $可因单位而异。 
+
+
+实验只揭示单位$i$的一个潜在结果，另一个缺失：
+\begin{eqnarray*} 
+Y_i^\textup{mis} &=& \begin{cases}
+   Y_i(0),& \text{if } Z_i = 1\\
+   Y_i(1), & \text{if } Z_i = 0
+\end{cases}  \\
+&=& Z_i Y_i(0) + (1-Z_i)Y_i(1) .
+\end{eqnarray*}
+缺失结果对应单位$i$没有接受的那个处理水平，因此潜在结果框架也称{\it 反事实}框架。\footnote{“反事实”在哲学中更常见，可能与\citet{lewis1973causation}有关。}这个名称可能引起误解：实验前，两个潜在结果都有可能被观测；实验后，一个成为观测结果，另一个才是反事实结果。 
+
+
+干预措施分配机制——即向量$\bm{Z} $的概率分布——对推断因果效应起着重要作用。以下简单数值示例可阐明这一点。我们先从正态分布中生成潜在结果，并使平均因果效应接近$-0.5$。 
+\begin{lstlisting}
+> n  = 500
+> Y0 = rnorm(n)
+> tau = - 0.5 + Y0
+> Y1 = Y0 + tau
+\end{lstlisting} 
+优秀的医生会在知晓某位患者个体因果效应非负时才安排其接受干预。如此一来，观测结果的均值差将呈现正值： 
+\begin{lstlisting}
+> Z = (tau >= 0)
+> Y = Z*Y1 + (1 - Z)*Y0
+> mean(Y[Z==1]) - mean(Y[Z==0])
+[1] 2.166509
+\end{lstlisting} 
+%Another perfect doctor ranks the individual causal effects and assigns the treatment to the patient if the rank is larger than or equal to $n/2$. This again results in a positive difference in means of the observed outcomes: 
+%\begin{lstlisting}
+%> Z = (rank(tau) >= n/2)
+%> Y = Z*Y1 + (1 - Z)*Y0
+%> mean(Y[Z==1]) - mean(Y[Z==0])
+%[1] 1.851417
+% \end{lstlisting} 
+而毫无经验可言的医生因不了解任何个体因果效应信息，只能随机安排干预措施。此时观测结果的均值差则会接近真实的平均因果效应值： 
+\begin{lstlisting}
+> Z = rbinom(n, 1, 0.5)
+> Y = Z*Y1 + (1 - Z)*Y0
+> mean(Y[Z==1]) - mean(Y[Z==0])
+[1] -0.552064 
+  \end{lstlisting} 
+  
+ 以上例子虽属假设，现实中没有医生能完全知晓个体因果效应值。这些例子仍足以说明干预措施分配机制的关键作用。本书后续内容也将围绕该机制展开论述。 
+
+
+
+
+ 
+\section{作业习题}
+
+
+
+\paragraph{优秀的医生}
+\label{hw::perfect-doctor}
+
+参照第\ref{sec::Treatment-ScienceTable}节中那位优秀医生的例子，假设潜在结果由如下方式生成：
+$$
+Y(0) \sim \textsc{N}(0,1), \quad \tau = -0.5 + Y(0),\quad Y(1)  = Y(0) + \tau .
+$$
+干预措施则由因果效应值决定：$Z = 1(\tau \geq 0)$，观测结果亦随之确定为$Y = ZY(1) + (1-Z) Y(0)$。现请计算两种干预水平下观测结果的均值差：
+$$
+E(Y\mid Z=1) - E(Y\mid Z=0).
+$$
+
+
+提示：截断正态随机变量的均值计算公式如下：
+$$
+E(X\mid   a < X < b ) = \mu - \sigma \frac{   \phi \left(  \frac{b-\mu}{\sigma} \right )   -  \phi \left(  \frac{a-\mu}{\sigma} \right )   }
+{   \Phi \left(  \frac{b-\mu}{\sigma} \right )   -  \Phi \left(  \frac{a-\mu}{\sigma} \right )   } , 
+$$
+其中$X \sim \textsc{N}(\mu, \sigma^2)$，$\phi(\cdot)$与$\Phi(\cdot)$分别为标准正态随机变量$\textsc{N}(0,1)$的概率密度函数与累积分布函数。 
+
+
+
+\paragraph{非线性因果估计量}
+\label{hw::nonlinear-causal-estimands}
+
+
+
+有$n$个单位的处理与对照潜在结果$\{  (Y_i(1), Y_i(0) \}_{i=1}^n$时，均值差等于个体处理效应的均值：
+$$
+\bar{Y}(1) - \bar{Y}(0) = n^{-1} \sum_{i=1}^n  \{ Y_i(1) - Y_i(0) \}.
+$$
+因此，平均处理效应是{\it 线性}因果估计目标：潜在结果均值之差等于个体潜在结果之差的均值。 
+
+
+其他估计目标未必线性。例如，可定义中位数处理效应
+$$
+\delta_1 = \text{median}\{  (Y_i(1) \}_{i=1}^n - \text{median}\{  (Y_i(0) \}_{i=1}^n,
+$$
+它一般不同于个体处理效应的中位数
+$$
+\delta_2 = \text{median}\{  (Y_i(1) - Y_i(0) \}_{i=1}^n .
+$$
+
+\begin{enumerate}
+\item
+请分别给出数值实例使上述两种估计量满足$\delta_1 = \delta_2$、$\delta_1 > \delta_2$与$\delta_1 < \delta_2$的情形。 
+
+
+\item
+$\delta_1$与$\delta_2$哪个更有意义？为什么？用例子说明。若认为$\delta_1$与$\delta_2$在不同应用中都可能合理，也可分别举例论证。 
+\end{enumerate}
+
+
+
+
+\paragraph{平均效应与个体效应}
+
+给出数值例子，使$\tau = n^{-1} \sum_{i=1}^n  \{ Y_i(1) - Y_i(0) \}  >0$成立，但满足$Y_i(1) > Y_i(0)$的单位比例小于$0.5$。即平均因果效应为正，处理却使不到一半的单位获益。 
+
+
+\paragraph{推荐阅读}
+
+\citet{holland1986statistics}是统计因果推断的经典综述，使潜在结果框架的“Rubin 因果模型”这一名称广为人知。在加州大学伯克利分校，出于显而易见的原因，我们称之为“Neyman 模型”。  
+
+
