@@ -27,7 +27,7 @@ $
 \item
 近似具备随机化特性，从而与未观测混淆因素$U$独立；
 \item
-能够改变治疗干预$D$的分布规律；
+能够改变处理$D$的分布规律；
 \item
 它只能通过$D$间接影响结果$Y$，不能直接影响结果。
 \end{enumerate}
@@ -54,19 +54,19 @@ $
  
  
  \begin{example}
- \citet{hearst1986delayed}发现越战征兵抽签中号码较小的男性随后死亡率较高；其解释为兵役产生的负面影响。\citet{angrist1990lifetime}补充指出这类男性后期收入也偏低，同样可归结为兵役所致。由于抽签号码属随机生成、号码较小者恰更可能服兵役，且该号码对死亡率与收入并无直接影响，故图\ref{fig::causal-diagram-IV}条件完全成立。\citet{angrist1996identification}正是以此为基础重新分析了实验数据：其中抽签号码为工具变量、兵役为处理干预、死亡率或收入则为观测结果。 
+ \citet{hearst1986delayed}发现越战征兵抽签中号码较小的男性随后死亡率较高；其解释为兵役产生的负面影响。\citet{angrist1990lifetime}补充指出这类男性后期收入也偏低，同样可归结为兵役所致。由于抽签号码是随机生成的、号码较小者更可能服兵役，且号码不太可能影响之后的死亡率或收入，这些解释是合理的，即图\ref{fig::causal-diagram-IV}所示条件具有合理性。\citet{angrist1996identification}用工具变量框架重新分析了这些数据：其中抽签号码为工具变量、兵役为处理干预、死亡率或收入则为观测结果。
 \end{example}
 
 
 
 
 \begin{example}
-\citet{angrist1991does}以出生季度作为工具变量，测算了受教育年限对收入的贡献值。出生季度具有近似随机化特征：一方面美国多数州规定儿童满六周岁方可入学；另一方面义务教育法要求最低入学年龄为十六周岁。此外出生季度亦不直接影响收入值。 
+\citet{angrist1991does}以出生季度作为工具变量，测算了受教育年限对收入的贡献值。出生季度近似随机，因而作为工具变量有一定合理性。出生季度影响受教育年限，因为美国多数州要求儿童在年满六周岁的那个日历年入学，而义务教育法通常要求学生在十六周岁之前一直在校。更重要的是，认为出生季度不直接影响收入也是合理的。
 \end{example}
 
 
 \begin{example}
-\citet{angrist1998children}选用兄弟姐妹性别构成作为工具变量，研究了家庭规模对母亲劳动参与的影响。同理，此变量亦具备近似随机化特征：同性别双胞胎会显著提升第三胎仍为同性别的概率，且该变量同样不直接决定母亲的就业行为。 
+\citet{angrist1998children}选用兄弟姐妹性别构成作为工具变量，研究了家庭规模对母亲劳动参与的影响。子女性别构成近似随机，因此这一工具变量有一定合理性。此外，在美国，已有两个同性别孩子的父母比已有两个不同性别孩子的父母更可能生育第三个孩子。认为子女性别构成不直接影响母亲的就业和工作也是合理的。
 \end{example}
 
 
@@ -232,7 +232,7 @@ E(  ZY)  = E(ZD\tran) \beta  \\
  \Longrightarrow 
 \beta = E(ZD\tran) ^{-1} E(  ZY)  
 $$
-前提是$E(ZD\tran)$非退化矩阵。当$E(\varepsilon D) = 0$时，即$D$本身充当工具变量，此式即退化为普通最小二乘估计量：
+前提是$E(ZD\tran)$非退化矩阵。当$E(\varepsilon D) = 0$时，$D$本身充当工具变量，普通最小二乘法便是一个特例。由上述矩条件得到的估计量为：
 \begin{eqnarray}\label{eq::iv-estimator}
 \hat{\beta}_\textsc{iv} = \left(  \sumn Z_i D_i\tran \right)^{-1}  \sumn Z_iY_i.
 \end{eqnarray}
@@ -368,7 +368,7 @@ D_i = \gamma_0 + \gamma_1 Z_i + \gamma_2 \tran X_i + \varepsilon_{2i},
 定义\ref{def::2sls}中的 TSLS 估计量简化如下。 
 
 \begin{definition}
-[在此情境下TSLS简化为两步操作：]\label{def::tsls-single}
+[单个内生回归变量的 TSLS]\label{def::tsls-single}
 根据\eqref{eq::strucrual-iv}，TSLS 分为以下两步。
 \begin{enumerate}
 \item
@@ -551,7 +551,7 @@ $$
 均可逆，则\eqref{eq::2sls-definition}定义的$\hat{\beta}_\textsc{tsls} $退化为\eqref{eq::iv-estimator}定义的$ \hat{\beta}_\textsc{iv}$。 
 \end{enumerate}
 
-\paragraph{间接法等价性证明}\label{para::tsls-ils}
+\paragraph{TSLS 与 ILS 的等价性}\label{para::tsls-ils}
 证明定理 \ref{thm::ils=2sls}。 
 
 
@@ -564,7 +564,7 @@ $$
 下面的定义 \ref{def::cf} 与上面的定义 \ref{def::2sls} 相对应。
 
 \begin{definition}
-[探讨第三种估计思路的适用性。]\label{def::cf}
+[控制函数]\label{def::cf}
 将控制函数估计量$\hat{\beta}_\textsc{cf}$定义如下。
 \begin{enumerate}
 \item

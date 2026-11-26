@@ -145,7 +145,7 @@ E(Y)  &=& \sum_{x_0} \sum_{z_1} \sum_{x_1} \sum_{z_2} E( Y \mid  z_2, z_1, x_1, 
 \pr(x_1\mid    z_1, x_0)  \pr(z_1\mid x_0)  \pr(x_0). \label{eq::identification-law-total-prob}
 \end{eqnarray}
 
-将 \eqref{eq::identification-law-total-prob} 中的 $Z_2$ 与 $Z_1$ 的概率项去除后，便可得到公式 \eqref{eq::identification-si-g-formula-2}。这一结果符合直觉，因为潜在结果 $Y(z_1, z_2)$ 的含义正是将 $Z_1$ 与 $Z_2$ 分别固定在 $z_1$ 与 $z_2$ 的值上。 
+将 \eqref{eq::identification-law-total-prob} 中 $Z_2$ 与 $Z_1$ 的概率项及其求和去除，并固定 $z_1$ 与 $z_2$，便可得到离散情形的公式 \eqref{eq::identification-si-g-formula-1}。这一结果符合直觉，因为潜在结果 $Y(z_1, z_2)$ 的含义正是将 $Z_1$ 与 $Z_2$ 分别固定在 $z_1$ 与 $z_2$ 的值上。
 
 
 罗宾斯将\eqref{eq::identification-si-g-formula-1}和\eqref{eq::identification-si-g-formula-2}称为g-公式。  
@@ -174,7 +174,7 @@ E\{ Y(z_1, z_2) \mid X_0 \}
 
 
 
-\subsection{基于结果建模的插补估计}
+\subsection{基于结果建模的代入估计}
 \label{section::si-plug-in-outcome}
 
 G公式\eqref{eq::identification-si-g-formula-1}和\eqref{eq::identification-si-g-formula-2}表明，为了估计潜在结果的均值，我们需要对$E(Y\mid z_2,z_1, x_1, x_0)$、$\pr(x_1\mid z_1,x_0)$以及$\pr(x_0)$进行建模。借助这些拟合好的模型，我们便能将其代入G公式中。 
@@ -221,7 +221,7 @@ E\{ Y(1,0)  - Y(0,0)\} &=& \beta_2 +  \beta_3 \gamma_1,  \label{eq::gformula-lin
 E\{ Y(0,1)  - Y(0,0)\} &=& \beta_1, \label{eq::gformula-linear2}\\
 E\{ Y(1,1)  - Y(0,0)\} &=& \beta_1 +  \beta_2 + \beta_3 \gamma_1. \label{eq::gformula-linear3} 
 \end{eqnarray}
-基于图\ref{fig::si-simple-coefficients}中箭头上的回归系数，\eqref{eq::gformula-linear1}至\eqref{eq::gformula-linear3}中的公式显得十分直观。在\eqref{eq::gformula-linear1}中，$Z_1$的效应等于路径$Z_1\rightarrow Y$与$Z_1\rightarrow X_1\rightarrow Y$上系数的总和；在\eqref{eq::gformula-linear2}中，$Z_2$的效应等于路径$Z_2\rightarrow Y$上的系数值；在\eqref{eq::gformula-linear3}中，$(Z_1,Z_2)$的总效应则等于路径$Z_1\rightarrow Y$、$Z_1\rightarrow X_1\rightarrow Y$与$Z_2\rightarrow Y$上系数的总和。 
+基于图\ref{fig::si-simple-coefficients}中箭头上的回归系数，\eqref{eq::gformula-linear1}至\eqref{eq::gformula-linear3}中的公式显得十分直观。在\eqref{eq::gformula-linear1}中，$Z_1$的效应等于路径$Z_1\rightarrow Y$的系数与路径$Z_1\rightarrow X_1\rightarrow Y$上系数乘积之和；在\eqref{eq::gformula-linear2}中，$Z_2$的效应等于路径$Z_2\rightarrow Y$上的系数值；在\eqref{eq::gformula-linear3}中，$(Z_1,Z_2)$的总效应则等于路径$Z_1\rightarrow Y$与$Z_2\rightarrow Y$的系数，加上路径$Z_1\rightarrow X_1\rightarrow Y$上系数的乘积。
 \end{example}
 
 
@@ -407,7 +407,7 @@ $$
 定理\ref{thm::si-msm-ipw}的证明过程与定理\ref{thm::sr-ipw}类似。我将其留作习题\ref{problem::ipw-msm}供读者自行推导。
 
 
- 定理\ref{thm::si-msm-ipw}提供了一种基于加权回归的简单估计策略。例如，在\eqref{eq::linear-msm}条件下，我们可利用权重$\hat{e}_{1}^{-1}(Z_{1i}, X_{0i})  \hat{e}_{2i}^{-1}(Z_{2i}, Z_{i1}, X_{1i}, X_{0i})$，对$(1,Z_{1i}, Z_{2i}, X_{0i})$中的变量$Y_i$进行加权最小二乘回归。 
+ 定理\ref{thm::si-msm-ipw}提供了一种基于加权回归的简单估计策略。例如，在\eqref{eq::linear-msm}条件下，我们可利用权重$\hat{e}_{1}^{-1}(Z_{1i}, X_{0i})  \hat{e}_{2i}^{-1}(Z_{2i}, Z_{i1}, X_{1i}, X_{0i})$，将$Y_i$对$(1,Z_{1i}, Z_{2i}, X_{0i})$进行加权最小二乘回归。
 
  
 
@@ -428,7 +428,7 @@ E\{  Y(z_1,0) - Y(0,0) \mid  Z_1=z_1,  X_0 \} = g_1( z_1, X_0; \beta)
 $$
 对所有$z_1$均成立；而在时间点2的条件效应为
 $$
-E\{  Y(z_1,z_2) - Y(z_1,0) \mid Z_2=z_2,Z_2=z_1,  X_1,  X_0 \} = g_2(z_2, z_1,  X_1,  X_0; \beta) 
+E\{  Y(z_1,z_2) - Y(z_1,0) \mid Z_2=z_2,Z_1=z_1,  X_1,  X_0 \} = g_2(z_2, z_1,  X_1,  X_0; \beta)
 $$
 对所有$ z_1, z_2.$均成立。
 \end{definition}
@@ -505,7 +505,7 @@ E\{  U_1(\beta)  \mid  Z_1, X_0 \}  &=&  E\{  U_1(\beta)  \mid  X_0 \}  \\
 
 
 引理\ref{lemma::snm-1}涉及一个较为微妙的符号表示$ Y(Z_1,0) $，因为$Z_1$具有随机性。该引理应当被理解为$  Y(Z_1,0) = Z_1 Y(1,0) +(1-Z_1) Y(0,0)$。
-基于相关定义以及引理\ref{lemma::snm-1}可知，$U_1(\beta)$代表未接受任何处理时的对照组潜在结果，而$U_2(\beta)  $则代表在时间点1接受处理后对照组的潜在结果。 
+基于相关定义以及引理\ref{lemma::snm-1}可知，$U_1(\beta)$可视为未接受任何处理时的对照潜在结果，而$U_2(\beta)  $可视为在时间点1接受处理后的对照潜在结果。
 
 
 \begin{myproof}{引理}{\ref{lemma::snm-1}}
@@ -567,7 +567,7 @@ $$
 
  
 
-\begin{myproof}{定理}{\ref{thm::sr-ipw}}
+\begin{myproof}{定理}{\ref{thm::estimating-equation-snm}}
 以$(Z_2, Z_1, X_1, X_0)$为条件并利用引理\ref{lemma::snm-1}，可得到
 \begin{eqnarray*}
 %&&E\left[  h_2(Z_1, X_1, X_0)  \{ Z_2 - e(1, Z_1, X_1, X_0)  \}   \{Y- g_2(Z_2, Z_1, X_1, X_0;\beta) \}   \right]  \\
@@ -623,7 +623,7 @@ $$
                                              &                                             &U\ar[lu]\ar[ru]
  }
  $$
- \caption{由于$X_1$与$Y$之间存在未测量的混杂因素。该因果图忽略了处理前的协变量$X_0$。}\label{fig::si-g-null-paradox}
+ \caption{$X_1$与$Y$之间存在未测量的混杂因素。该因果图忽略了处理前的协变量$X_0$。}\label{fig::si-g-null-paradox}
 \end{figure}
 
 
@@ -651,7 +651,7 @@ $$则期望值 $E\{ Y(z_1, z_2) \} $ 并不依赖于 $(z_1, z_2)$。
 证明定理 \ref{thm::si-msm-ipw}。 
 
 
-\paragraph{定义\ref{def::si-msm-with-x0}}的一个非线性示例\label{hw::logistic-msm}
+\paragraph{定义\ref{def::si-msm-with-x0}的一个非线性示例}\label{hw::logistic-msm}
 
 
 定义\ref{def::si-msm-with-x0}的另一个典型示例为\begin{equation}\label{eq::logistic-msm}
@@ -754,7 +754,7 @@ $$
 
 
 
-\paragraph{示例\ref{example::g-estimation-snm}}下的估计方法\label{problem::snm-estimation-example}
+\paragraph{示例\ref{example::g-estimation-snm}下的估计方法}\label{problem::snm-estimation-example}
  
 
 我们可以通过求解示例\ref{example::g-estimation-snm}中所列估计方程的经验版本来估计$\beta$的值。首先，我们估算出两个倾向得分，进而得到时间点1处的中心化处理值$$
@@ -764,7 +764,7 @@ $$以及时间点2处的中心化处理值$$
  $$ 
 
 
-可以证明：通过对$Y_i$以$(Z_{2i}, Z_{1i} Z_{2i} )$为因变量、$( \check{Z}_{2i} ,  Z_{1i}\check{Z}_{2i} )$作为$(Z_{2i}, Z_{1i} Z_{2i} )$的工具变量来进行两阶段最小二乘法估计，我们便能估算出$\beta_2$与$\beta_3$；随后，再通过对$Y_i - (\hat{\beta}_2+\hat{\beta}_3 Z_{1i}) Z_{2i}$以$Z_{1i}$为因变量、$\check{Z}_{1i} $作为$Z_{1i}$的工具变量来进行两阶段最小二乘法估计，我们便能估算出$\beta_1$。 
+请证明：通过将$Y_i$对$(Z_{2i}, Z_{1i} Z_{2i} )$作回归、$( \check{Z}_{2i} ,  Z_{1i}\check{Z}_{2i} )$作为$(Z_{2i}, Z_{1i} Z_{2i} )$的工具变量来进行两阶段最小二乘法估计，我们便能估算出$\beta_2$与$\beta_3$；随后，再通过将$Y_i - (\hat{\beta}_2+\hat{\beta}_3 Z_{1i}) Z_{2i}$对$Z_{1i}$作回归、$\check{Z}_{1i} $作为$Z_{1i}$的工具变量来进行两阶段最小二乘法估计，我们便能估算出$\beta_1$。
  
  
  
@@ -949,7 +949,7 @@ $$
 
 \begin{theorem}
 \label{thm::snm-estimating-equation-multiple}
-在假设\ref{assume::si-multiple}与定义\ref{def::snm-multiple}的前提下，对于任意函数$h_k$$(k=1,\ldots, K)$，只要其矩存在，我们便有
+在假设\ref{assume::si-multiple}与定义\ref{def::snm-multiple}的前提下，对于任意函数$h_k$（$k=1,\ldots, K$），只要其矩存在，我们便有
 $$
 E\left[    h_k( \overline{Z}_{k-1}, \overline{X}_{k-1} ) \{  Z_k - e(1, \overline{Z}_{k-1}, \overline{X}_{k-1}) \}  U_k(\beta) 
 \right] = 0

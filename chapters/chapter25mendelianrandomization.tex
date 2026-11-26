@@ -5,7 +5,7 @@
 
 
 
-\citet{katan1986apoupoprotein}研究了某些观察性研究的结果，这些研究表明低血清胆固醇水平与癌症风险相关。然而，正如我们所讨论的，观察性研究容易受到未测量混杂因素的影响。因此，很难将观察到的关联性解释为因果关系。在\citet{katan1986apoupoprotein}所研究的具体问题中，甚至有可能是癌症的早期阶段导致了血清胆固醇水平降低。利用常规的流行病学研究方法，要厘清血清胆固醇水平对癌症的因果效应似乎是个难题。\citet{katan1986apoupoprotein}指出，载脂蛋白E基因与血清胆固醇水平相关，但并不直接影响癌症的发生。因此，如果低血清胆固醇水平确实会导致癌症，那么在具有该基因型的人群与不具备该基因型的人群之间，其癌症风险应当存在显著差异。用因果推断的术语来说，\citet{katan1986apoupoprotein}提出将载脂蛋白E基因作为工具变量来使用。 
+\citet{katan1986apoupoprotein}研究了某些观察性研究的结果，这些研究表明低血清胆固醇水平与癌症风险相关。然而，正如我们所讨论的，观察性研究容易受到未测量混杂因素的影响。因此，很难将观察到的关联性解释为因果关系。在\citet{katan1986apoupoprotein}所研究的具体问题中，甚至有可能是癌症的早期阶段导致了血清胆固醇水平降低。利用常规的流行病学研究方法，要厘清血清胆固醇水平对癌症的因果效应似乎是个难题。\citet{katan1986apoupoprotein}指出，载脂蛋白E基因与血清胆固醇水平相关，但并不直接影响癌症的发生。因此，如果低血清胆固醇水平确实会导致癌症，那么在具有与不具有导致血清胆固醇水平不同的基因型的人群之间，其癌症风险应当存在差异。用因果推断的术语来说，\citet{katan1986apoupoprotein}提出将载脂蛋白E基因作为工具变量来使用。
 
 
 \citet{katan1986apoupoprotein}并未开展数据分析，只是提出了一种概念性设计，以同时应对{\it 未测量混杂}和{\it 反向因果}。此后，得益于现代全基因组关联研究，人们开展了更复杂精细的研究。这些研究将遗传信息作为流行病学研究中暴露的工具变量，估计暴露对结果的因果效应。其思想均源于{\it 孟德尔第二定律}，即{\it 自由组合定律}，它指出一种性状的遗传独立于其他性状的遗传。因此，使用遗传信息作为工具变量的方法称为{\it 孟德尔随机化}（MR）。 
@@ -31,7 +31,7 @@
 Y  &=& \beta_0 +  \beta D + \beta_u U + \varepsilon_Y , \\
 D  &=& \gamma_0 +   \gamma_1 G_1 + \cdots + \gamma_p G_p + \gamma_u U + \varepsilon_D ,
 \end{eqnarray}的简约式为\begin{eqnarray}
-Y  &=&\beta_0 +  \beta  \gamma_0 + \beta \gamma_1 G_1 + \cdots + \beta  \gamma_p G_p  + (\beta_u + \beta_0 \gamma_u )U + \varepsilon_Y , \\
+Y  &=&\beta_0 +  \beta  \gamma_0 + \beta \gamma_1 G_1 + \cdots + \beta  \gamma_p G_p  + (\beta_u + \beta \gamma_u )U + \varepsilon_Y + \beta \varepsilon_D , \\
 D  &=& \gamma_0 +  \gamma_1 G_1 + \cdots + \gamma_p G_p + \gamma_u U + \varepsilon_D ,
 \end{eqnarray}
 \end{definition}
@@ -48,7 +48,7 @@ Y  &=& \beta_0 + \beta D + \alpha_1 G_1 + \cdots + \alpha_p G_p  + \beta_u U + \
 D  &=& \gamma_0 + \gamma_1 G_1 + \cdots + \gamma_p G_p + \gamma_u U + \varepsilon_D ,
 \end{eqnarray}的简约式为\begin{eqnarray}
 Y  &=& ( \beta_0 +\beta  \gamma_0 ) +  (\alpha_1 + \beta \gamma_1)  G_1 + \cdots + (\alpha_p +  \beta  \gamma_p) G_p \nonumber  \\
-&&+  ( \beta_u + \beta \gamma_u )  U + \varepsilon_Y ,   \\
+&&+  ( \beta_u + \beta \gamma_u )  U + \varepsilon_Y + \beta \varepsilon_D ,   \\
 D  &=& \gamma_0 +  \gamma_1 G_1 + \cdots + \gamma_p G_p + \gamma_u U + \varepsilon_D .
 \end{eqnarray}
 \end{definition}
@@ -243,7 +243,7 @@ beta.exposure 0.3172989306 0.110948506 2.85987564 0.004811017
 
 
 
-在概念层面，多数孟德尔随机化研究中的“处理因素”并未基于潜在结果框架予以清晰界定。例如，研究常将胆固醇水平或身体质量指数视为处理因素，然而它们均为复合变量，其对应的理想化实验定义方式亦不止一种；此时“无干扰无干扰无干扰无干扰”（SUTVA）假设往往难以满足。相关讨论可参见第\ref{chapter::potential-outcomes}章。 
+在概念层面，多数孟德尔随机化研究中的“处理因素”并未基于潜在结果框架予以清晰界定。例如，研究常将胆固醇水平或身体质量指数视为处理因素，然而它们均为复合变量，其对应的理想化实验定义方式亦不止一种；此时稳定单元处理值假设（SUTVA）往往难以满足。相关讨论可参见第\ref{chapter::potential-outcomes}章。
 
 
 从生物学角度而言，工具变量分析所需的基本前提可能并不成立。孟德尔第二定律虽保证了不同性状遗传的独立性，却未确保所选工具变量与处理因素和结局间的隐性混杂因素互不相关；事实上工具变量亦可能直接影响混杂因素，或某些未被测定的基因同时影响工具变量与混杂因素。此外，该定律亦无法保障排除性假设；工具变量还可能通过非处理因素作用路径影响结局。 

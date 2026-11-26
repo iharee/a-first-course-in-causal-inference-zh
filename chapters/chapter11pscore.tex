@@ -20,9 +20,9 @@
  \item
  $\pr\{ Y(1), Y(0) \mid X \}$为在给定协变量$X$时的结果变量分布；
  \item
- $\pr\{  Z\mid X, Y(1), Y(0)  \}$为在给定协变量$X$时的处理分配概率，即处理机制。 
+ $\pr\{  Z\mid X, Y(1), Y(0)  \}$为给定协变量和潜在结果时的处理分配分布，即处理分配机制。
 \end{enumerate}
-通常我们无需对协变量建模，因为它们属于处理与结果发生前的背景信息。若需进一步分析，则需关注处理机制，这便引出了倾向得分的定义。
+通常我们无需对协变量建模，因为它们属于处理与结果发生前的背景信息。若要超越结果模型，则需关注处理机制，这便引出了倾向得分的定义。
 
 \begin{definition}
 [倾向得分]\label{def::pscore}
@@ -160,7 +160,7 @@ $$
 \end{figure}
 
 
-图\ref{fig::pscore_bmi}画出了采用不同组数$(K=5,10,30)$的估计倾向得分直方图。利用第\ref{chapter::stratification-poststratification}章分析分层随机实验的\ri{Neyman_SRE}函数，可以对$K \in \{5, 10, 20, 50, 80 \}$的不同选择计算分层点估计与标准误：
+图\ref{fig::pscore_bmi}画出了采用不同分箱数$(K=5,10,30)$的估计倾向得分直方图。利用第\ref{chapter::stratification-poststratification}章分析分层随机实验的\ri{Neyman_SRE}函数，可以对$K \in \{5, 10, 20, 50, 80 \}$的不同选择计算分层点估计与标准误：
 \begin{lstlisting}
 > pscore = glm(z ~ x, family = binomial)$fitted.values
 > n.strata = c(5, 10, 20, 50, 80)
@@ -426,7 +426,7 @@ $$
 \subsection{协变量均衡性验证}
 \label{sec::balance-check-bmi}
 
-定理\ref{thm::pscoreASbscore}虽易证明，定理\ref{thm::pscoreASbscore}对实际分析却有重要启示。在查看结果数据前，就可通过数据中的协变量平衡，检查倾向得分模型是否足够合理。\citet{rubin2007design}将其视为观察性研究的设计阶段，\citet{rubin2008objective}认为，这一阶段不涉及结果值，能使因果推断更客观。\footnote{这是一项实用建议，但如何量化这种客观性并不完全清楚。} 
+定理\ref{thm::pscoreASbscore}虽易证明，却对实际分析有重要启示。在查看结果数据前，就可通过数据中的协变量平衡，检查倾向得分模型是否足够合理。\citet{rubin2007design}将其视为观察性研究的设计阶段，\citet{rubin2008objective}认为，这一阶段不涉及结果值，能使因果推断更客观。\footnote{这是一项实用建议，但如何量化这种客观性并不完全清楚。}
 
 
 倾向得分分层中，得到离散估计得分$\hat{e}'(X)$，并近似有
@@ -447,7 +447,7 @@ $$
 \centering
 \includegraphics[width = \textwidth]{figures/balance_PSstratification5.pdf}
 \includegraphics[width = \textwidth]{figures/balance_PShajek.pdf}
-\caption{协变量均衡性检验结果：平均因果效应点估计及95\% 协变量上的平均因果效应置信区间}\label{fig::balance-check}
+\caption{协变量均衡性检验：协变量上平均因果效应的点估计及95\%置信区间}\label{fig::balance-check}
 \end{figure}
 
  
@@ -470,7 +470,7 @@ $$
  
  注：这个结论无需强可忽略性，且蕴含
 $$
-  Z\ind \{  Y(1), Y(0) \}  \mid  \{ X,   e(X, Y(1), Y(0)  \} .
+  Z\ind \{  Y(1), Y(0) \}  \mid  \{ X, e(X, Y(1), Y(0)) \} .
  $$
 \citet{rosenbaum2020modern}与\citet{rosenbaum2023propensity}指出了\eqref{eq::principal-covariate-ind}的结论，将$e(X, Y(1), Y(0)   ) $称为{\it 主要未观测协变量}。 
  

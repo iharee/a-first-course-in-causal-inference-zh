@@ -71,7 +71,7 @@ $$
  
 \begin{myproof}{定理}{\ref{thm::cace-mixture-components}}
 第一部分：我们首先确定各类潜在顺从类型的比例。
- never-takers类型的比例可通过下式计算：
+ 从不接受者的比例可通过下式计算：
 \begin{eqnarray*}
 \pr(D=0\mid Z=1) 
 %&=& \pr\{ D(1) = 0\mid Z=1 \} = \pr\{ D(1) = 0, D(0) = 0 \mid Z=1 \} \\
@@ -79,14 +79,14 @@ $$
 &=& \pr(U=\nt) \\
 &=&  \pi_\nt ,
 \end{eqnarray*}
-Always-takers类型的比例则为：
+始终接受者的比例则为：
 \begin{eqnarray*}
 \pr(D=1\mid Z=0) 
 %&=& \pr\{  D(0) = 1\mid Z=0 \} =  \pr\{ D(1)=1,  D(0) = 1\mid Z=0 \} \\
 &=& \pr(U=\at \mid Z=0)  \\
 &=& \pr(U=\at) =  \pi_\at . 
 \end{eqnarray*}
-因此，Compliers类型的比例即为：
+因此，依从者的比例即为：
 \begin{eqnarray*}
 \pi_\cp &=& \pr(U=\cp) \\
 &=& 1-  \pi_\nt -  \pi_\at  \\
@@ -165,7 +165,7 @@ E(Q\mid Z=1) - E(Q\mid Z=0) \geq 0,
 \end{theorem}
 
 
-在IV假设\ref{assume::random}至\ref{assume::ER}下，$Q = DY, D(1-Y), (D - 1)Y$及$D+Y-DY$的均值差均必须非负。值得注意的是，上述推论仅涉及观测变量的分布特性。任何违反IV不等式的观测结果都会引发对IV假设本身的质疑。 
+在IV假设\ref{assume::random}至\ref{assume::ER}下，$Q = DY, D(1-Y), (D - 1)Y$及$D+Y-DY$的均值差均必须非负。值得注意的是，上述推论仅涉及观测变量的分布特性。若拒绝工具变量不等式，也就要拒绝这些工具变量假设。
 
 
 \citet{balke1997bounds}推导出了含或不含单调性假设时的广义IV不等式；本证明思路源自\citet{jiang2020measurement}提出的针对稍复杂情境的推导方法。定理\ref{thm::iv-inequality}仅针对二元结果变量展开了讨论；习题\ref{hw::ivineq-binary}提供了等价形式，习题\ref{hw::ivineq-general-Y}则给出了适用于一般结果变量的结论。
@@ -366,10 +366,10 @@ $tau_c
 
 
 
-\paragraph{Compliers群体的风险比}\label{hw::rr-compliers}
+\paragraph{依从者群体的风险比}\label{hw::rr-compliers}
 
 
-对于二元结果变量，可定义Compliers群体的风险比为：
+对于二元结果变量，可定义依从者群体的风险比为：
 $$
 \textsc{rr}_\cp = \frac{  \pr\{  Y(1) = 1\mid U = \cp \}  }{ \pr\{  Y(0) = 1\mid U = \cp \}   } .
 $$
@@ -444,7 +444,7 @@ f_{0\cp} (y) &=& \pi_\cp^{-1} \{  \pr(D=0\mid Z=0)  g_{00}(y)  -  \pr(D=0\mid Z=
 \end{eqnarray*}
 对所有$y$值均成立。 
  
-提示：\citet{imbens1997estimating}与\citet{kitagawa2015test}探讨了类似结论。可借助Kolmogorov-Smirnov统计量构建检验形式：
+提示：\citet{imbens1997estimating}与\citet{kitagawa2015test}探讨了类似结论。可借助类似 Kolmogorov-Smirnov 的统计量检验第一条不等式：
 $$
 \text{KS}_1 = \max_{y} \Big |
 \frac{  \sumn Z_i D_i  1(Y_i \leq y)  }{ \sumn Z_i D_i  } - \frac{  \sumn (1-Z_i) D_i  1(Y_i \leq y)  }{ \sumn (1-Z_i) D_i  }
@@ -488,7 +488,7 @@ $$
 
 \begin{enumerate}
 \item 
-{\it 按实际治疗分析}比较实际接受处理和对照的单位的结果均值，得到$$
+{\it 按实际处理分析}比较实际接受处理和对照的单位的结果均值，得到$$
 \tau_\textsc{at} = E(Y\mid D=1) - E(Y\mid D=0).
 $$证明$$
 \tau_\textsc{at} = \frac{  \pi_\at \mu_\at + \pr(Z=1)\pi_\cp \mu_{1\cp}   }{   \pr(D=1) } 
@@ -506,7 +506,7 @@ $$
 
 
 \item 
-亦可考察实际接受干预与未接受干预组之间的条件均值差，即
+亦可在给定处理分配的条件下，比较实际接受处理与对照的单位的结果均值，得到
 \begin{eqnarray*}
 \tau_{Z=1} &=& E(Y\mid Z=1, D=1) - E(Y\mid Z=1, D=0),\\ 
 \tau_{Z=0} &=& E(Y\mid Z=0, D=1) - E(Y\mid Z=0, D=0).
@@ -591,7 +591,7 @@ $$
 \end{tabular}
  \end{center}
  
-此实验中$Z$为是否分配维生素A补充剂的指示变量，$D$为实际接受补充剂的状况，$Y$为存活与否的指示变量。该试验在印度尼西亚实施。请重新分析该数据。 
+此实验中$Z$为儿童是否被分配维生素A补充剂的指示变量，$D$为儿童是否实际接受补充剂的指示变量，$Y$为存活与否的指示变量。该试验在印度尼西亚实施。请重新分析该数据。
  \end{enumerate}
  
  

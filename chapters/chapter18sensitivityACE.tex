@@ -12,7 +12,7 @@
  
  
  
- 该方法与推导平均潜在结局最坏情况界限的思路密切相关。我将先介绍界限推导这一较为简单的思路，随后将其扩展至敏感性分析领域。 
+ 该方法与推导平均潜在结果最坏情况界限的思路密切相关。我将先介绍界限推导这一较为简单的思路，随后将其扩展至敏感性分析领域。
 
 
 
@@ -67,7 +67,7 @@ $$
 
 \begin{table}
 \centering
-\caption{结局值受限 $ [\underline{y}, \overline{y}]$ 时的分析表格，$\underline{y}$ 与 $\overline{y}$ 为给定常数}\label{table::manski-bounds}
+\caption{结果有界于 $ [\underline{y}, \overline{y}]$ 时的科学表，$\underline{y}$ 与 $\overline{y}$ 为给定常数}\label{table::manski-bounds}
 \begin{tabular}{ccccccc}
 \hline 
 $Z$ & $Y(1)$ & $Y(0)$ &  $Y(1)$ 下限 & $Y(1)$ 上限 & $Y(0)$ 下限 & $Y(0)$ 上限 \\
@@ -139,12 +139,12 @@ $$
 
 
 
-Manski将此思路成功应用于因果推断 \citep{manski1990nonparametric} 及多种计量经济模型 \citep{manski2003partial}。在辅以其他定性假设的前提下，这种基于最小假设的界限推导法极具实用价值。\citet{manski2003partial} 系统梳理了多种适用策略。例如可引入单调性假设：
+Manski将此思路成功应用于因果推断 \citep{manski1990nonparametric} 及多种计量经济模型 \citep{manski2003partial}。在辅以其他定性假设的前提下，这种基于最小假设的界限推导法极具实用价值。\citet{manski2003partial} 系统梳理了多种适用策略。例如，若认为处理不会损害任何单位，就可引入单调性假设：
 $
 Y(1)\geq Y(0) . 
 $
-此时 $\tau$ 下界降为零而上界不变。亦可设定：
-$Z = I\{  Y(1) \geq Y(0) \}$，即治疗选择基于潜在结局差值。此类假设均能优化 $\tau$ 的界限估计。更多细节探讨已超出本书范围。 
+此时 $\tau$ 的下界为零，上界不变。亦可设定：
+$Z = I\{  Y(1) \geq Y(0) \}$，即处理选择基于潜在结果的差值。此类假设均能优化 $\tau$ 的界限估计。更多细节探讨已超出本书范围。
 
  
  
@@ -166,7 +166,7 @@ $Z = I\{  Y(1) \geq Y(0) \}$，即治疗选择基于潜在结局差值。此类�
 \frac{ E\{ Y(1)\mid Z=1, X \} }{ E\{ Y(1)\mid Z=0, X \} } = \varepsilon_1(X), \\
 \frac{ E\{ Y(0)\mid Z=1, X \} }{ E\{ Y(0)\mid Z=0, X \} } = \varepsilon_0(X) ,
 \end{eqnarray*}
-上述参数即敏感性参数。为简化分析可假定二者与 $X$ 无关。实际应用时需预先设定其取值范围。令 $\mu_1(X) = E(Y\mid Z=1, X)$ 与 $\mu_0(X) = E(Y\mid Z=0, X)$ 分别为处理组与对照组的条件均值函数。此时可推导出： 
+上述参数即敏感性参数。为简化分析可假定二者与 $X$ 无关。实际应用时需要固定其取值，或让它们在预先设定的范围内变化。令 $\mu_1(X) = E(Y\mid Z=1, X)$ 与 $\mu_0(X) = E(Y\mid Z=0, X)$ 分别为处理组与对照组的条件均值函数。此时可推导出：
 
 \begin{theorem}
 \label{thm::outcome-reg-sensitivity}
@@ -204,7 +204,7 @@ E\{ Y(0)\mid Z=1 \}   &=& E\left\{\mu_0(X)    \varepsilon_0(X)  \mid Z=1\right\}
 
 
 
-更有价值的是基于逆概率加权法推导 $\tau$ 估计量：
+更有意思的是，还可用逆概率加权公式识别 $\tau$：
 
 \begin{theorem}\label{thm::ipw-sensitivity}
 已知 $\varepsilon_1(X)$ 与 $ \varepsilon_0(X) $ 时，有
@@ -232,7 +232,7 @@ $$
 以及
 \begin{eqnarray*} 
 \hat\tau^{\textup{haj}} &=&   \sumn \frac{ \{ \hat{e}(X_i)\varepsilon_1(X_i) + 1-\hat{e}(X_i) \} Z_iY_i     }{  \varepsilon_1(X_i)  \hat  e(X_i)  }  \Big / \sumn \frac{Z_i}{ \hat{e}(X_i)  }   \\
-&&- n^{-1} \sumn  \frac{ \{  \hat  e(X_i)  \varepsilon_0(X_i) + 1- \hat e(X_i)  \} (1-Z_i) Y_i }{ 1- \hat e(X_i)} \Big / \sumn \frac{1-Z_i}{ 1- \hat{e}(X_i)  } .
+&&- \sumn  \frac{ \{  \hat  e(X_i)  \varepsilon_0(X_i) + 1- \hat e(X_i)  \} (1-Z_i) Y_i }{ 1- \hat e(X_i)} \Big / \sumn \frac{1-Z_i}{ 1- \hat{e}(X_i)  } .
 \end{eqnarray*}
 
 
@@ -241,7 +241,7 @@ $$
 
 更有意思的是，利用拟合的倾向得分和结果模型，下列$\tau$的估计量具有双重稳健性：
 \begin{eqnarray*}
-\hat{\tau}^{\textup{ht}} = \hat\tau^{\textup{ht}} 
+\hat{\tau}^{\textup{dr}} = \hat\tau^{\textup{ht}}
 - n^{-1} \sumn \{Z_i- \hat e(X_i)\}  \left\{   \frac{  \hat  \mu_1(X_i) }{  \hat e(X_i) \varepsilon_1(X_i)  }    + \frac{  \hat  \mu_0(X_i)\varepsilon_0(X_i)  }{ 1-  \hat  e(X_i) } \right\}.
 \end{eqnarray*}
 也就是说，在$\varepsilon_1(X_i) $和$\varepsilon_0(X_i) $已知时，只要倾向得分模型或结果模型中至少一个设定正确，$\hat{\tau}^{\textup{dr}} $就是$\tau$的一致估计量。上述估计量的方差可用自助法近似，技术细节参见\citet{luding2023flexible}。 
@@ -288,7 +288,7 @@ OS_est_sa = function(z, y, x, out.family = gaussian,
                    mean((1 - z)*y*w0/(1 - pscore))/mean((1 - z)/(1 - pscore))
      ## doubly robust estimator
      aug = outcome1/pscore/e1 + outcome0*e0/(1-pscore)
-     ace.dr   = ace.ipw0 + mean((z-pscore)*aug)
+     ace.dr   = ace.ipw0 - mean((z-pscore)*aug)
 
      return(c(ace.reg, ace.ipw0, ace.ipw, ace.dr))     
 }
@@ -301,7 +301,7 @@ OS_est_sa = function(z, y, x, out.family = gaussian,
 
 令
 $$
-\varepsilon_1(X) = \varepsilon_0(X) \in \{1/2, 1/1.7, 1/1.5, 1/1.3, 1, 1.3, 1.5, 1.7, 2\},
+\varepsilon_1(X),\ \varepsilon_0(X) \in \{1/2, 1/1.7, 1/1.5, 1/1.3, 1, 1.3, 1.5, 1.7, 2\},
 $$
 用下面的\ri{R}代码可得到一组$\tau$的双重稳健估计：
 \begin{lstlisting}
@@ -332,21 +332,21 @@ $$
   \hline
  & 1/2 & 1/1.7 & 1/1.5 & 1/1.3 & 1 & 1.3 & 1.5 & 1.7 & 2 \\ 
   \hline
-1/2 & 11.62 & 10.44 & 9.40 & 8.03 & 4.96 & 0.97 & -1.69 & -4.35 & -8.34 \\ 
-  1/1.7 & 9.22 & 8.05 & 7.00 & 5.64 & 2.57 & -1.42 & -4.08 & -6.75 & -10.74 \\ 
-  1/1.5 & 7.63 & 6.45 & 5.41 & 4.05 & 0.97 & -3.02 & -5.68 & -8.34 & -12.33 \\ 
-  1/1.3 & 6.03 & 4.86 & 3.81 & 2.45 & -0.62 & -4.61 & -7.27 & -9.94 & -13.93 \\ 
-  1 & 3.64 & 2.47 & 1.42 & 0.06 & -3.01 & -7.01 & -9.67 & -12.33 & -16.32 \\ 
-  1.3 & 1.80 & 0.63 & -0.42 & -1.78 & -4.85 & -8.85 & -11.51 & -14.17 & -18.16 \\ 
-  1.5 & 0.98 & -0.19 & -1.24 & -2.60 & -5.67 & -9.66 & -12.33 & -14.99 & -18.98 \\ 
-  1.7 & 0.36 & -0.82 & -1.86 & -3.23 & -6.30 & -10.29 & -12.95 & -15.61 & -19.60 \\ 
-  2 & -0.35 & -1.52 & -2.57 & -3.93 & -7.00 & -10.99 & -13.65 & -16.32 & -20.31 \\ 
+  1/2 & 14.62 & 13.62 & 12.73 & 11.57 & 8.96 & 5.57 & 3.30 & 1.04 & -2.36 \\
+  1/1.7 & 11.93 & 10.93 & 10.04 & 8.88 & 6.27 & 2.87 & 0.61 & -1.66 & -5.05 \\
+  1/1.5 & 10.13 & 9.13 & 8.24 & 7.08 & 4.47 & 1.08 & -1.19 & -3.45 & -6.85 \\
+  1/1.3 & 8.33 & 7.33 & 6.45 & 5.29 & 2.67 & -0.72 & -2.98 & -5.25 & -8.64 \\
+  1 & 5.64 & 4.64 & 3.75 & 2.59 & -0.02 & -3.41 & -5.68 & -7.94 & -11.34 \\
+  1.3 & 3.57 & 2.57 & 1.68 & 0.52 & -2.09 & -5.49 & -7.75 & -10.01 & -13.41 \\
+  1.5 & 2.65 & 1.65 & 0.76 & -0.40 & -3.01 & -6.41 & -8.67 & -10.93 & -14.33 \\
+  1.7 & 1.94 & 0.94 & 0.06 & -1.11 & -3.72 & -7.11 & -9.38 & -11.64 & -15.03 \\
+  2 & 1.15 & 0.15 & -0.74 & -1.90 & -4.51 & -7.90 & -10.17 & -12.43 & -15.83 \\
    \hline
 \end{tabular}
 \end{table}
 
 
-表 \ref{table::sensitivity-ACE} 列出了各敏感性参数组合下的估计值。当敏感性参数大于1时估计值符号趋于稳定，小于1时则变化剧烈。若参与计划者BMI值偏高（即 $\varepsilon_1(X) >1$ 且 $ \varepsilon_0(X)  > 1$），则计划对BMI具有负向影响。反之若参与群体BMI偏低，此结论则需谨慎对待。 
+表 \ref{table::sensitivity-ACE} 列出了各敏感性参数组合下的估计值。\footnote{英文原文的双重稳健估计代码在增广项前使用加号，与本章公式不符；这里将代码改为减号，并使用书中公开的原始数据重新计算了表中数值。}当敏感性参数大于1时，估计值的符号对参数取值并不敏感；参数小于1时，符号则相当敏感。若参与计划者的BMI倾向于较高（即 $\varepsilon_1(X) >1$ 且 $ \varepsilon_0(X) > 1$），则计划对BMI的平均因果效应为负。若参与者的BMI倾向于较低，这一结论则可能相当敏感。
 
 
 
@@ -413,6 +413,6 @@ $$
 
 \paragraph{推荐阅读}
 
- \citet{Rosenbaum::1983JRSSB} 与 \citet{imbens2003sensitivity} 为敏感性分析领域的奠基性文献，但所用方法相对复杂，建议读者在掌握基础概念后再行参阅。 
+ \citet{Rosenbaum::1983JRSSB} 与 \citet{imbens2003sensitivity} 为敏感性分析领域的奠基性文献，但所用方法相对复杂。
 
 

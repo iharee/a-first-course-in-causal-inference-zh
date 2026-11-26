@@ -5,7 +5,7 @@
  
 
 
-我们之前重点讨论了随机实验中的有限总体视角。该视角将所有潜在结果视为固定数值。即便这些潜在结果本质上是随机变量，在有限总体视角下我们仍能将其视为已知条件。这种视角的优势在于：
+我们之前重点讨论了随机实验中的有限总体视角。该视角将所有潜在结果视为固定数值。即便这些潜在结果是随机变量，在有限总体视角下我们仍可以给定它们为条件进行分析。这种视角的优势在于：
 \begin{enumerate}
 \item
 它侧重于实验设计本身；
@@ -158,7 +158,7 @@ res = replicate(2000, {
 \end{lstlisting}
 
 
-模拟结果完全印证了理论推测。首先，\citet{lin2013}估计量近乎无偏。其次，EHW标准误均值小于经验标准差，致使95\% 置信区间覆盖率不足。最后，经修正的超总体标准误均值与经验标准差高度吻合，从而准确实现了95\% 置信区间的覆盖率控制。  
+模拟结果印证了理论推测。首先，\citet{lin2013}估计量近乎无偏。其次，EHW标准误均值小于经验标准差，致使95\% 置信区间覆盖率不足。最后，经修正的超总体标准误均值与经验标准差接近，得到更准确的95\% 置信区间覆盖率。
 \begin{lstlisting}
 > ## bias
 > mean(res[1, ])
@@ -263,7 +263,7 @@ $$
  
 \paragraph{完全随机实验中观测结果的 OLS 分解}\label{hw::ols-decompose-cre}
 
-依据\eqref{eq::ols-decomposition-y1}与\eqref{eq::ols-decomposition-y0}，试证观测结果可分解为如下形式
+依据\eqref{eq::ols-decomposition-y1}与\eqref{eq::ols-decomposition-y0}，试证观测结果对处理、协变量及其交互项的 OLS 分解如下
 $$
 Y= \alpha_0 + \alpha_Z  Z +
 \alpha_X \tran X + \alpha_{ZX} \tran X Z + \varepsilon 
@@ -297,7 +297,7 @@ EHW稳健型方差估计值；
 \item
 协变量初始中心化处理且每次自助法抽样不再重新调整的Bootstrap方差估计值；
 \item
-每次自助法抽样前均重新中心化协变量的Bootstrap方差估计值。
+对每个自助法样本重新中心化协变量的Bootstrap方差估计值。
 \end{enumerate}
 
   

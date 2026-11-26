@@ -2,7 +2,7 @@
 \chapter{配对实验}
  \label{chapter::mpe}
  
-配对实验（Matched-Pairs Experiment, MPE）是随机化实验（SRE）的极端形式：在每个分层内仅有一个处理组单位和一个对照组单位。此时这些分层也被称为“配对”。虽然这种实验形式属于第\ref{chapter::stratification-poststratification}章所述SRE的特殊情况，但它有自己独立的估计与推断方法。此外，它还具有许多新特性，且与第\ref{chapter::matching-obs}章将要讨论的观测研究中的“匹配”策略密切相关。因此我们在此单独设章探讨MPE。 
+配对实验（Matched-Pairs Experiment, MPE）是分层随机实验（SRE）的极端形式：在每个分层内仅有一个处理组单位和一个对照组单位。此时这些分层也被称为“配对”。虽然这种实验形式属于第\ref{chapter::stratification-poststratification}章所述SRE的特殊情况，但它有自己独立的估计与推断方法。此外，它还具有许多新特性，且与第\ref{chapter::matching-obs}章将要讨论的观测研究中的“匹配”策略密切相关。因此我们在此单独设章探讨MPE。
 
 
 
@@ -61,7 +61,7 @@ $$
 $$
 实施 FRT 时，需要根据\eqref{eq::mp-treatment}模拟$(Z_1, \ldots, Z_n)$的分布。下面介绍几种基于处理与对照结果对内差的常用统计量：
 \begin{eqnarray*}
-\hat{\tau}_i &=& \text{outcome under treatment} - \text{outcome under control} \text{ (within pair } i) \\
+\hat{\tau}_i &=& \text{处理下的结果} - \text{对照下的结果}\quad\text{（在第 } i \text{ 对中）} \\
 &=&  (2Z_i - 1) (Y_{i1}  - Y_{i2})\\
 &=& S_i (Y_{i1}  - Y_{i2})  , 
 \end{eqnarray*}
@@ -235,7 +235,7 @@ $$
 $$
 E(  \hat{V}) - \var(   \hat{\tau}  ) = \{ n(n-1)  \}^{-1} \sumn  (\tau_i - \tau)^2 \geq 0  .
 $$
-若各对的$\tau_i$相同，则$E(  \hat{V} )  = \var(\hat{\tau}) .$。
+若各对的$\tau_i$相同，则$E(  \hat{V} )  = \var(\hat{\tau})$。
 \end{theorem}
 
 
@@ -332,9 +332,9 @@ $$
 $$
 处达到最小。上文已得$\cov(\hat{\tau}_X   ) $的公式，也可写为
 $$
-\cov(\hat{\tau}_X   ) = n^{-2} \sumn |  \hat{\tau}_{X,i}  |  |\hat{\tau}_{X,i}  | \tran,
+\cov(\hat{\tau}_X) = n^{-2} \sumn (X_{i1}-X_{i2})(X_{i1}-X_{i2})\tran.
 $$
-其中$| \cdot | $表示向量逐分量取绝对值。因此，$\cov(\hat{\tau}_X   ) $是固定的，且可由观测数据得知。但$\cov( \hat{\tau}_X ,  \hat{\tau}  )$依赖未知潜在结果。幸运的是，仍可得到它的无偏估计量，见下面的定理\ref{thm::covariance-mp}。
+因此，$\cov(\hat{\tau}_X)$是固定的，且可由观测数据得知。但$\cov( \hat{\tau}_X ,  \hat{\tau}  )$依赖未知潜在结果。幸运的是，仍可得到它的无偏估计量，见下面的定理\ref{thm::covariance-mp}。
 
 \begin{theorem}\label{thm::covariance-mp}
 $\cov( \hat{\tau}_X ,  \hat{\tau}  )$的无偏估计量为
@@ -505,7 +505,7 @@ MP_enumerate = function(i, n.pairs)
 > sqrt(vhat)
 [1] 4.636337
 \end{lstlisting}
-由命题\ref{prop::mpe-variance}和\ref{prop::colin2018regression}，可用 OLS 得到点估计与标准误。调整协变量后，有
+由命题\ref{prop::mpe-variance}和\ref{prop::colin2018regression}，可用 OLS 得到点估计与标准误。不调整协变量时，有
 \begin{lstlisting}
 > unadj = summary(lm(diffy ~ 1, data = dataxy))$coef
 > round(unadj, 3) 
@@ -644,7 +644,7 @@ $$
 \label{thm::hadamdard-matched-experiment}
 在各$M_i$可变的一般匹配实验中，若对所有$i$都有$w_i < 1/2$，则
 $$
- E(\hat{V}_w ) - \var( \hat\tau_w  ) = \sumn c_i (\tau_i - \tau_w )^2 \geq \var( \hat\tau_w  )  \geq 0
+ E(\hat{V}_w ) - \var( \hat\tau_w  ) = \sumn c_i (\tau_i - \tau_w )^2 \geq 0
  $$
 各$\tau_i $相同时取等号。 
 \end{theorem}
@@ -668,7 +668,7 @@ $$
 证明命题\ref{prop::mpe-variance}与\ref{prop::colin2018regression}。 
 
 
-\paragraph{二元结果下的内曼推断}\label{para::binary-matchedpairs-neyman}
+\paragraph{二元结果下的点估计量与方差估计量}\label{para::binary-matchedpairs-neyman}
 
 
 本题将例\ref{eg::mcnenar-test-binary}推广到 Neyman 推断。 
@@ -685,8 +685,6 @@ $$
  
 
 \paragraph{达尔文数据再分析}  
-用威尔科克森统计量与内曼法重新分析该数据。
-
  
 第\ref{sec::frt-darwin-mpe}节用统计量$\hat{\tau}$的 FRT 分析了 Darwin 数据。
 
@@ -695,8 +693,6 @@ $$
 采用 Neyman 推断重新分析该数据集，报告无偏点估计、保守方差估计及 95\% 置信区间。
 
 \paragraph{电视实验数据再分析}  
-对比不同检验法的结果差异。
-
 第\ref{sec::neyman-television-mpe}节基于 Neyman 推断分析了这一数据集。
 
 使用不同检验统计量的 FRT 重新分析该数据集。 

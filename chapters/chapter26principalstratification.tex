@@ -31,7 +31,7 @@
 
 \begin{example}
 [替代终点]\label{eg::surrogate-endpoints}
-在临床试验中，真正感兴趣的结局指标（如30年生存率）需要长期且成本高昂的随访才能获得。因此研究人员通常选择一些易于测量的替代变量。这些变量即被称作“替代终点”。一个实际例子是：在针对HIV感染者的试验中，候选的替代终点 $M$ 即为CD4细胞计数（CD4细胞属于负责抵御感染的白细胞）。 
+在临床试验中，真正感兴趣的结局指标（如30年生存率）需要长期且成本高昂的随访才能获得。因此研究人员转而在随访早期收集一些易于测量的其他变量。这些变量即被称作“替代终点”。一个实际例子是：在针对HIV感染者的试验中，候选的替代终点 $M$ 即为CD4细胞计数（CD4细胞属于负责抵御感染的白细胞）。
 \end{example}
 
 
@@ -116,10 +116,10 @@ $$
 因此，在完全随机实验中，比较\eqref{eq::proby|z1m}与\eqref{eq::proby|z0m}，等价于在不同单位子集中比较$Y(1)$与$Y(0)$的分布：只要$Z$影响$M$，满足$M(1) = m$的单位就与满足$M(0) = m$的单位不同。故除非$M(1) = M(0)$，否则给定$M=m$后的比较一般没有因果解释。\footnote{从因果图也能得到相同结论。在图\ref{fig::intermediate-diagram}中，虽然随机化$Z$保证了$Z\ind U$，但以$M$为条件会引入“碰撞点偏差”，导致$Z\nind U$。} 
 
 
-再来看示例\ref{eg::noncompliance}。在符合单调性假设 $M(1) \geq M(0)$ 的前提下，比较 $\pr(Y\mid Z=1, M=1)$ 与 $\pr(Y\mid Z=0, M=1)$ 相当于比较“遵从者”与“始终接受干预者”在干预组中的潜在结果，而对照组中“始终接受干预者”的潜在结果则作为基准值。这正是问题\ref{problem::as-treated-analysis}第三部分所探讨的内容。 
+再来看示例\ref{eg::noncompliance}。在符合单调性假设 $M(1) \geq M(0)$ 的前提下，比较 $\pr(Y\mid Z=1, M=1)$ 与 $\pr(Y\mid Z=0, M=1)$ 相当于比较依从者和始终接受者在处理下的潜在结果，与始终接受者在对照下的潜在结果。这正是问题\ref{problem::as-treated-analysis}第三部分所探讨的内容。
 
 
-再看示例\ref{eq::truncationbydeath}。若干预措施能改善患者的生存状况，那么干预组存活病例数将多于对照组。此时，$M(1)=1$ 的患者群体必定比 $M(0)=1$ 的群体更为虚弱，因此仅使用上述条件比较法得出的结果反而会偏向“对照组更有利”的错误结论。 
+再看示例\ref{eq::truncationbydeath}。若处理能改善患者的生存状况，与对照相比，处理可以挽救更多体弱的患者。此时，$M(1)=1$ 的患者群体比 $M(0)=1$ 的群体更为虚弱，因而上述直接比较会产生偏向对照组的结果。
 
 \section{基于潜在值的条件化处理法}
 
@@ -153,7 +153,7 @@ $$
 
 \setcounter{example}{0}
 \begin{example}[不遵从干预者]
-在不遵从干预现象存在的情形下，\eqref{eq::psace} 中的四个效应值分别对应“始终遵从者”、“遵从者”、“逆向遵从者”与“从不遵从者”的平均因果效应 \citep{imbens1994identification, angrist1996identification}。 
+在不遵从干预现象存在的情形下，\eqref{eq::psace} 中的四个效应值分别对应“始终接受者”、“依从者”、“反向依从者”与“从不接受者”的平均因果效应 \citep{imbens1994identification, angrist1996identification}。
 \end{example}
 
 
@@ -194,7 +194,7 @@ $$
 \section{统计推断及其难点}
 \label{sec::difficulty-of-PS}
 
-在示例\ref{eg::noncompliance}中，若满足完全随机实验、单调性及排除限制假设，即可测得 $\tau(1, 0)$ 的值，此即第\ref{chapter::iv-experiment}章的核心结论。 
+在示例\ref{eg::noncompliance}中，若满足完全随机实验、单调性及排除限制假设，即可识别依从者平均因果效应 $\tau(1, 0)$，此即第\ref{chapter::iv-experiment}章的核心结论。
 
 
 但在其他例子中，不能施加排除限制。例如，例\ref{eq::truncationbydeath}和\ref{eg::unemployment}的主要研究参数是$\tau(1,1)$，例\ref{eg::surrogate-endpoints}则同时关心$\tau(1,1)$与$\tau(0,0)$。没有排除限制，要识别主分层平均因果效应非常困难。有时甚至不能作单调性假设，因而连各潜在主层的比例也无法识别。 
@@ -202,7 +202,9 @@ $$
 
 
 
-\subsection{特例：二元结果的死亡截断问题}下面用二元处理、二元存活状态和二元结果这一简单设定，说明基于主分层进行统计推断的思路，尤其是其中的困难。
+\subsection{特例：二元结果的死亡截断问题}
+
+下面用二元处理、二元存活状态和二元结果这一简单设定，说明基于主分层进行统计推断的思路，尤其是其中的困难。
 
 
 除假设\ref{assume::complete-randomization-withM}外，再施加单调性假设。
@@ -475,7 +477,7 @@ $$
 $$
 和
 $$
-\hat \tau(0,0) =  \frac{  \sumn Z_i(1-M_i)Y_i  }{ \sumn Z_i (1-M_i) }  - \frac{  \sumn (1-Z_i)(1-\hat \pi(X_i)\} Y_i  }{  (1- \hat \pi )\sumn (1-Z_i)  }
+\hat \tau(0,0) =  \frac{  \sumn Z_i(1-M_i)Y_i  }{ \sumn Z_i (1-M_i) }  - \frac{  \sumn (1-Z_i)(1-\hat \pi(X_i)) Y_i  }{  (1- \hat \pi )\sumn (1-Z_i)  }
 ;
 $$
 \item

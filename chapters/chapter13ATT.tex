@@ -1,5 +1,5 @@
 
-\chapter{处理组单元的平均因果效应及其他估计量}
+\chapter{处理组单元的平均因果效应及其他估计目标}
  \label{chapter::ATT-and-other}
 
 第\ref{chapter::observational-studies}章至第\ref{chapter::doubly-robust}章主要讨论了在可忽略性假设与重叠性假设下，平均因果效应$\tau = E\{  Y(1) - Y(0) \}$的识别与估计。从概念上讲，将讨论范围扩展至处理组与对照组单元的平均因果效应是顺理成章的：
@@ -10,7 +10,7 @@
 若$\tau_\textsc{T}$与$\tau_\textsc{C}$均不等于$\tau$，则说明处理组与对照组间的平均因果效应存在异质性。究竟应当估计$\tau_\textsc{T}$、$\tau_\textsc{C}$还是$\tau$，则需视具体研究问题而定。 
 
 
-由于二者具有对称性，本章重点探讨$\tau_\textsc{T} $。第\ref{sec::other-estmand-overlap}章还会探讨其他估计量的相关问题。 
+由于二者具有对称性，本章重点探讨$\tau_\textsc{T} $。第\ref{sec::other-estmand-overlap}章还会探讨其他估计目标的相关问题。
 
 
 
@@ -43,7 +43,7 @@ $Z\ind Y(0) \mid X$且$e(X) < 1$。
 \end{theorem}
 
 
-依据定理\ref{thm::identification-ATT}，反事实均值$ E\{    Y(0) \mid Z=1 \}  $等同于在给定处理组协变量分布的条件下，对照组观测结果的条件均值。这意味着$\tau_\textsc{T} $可通过下式实现非参数识别：
+依据定理\ref{thm::identification-ATT}，反事实均值$ E\{    Y(0) \mid Z=1 \}  $等于对照组观测结果的条件均值按处理组协变量分布求平均。这意味着$\tau_\textsc{T} $可通过下式实现非参数识别：
 \begin{equation}
 \tau_\textsc{T}  = E(Y\mid Z=1) -E\left\{  E(    Y \mid Z=0 , X) \mid  Z=1  \right\}  \label{eq::att-identification} 
 \end{equation}
@@ -84,7 +84,7 @@ $$
 其中$\hat{\pi}_{[k]\mid 1} = n_{[k]1}/n_1$是处理单位中协变量$X$属于第$k$类的比例。 
 
 
-对于连续型$X$，则需借助对照组数据拟合$E(Y\mid Z=0, X)$的模型。若拟合所得处理组潜在结果为$\hat{\mu}_0(X_i)$，则相应估计量为
+对于连续型$X$，则需借助对照组数据拟合$E(Y\mid Z=0, X)$的模型。若拟合所得对照潜在结果为$\hat{\mu}_0(X_i)$，则相应估计量为
 $$
 \hat{\tau}_\textsc{T}^\text{reg} =  \hat{\bar{Y}}(1) - n_1^{-1} \sumn Z_i \hat{\mu}_0(X_i) = n_1^{-1} \sumn Z_i  \{  Y_i - \hat{\mu}_0(X_i)  \}. 
 $$
@@ -172,7 +172,7 @@ E\{ Y(0) \mid Z=1 \} = E\left\{         \frac{e(X)}{e}  \frac{1-Z}{1-e(X)} Y \ri
 \begin{eqnarray}\label{eq::att-ipw-formula}
 \tau_\textsc{T} = E(Y\mid Z=1) -  E\left\{         \frac{e(X)}{e}  \frac{1-Z}{1-e(X)} Y \right\} ,
 \end{eqnarray}
-其中$e = \pr(Z=1)$为处理效应的边际概率。 
+其中$e = \pr(Z=1)$为接受处理的边际概率。
 \end{theorem}
 
 
@@ -205,7 +205,7 @@ $$
 \hat{\tau}_\textsc{T}^\text{hajek} = \hat{\bar{Y}}(1) 
 - \frac{  \sumn \hat{o}(X_i) (1-Z_i) Y_i }{ \sumn \hat{o}(X_i) (1-Z_i) } ,
 $$
-其中$\hat{o}(X_i) = \hat{e}(X_i) / \{ 1 - \hat{e}(X_i)  \} $为处理效应的拟合比值。 
+其中$\hat{o}(X_i) = \hat{e}(X_i) / \{ 1 - \hat{e}(X_i)  \} $为给定协变量时接受处理的拟合优势。
 
  
  
@@ -354,11 +354,11 @@ se  0.227  0.258  0.705  0.328  0.287
 est 0.061 -0.351 -0.597 -0.192 -0.230
 se  0.223  0.255  0.579  0.302  0.276
 \end{lstlisting}
-这里将倾向得分估计的上限设为$0.9$。如预期，HT 估计量对截断敏感。例\ref{eg::att-regression1}的回归估计与其他估计相差较大，因为它施加了不必要的限制，要求处理组与对照组回归中$X$的系数相同。例\ref{eg::att-regression2}的回归估计则更接近 Hájek 与双重稳健估计。上述估计与第\ref{sec::ATE-application}节略有不同，说明$\tau_\textsc{T}$与$\tau$的差异体现了处理效应异质性。 
+这里将倾向得分估计的上限设为$0.9$。如预期，HT 估计量对截断敏感。例\ref{eg::att-regression1}的回归估计与其他估计相差较大，因为它施加了不必要的限制，要求处理组与对照组回归中$X$的系数相同。例\ref{eg::att-regression2}的回归估计则更接近 Hájek 与双重稳健估计。上述估计与第\ref{sec::ATE-application}节略有不同，提示$\tau_\textsc{T}$与$\tau$之间可能存在处理效应异质性。
 
 
 
-\section{其他估计量}\label{sec::other-estmand-overlap}
+\section{其他估计目标}\label{sec::other-estmand-overlap}
 
 
 \citet{li2018balancing}统一讨论了观察性研究中的因果估计目标。他们从条件平均因果效应$\tau(X)$出发，提出一般估计目标族

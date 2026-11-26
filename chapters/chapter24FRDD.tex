@@ -18,7 +18,7 @@
 第\ref{chapter::overlap}章已介绍过回归不连续设计。以下三个实例与其略有区别：在这些实例中，实验处理并非由运行变量直接决定；相反，运行变量会在断点处使个体接受处理的概率发生突变。 
 
 \begin{example}\label{eg::indianroad}
-2000年，印度政府启动了“总理乡村道路计划”；至2015年，该计划已为近20万个村庄修建了全天候道路。\citet{asher2020rural}基于村庄级数据，运用回归不连续设计来估算新修道路对各种经济指标的影响。该计划的实施标准参照了2001年人口普查数据，以特定阈值来决定优先资助的村庄规模。若某村庄在统计年份前新建了道路，则视为接受了处理。不过，村庄人口规模与阈值间的差距并不决定处理状态本身，仅在断点0处影响到接受处理的概率。 
+2000年，印度政府启动了“总理乡村道路计划”；至2015年，该计划已为近20万个村庄修建了全天候道路。\citet{asher2020rural}基于村庄级数据，运用回归不连续设计来估算新修道路对各种经济指标的影响。该计划的实施标准参照了2001年人口普查数据，根据设定的人口阈值，优先资助人口较多的村庄。若某村庄在结果测量的年份之前获得了新建道路，则视为接受了处理。不过，村庄人口规模与阈值间的差距并不决定处理状态本身，仅在断点0处影响到接受处理的概率。
 \end{example}
 
 
@@ -91,16 +91,13 @@ $$识别。
 无论严格抑或模糊回归不连续设计，选取断点邻域范围均属核心操作。一般而言，较小邻域能降低偏差却增加方差；较大邻域则反之。这种偏差-方差权衡亟需通过敏感性分析加以权衡。当前已有基于统计判据的自动选择方法，却需满足若干严苛前提条件。因此就实际分析而言，多步调整邻域范围并开展敏感性检验方为稳妥策略。 
 
 假设已用带宽$h$确定$x_0$的邻域。对于满足$X_i \in [x_0-h, x_0 + h]$的数据，可用$$
-\hat{\tau}_D(x_0) = \text{the coefficient of } Z_i
-\text{ in the OLS fit of } D_i \text{ on } \{1, Z_i, R_i, L_i\},
+\hat{\tau}_D(x_0) = \text{将 } D_i \text{ 对 } \{1, Z_i, R_i, L_i\} \text{ 作 OLS 回归时 } Z_i \text{ 的系数},
 $$估计$\tau_D(x_0) $，用$$
-\hat{\tau}_Y(x_0) = \text{the coefficient of } Z_i
-\text{ in the OLS fit of } Y_i \text{ on } \{1, Z_i, R_i, L_i\},
+\hat{\tau}_Y(x_0) = \text{将 } Y_i \text{ 对 } \{1, Z_i, R_i, L_i\} \text{ 作 OLS 回归时 } Z_i \text{ 的系数},
 $$估计$\tau_Y(x_0) $，其中回顾定义$R_i = \max(X_i - x_0, 0)$和$L_i= \min (X_i - x_0, 0)$。于是局部依从者平均因果效应可估计为$$
 \hat\tau_\cp(x_0)  = \hat{\tau}_Y(x_0) / \hat{\tau}_D(x_0).
 $$这是间接最小二乘估计量。由定理\ref{thm::ils=2sls}，它在数值上等于$$
-\text{the coefficient of } D_i
-\text{ in the TSLS fit of } Y_i \text{ on } \{1, D_i, R_i, L_i\}  
+\text{将 } Y_i \text{ 对 } \{1, D_i, R_i, L_i\} \text{ 作 TSLS 回归时 } D_i \text{ 的系数}
 $$其中用$Z_i$作为$D_i$的工具变量。总之，选定$h$后，$ \tau_\cp(x_0)$的估计就归结为对阈值附近的局部数据实施两阶段最小二乘。  
 
 
@@ -147,7 +144,7 @@ frd_sa = do.call(rbind, frd_sa)
 \end{figure} 
 
 
-\ri{rdrobust}包可自动确定最优带宽。分析结果显示新建道路并未对目标指标产生明显影响。 
+\ri{rdrobust}包可自动选择带宽。分析结果显示新建道路并未对目标指标产生明显影响。
 
 \begin{lstlisting}
 > library("rdrobust")
@@ -200,7 +197,7 @@ frd_sa = do.call(rbind, frd_sa)
  
 
 
-  图\ref{fig::italy_university}显示测算数据：无论何种带宽设置，助学金对辍学率均无明显效应。 
+  图\ref{fig::italy_university}显示分析结果，表明助学金对辍学率的影响不显著。
 \begin{figure}
 \centering
 \includegraphics[width = 0.9\textwidth]{figures/frd_italy.pdf}
@@ -234,7 +231,7 @@ Robust         -0.155     0.121
  \section{讨论}
 
 
-第\ref{chapter::overlap}章与本章均基于运行变量条件下潜在结果期望值的连续性来构建回归不连续分析框架。此视角虽具数学简洁性，却仅能在断点处精确估计局部效应。\citet{hahn2001identification}开拓了这一研究方向。 
+第\ref{chapter::overlap}章与本章均基于运行变量条件下潜在结果期望值的连续性来构建回归不连续分析框架。此视角虽具数学简洁性，却仅能识别运行变量恰好位于断点处的局部效应。\citet{hahn2001identification}开拓了这一研究方向。
 
 另一种较少采用的视角基于{\it 局部随机化}\citep{cattaneo2015randomization, li2015evaluating}。若将运行变量看作某个潜在真实量的含噪测量，且阈值的选取带有一定任意性，则阈值附近的单位不存在系统差异。这提示，在阈值的小邻域内，各单位像随机实验中一样随机接受处理或对照。类似于第一种视角中选择$h$的问题，这里关键在于确定断点附近多大的范围可以视为随机实验。将这种直觉用数学量化并不容易，因此，在第二种视角下，对一系列$h$开展敏感性分析同样是合理的做法。  
 

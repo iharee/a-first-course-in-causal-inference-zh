@@ -27,18 +27,18 @@ $$
 $
 E\{  Y(z,1) - Y(z,0)\}
 $
-仅衡量将处理固定为$z.$时中介变量对结果的效应，不能将其视为有意义的间接效应定义。 
+仅衡量将处理固定为$z$时中介变量对结果的效应，不能将其视为有意义的间接效应定义。
 
 
 
 \section{受控直接效应的识别与估计}
 
 
-为了识别$\CDE(m)$，我们需要以下假设：即给定$X$时，$Z$与$M$均受到随机化处理。 
+为了识别$\CDE(m)$，我们需要以下假设：即给定$X$时，$Z$与$M$联合随机化。
 
 
 \begin{assumption}\label{assume::si-cde}
-序列无偏性要求满足
+序贯可忽略性要求满足
 $$
 Z\ind Y(z,m) \mid X, \quad M \ind  Y(z,m) \mid (Z,X)
 $$
@@ -76,11 +76,11 @@ $$
 \mu_{zm} = E\{  \mu_{zm}(X) \}
 = E \left\{   \frac{I(Z=z, M=m) Y}{  e_{zm}(X)  }  \right\} .
 $$
-此外，若以$e_{zm}(X, \alpha) $与$\mu_{zm}(X, \beta) $分别作为$e_{zm}(X) $和$\mu_{zm}(X) $的拟合模型，则可得到双重稳健估计式：
+此外，若以$e_{zm}(X, \alpha) $与$\mu_{zm}(X, \beta) $分别作为$e_{zm}(X) $和$\mu_{zm}(X) $的工作模型，则可得到双重稳健估计式：
 $$
 \mu_{zm}^{\textup{dr}}  = E\{  \mu_{zm}(X, \beta) \} + E \left[   \frac{I(Z=z, M=m) \{ Y - \mu_{zm}(X, \beta)  \}}{  e_{zm}(X, \alpha)  }  \right],
 $$
-只要满足$e_{zm}(X, \alpha) = e_{zm}(X)$或$\mu_{zm}(X, \beta)  = \mu_{zm}(X)$中的任一条件，该估计值即等于$\mu_{zm} $。 
+只要满足$e_{zm}(X, \alpha) = e_{zm}(X)$或$\mu_{zm}(X, \beta)  = \mu_{zm}(X)$中的任一条件，该公式即等于$\mu_{zm} $。
 \end{theorem}
 
 
@@ -125,7 +125,7 @@ $
 
 \section{讨论}
 
-受控直接效应的定义方式不涉及任何嵌套或预先假设的潜在反事实结果，其识别过程也无需“跨世界反事实独立性”假设。参数$\CDE(m)$可反映中介变量保持为$m$时处理的直接效应；然而它无法反映间接效应。表\ref{table::causal-intermediate-frameworks}总结了各类涉及中介变量的因果分析框架。 
+受控直接效应的定义方式不涉及嵌套潜在结果或先验反事实潜在结果，其识别过程也无需“跨世界反事实独立性”假设。参数$\CDE(m)$可反映中介变量保持为$m$时处理的直接效应；然而它无法反映间接效应。表\ref{table::causal-intermediate-frameworks}总结了各类涉及中介变量的因果分析框架。
  
 \begin{table}
 \centering 
@@ -204,11 +204,11 @@ $$
 \mu_{k} = E\{  \mu_{k}(X) \}
 = E \left\{   \frac{I(Z = k) Y}{  e_{k}(X)  }  \right\} .
 $$
-另外，若以$e_{k}(X, \alpha) $与$\mu_{k}(X, \beta) $作为$e_{k}(X) $与$\mu_{k}(X) $的拟合模型，可得双重稳健估计式：
+另外，若以$e_{k}(X, \alpha) $与$\mu_{k}(X, \beta) $作为$e_{k}(X) $与$\mu_{k}(X) $的工作模型，可得双重稳健估计式：
 $$
 \mu_{k}^{\textup{dr}}  = E\{  \mu_{k}(X, \beta) \} + E \left[   \frac{I(Z=k) \{ Y - \mu_{k}(X, \beta)  \}}{  e_{k}(X, \alpha)  }  \right],
 $$
-当满足$e_{k}(X, \alpha) = e_{k}(X)$或$\mu_{k}(X, \beta)  = \mu_{k}(X)$时，此估计值即等于$\mu_{k} $。 
+当满足$e_{k}(X, \alpha) = e_{k}(X)$或$\mu_{k}(X, \beta)  = \mu_{k}(X)$时，此公式即等于$\mu_{k} $。
 \end{theorem}
 
 

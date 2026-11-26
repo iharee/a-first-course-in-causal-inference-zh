@@ -43,7 +43,7 @@ $$
 
 
 \begin{example}
-\citet{rudolph2018causal} 研究了社区贫困状况如何通过学校环境及同伴网络间接影响青少年的药物滥用问题。数据源自2001至2004年间对美国青少年开展的全国性代表性调查——共病调查复制青少年补充研究。处理因素定义为居住地是否属于美国人口普查所确定的社会经济地位最低区域，并以二元变量表示。四个二元变量衡量学校环境及同伴关系；六个二元变量则用于评估药物使用情况。其他控制因素包括性别、年龄、种族、移民代际、家庭收入等特征。
+\citet{rudolph2018causal} 研究了社区贫困状况如何通过学校环境及同伴网络间接影响青少年的药物滥用问题。数据源自2001至2004年间对美国青少年开展的全国性代表性调查——共病调查复制青少年补充研究。处理因素定义为居住地是否属于2000年美国人口普查所确定的社区社会经济地位最低三分之一的区域，并以二元变量表示。四个二元中介变量衡量学校环境及同伴关系；六个二元结果变量用于评估药物使用情况。基线协变量包括性别、年龄、种族、移民代际、家庭收入等特征。
 \end{example}
 
 
@@ -56,7 +56,9 @@ $$
 \section{嵌套潜在结果模型}
 
 
-\subsection{自然直接效应与自然间接效应}下面省略单位$i$的下标$i$，假定所有随机变量都是从超总体独立同分布抽取的。为简化讨论，着重考虑二元处理$Z$。 
+\subsection{自然直接效应与自然间接效应}
+
+下面省略单位$i$的下标$i$，假定所有随机变量都是从超总体独立同分布抽取的。为简化讨论，着重考虑二元处理$Z$。
 
  
 先考虑对$z$的假想干预，并定义对应于干预$z$的潜在中介与结果：
@@ -134,7 +136,7 @@ $$
 \subsection{形而上学还是科学？}
 \label{sec::popper-science}
 
-因果推断极为复杂，连基本符号系统也尚无共识。\citet{Robins::1992}与\citet{Pearl::2001}利用嵌套潜在结果描述直接与间接效应。但\citet{frangakis2002principal}认为 $Y(1,M_0)$ 与 $Y(0, M_1)$ 属于无法被实验观测到的{\it 先验反事实值}，因而带有形而上学色彩。依据\citet{popper1963conjectures}的学说：一个命题若无法通过任何实验证伪则属形而上学范畴。由于 $Y(1,M_0)$ 和 $Y(0, M_1)$ 均无法观测，除极其有限的平凡命题外我们无法验证任何与之相关的论断，因此纯粹的贝叶斯统计学家可能视中介分析为某种形而上学研究。 
+因果推断极为复杂，连基本符号系统也尚无共识。\citet{Robins::1992}与\citet{Pearl::2001}利用嵌套潜在结果描述直接与间接效应。但\citet{frangakis2002principal}认为 $Y(1,M_0)$ 与 $Y(0, M_1)$ 属于无法被实验观测到的{\it 先验反事实值}，因而带有形而上学色彩。依据\citet{popper1963conjectures}的学说：一个命题若无法通过任何实验证伪则属形而上学范畴。由于 $Y(1,M_0)$ 和 $Y(0, M_1)$ 均无法观测，除极其有限的平凡命题外，我们无法证伪与之相关的论断，因此，严格遵循波普尔证伪主义的统计学家会将中介分析视为形而上学。
 
 
 更进一步，\citet{dawid2000causal}批评潜在结果框架具有形而上学性质，将第\ref{sec::po-sciencetable}章 Rubin 的“科学表”称为“形而上学数组”。他的批评不仅针对$Y(1,M_0)$与$Y(0, M_1)$这些先验反事实，也针对更简单的$Y(1)$与$Y(0)$。\citet{dawid2000causal}认为，既然$Y(1)$与$Y(0)$永远不能同时观测，引入$\{ Y(1), Y(0)\}$就是形而上学活动。对联合分布$\pr\{ Y(1) , Y(0) \}$的不可观测性，他的看法有道理；对边际分布却并非如此。观测数据确实能证伪有关边际分布的一些命题，尽管无法一般地检验联合分布的具体依赖结构。\footnote{根据概率论，给定边际分布$\pr( Y(1) \leq y_1 ) $与$\pr( Y(0) \leq y_0 ) $，Fréchet--Hoeffding 不等式可约束联合分布$\pr( Y(1) \leq y_1 , Y(0) \leq y_0 ) $：
@@ -201,7 +203,7 @@ $$
 
 \begin{assumption}
 \label{assume::mediation4}
-不存在跨情境独立性：
+潜在结果与潜在中介满足跨世界独立性：
 $$
 Y(z,m) \ind M(z') \mid X
 $$ 
@@ -313,7 +315,7 @@ $Y(1, M_0)$的中介公式简化为
 
 \begin{corollary}
 \label{corollary::mediation-nde-nie}
-在假设 \ref{assume::mediation1}--\ref{assume::mediation4} 条件下，条件自然直接效应与间接效应定义为：
+在假设 \ref{assume::mediation1}--\ref{assume::mediation4} 条件下，条件自然直接效应与间接效应可由下式识别：
 \begin{eqnarray*}
 \NDE(x) &=& E\{ Y(1, M_0) - Y(0, M_0) \mid X=x \} \\
 &=& \sum_m \{ E( Y  \mid  Z=1, M=m,   X=x) - E( Y  \mid  Z=0, M=m,   X=x) \} \\
@@ -422,7 +424,7 @@ $$
 \begin{eqnarray*}
 \NIE(x) &=&  \sum_m  (\theta_0 + \theta_1  + \theta_2 m + \theta_4\tran x )\\
 &&  \qquad  \times  \{ \pr(M=m \mid Z=1, X=x) -  \pr(M=m \mid Z=0, X=x) \} \\
-&=& \theta_2 \{ E(M=m \mid Z=1, X=x) -  E(M=m \mid Z=0, X=x) \} \\
+&=& \theta_2 \{ E(M \mid Z=1, X=x) -  E(M \mid Z=0, X=x) \} \\
 &=&  \theta_2 \beta_1 ,
 \end{eqnarray*}
 二者均不依赖$x$，因此也是无条件自然直接效应与间接效应的公式。
@@ -527,7 +529,7 @@ NIE -0.014 0.009 -1.528
 \section{敏感性分析}
 
 
-中介分析建立在多种强假设基础之上，其中核心之一是处理-中介-结果间不存在不可观测混杂因素。目前已有多种敏感性分析工具；\citet{ding2016sharp}提出基于Cornfield方法的敏感性界限；\citet{zhang2022interpretable}则针对Baron-Kenny框架提出特定分析方案。这些内容已超出本书范围。  
+中介分析建立在多种强且无法检验的假设基础之上，其中核心之一是处理-中介-结果间不存在不可观测混杂因素。目前已有多种敏感性分析工具；\citet{ding2016sharp}提出基于Cornfield方法的敏感性界限；\citet{zhang2022interpretable}则针对基于线性结构方程模型的Baron-Kenny方法提出敏感性分析方案。这些内容已超出本书范围。
 
 
 
@@ -570,7 +572,7 @@ $$
 
 证明，在例\ref{eg::mediation-assumptions}的数据生成过程中，假设\ref{assume::mediation1}至\ref{assume::mediation4}成立。并说明若允许$  \varepsilon_M$和$\varepsilon_Y$分别变为$ \varepsilon_M(z)$与$\varepsilon_Y(z,m)$，假设\ref{assume::mediation1}至\ref{assume::mediation4}就可能失败。 
  
- \paragraph{中介效应的替代定义方式}\label{para::alternative-si}
+ \paragraph{中介公式的另一组假设}\label{para::alternative-si}
 
 
 
@@ -659,7 +661,7 @@ $$
 
 
 
-\paragraph{放弃跨情境独立性假设后的定义调整}\label{para::continM-binaryY}
+\paragraph{连续中介与二元结果的中介分析}\label{para::continM-binaryY}
 
 
 考虑中介的以下正态线性模型，以及二元结果的逻辑回归模型：
@@ -698,7 +700,7 @@ $$
 
 
 
-\paragraph{主分层法与中介分析的关系}
+\paragraph{二元中介与二元结果的中介分析}
 \label{para::mediation-binaryMY}
 
 考虑二元中介与结果的以下逻辑回归模型：

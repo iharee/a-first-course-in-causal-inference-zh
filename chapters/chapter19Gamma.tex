@@ -3,7 +3,7 @@
 \chaptermark{配对研究中的敏感性分析}\label{sec::rosenbaum-sensitivity-analysis}
 
 
-\citet{rosenbaum1987sensitivity}提出了一种适用于配对观察性研究的敏感性分析技术。虽然该方法也适用于一般的配对研究\citep{rosenbaum2002design}，但在一对一配对的情况下其理论最为完善。与\ref{chapter::evalue}章及\ref{chapter::sensitivity-ACE}章不同，Rosenbaum式敏感性分析最适用于检验“不存在个体治疗效果”这一明确零假设的配对观察性研究。  
+\citet{rosenbaum1987sensitivity}提出了一种适用于配对观察性研究的敏感性分析技术。虽然该方法也适用于一般的配对研究\citep{rosenbaum2002design}，但在一对一配对的情况下其理论最为完善。与\ref{chapter::evalue}章及\ref{chapter::sensitivity-ACE}章不同，Rosenbaum式敏感性分析最适用于检验“不存在个体处理效应”这一尖锐零假设的配对观察性研究。
 
 
 \section{基于配对数据的敏感性分析模型}
@@ -68,11 +68,11 @@ $$
 $$
 T = \sumn S_i q_i,
 $$
-其中$q_i\geq 0$是$ (|\hat{\tau}_1|, \ldots, |\hat{\tau}_n|   ).$的函数。其特例包括符号统计量、配对$t$统计量（相差一个常数平移）以及 Wilcoxon 符号秩统计量：
+其中$q_i\geq 0$是$(|\hat{\tau}_1|, \ldots, |\hat{\tau}_n|)$的函数。其特例包括符号统计量、配对$t$统计量（相差一个常数平移）以及 Wilcoxon 符号秩统计量：
 $$
 T = \sumn S_i,\quad T = \sumn S_i |\hat{\tau}_i|,\quad T = \sumn S_i R_i,
 $$
-其中$(R_1,\ldots, R_n)$是$ (|\hat{\tau}_1|, \ldots, |\hat{\tau}_n|   ).$的秩。 
+其中$(R_1,\ldots, R_n)$是$(|\hat{\tau}_1|, \ldots, |\hat{\tau}_n|)$的秩。
 
 对于一般的$\Gamma$，在假设\ref{assume::rosenbaum-sensitivity}下检验统计量$T$的零分布是什么？由于假设\ref{assume::rosenbaum-sensitivity}没有完全规定各$\pi_{i1}$的确切取值，答案可能很复杂。幸运的是，我们不需要知道$T$的确切分布，只需要知道在假设\ref{assume::rosenbaum-sensitivity}下使$p$值最大的$T$的最坏情形分布。该分布对应于
 $$
@@ -231,7 +231,7 @@ abline(v = gammastar, lty = 2)
 \begin{subfigure}[b]{\textwidth}
                 \centering
                 \includegraphics[width=\textwidth]{figures/lead250_p_gamma.pdf}
-                \caption{ead250数据}
+                \caption{lead250数据}
                 \label{fig::ead250}
         \end{subfigure}%        
 \caption{两个实例：$\hat{\tau}_i$分布直方图与$p$值随$\Gamma$的变化。}\label{fg::another2sensitivity}

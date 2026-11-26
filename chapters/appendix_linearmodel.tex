@@ -349,7 +349,7 @@ L(\beta)
  & =\prod_{i=1}^{n}\left(e^{x_{i} \tran \beta}\right)^{y_{i}}\frac{1}{1+e^{x_{i} \tran \beta}}\\
  & =\prod_{i=1}^{n}\frac{e^{y_{i}x_{i} \tran \beta}}{1+e^{x_{i} \tran \beta}}.
 \end{align*}  
-用 $\hat{\beta}$ 表示该最大化值，它被称为最大似然估计值（MLE）。对 $L(\beta)  $ 取对数并关于 $\beta$ 求导后，我们可以证明该 MLE 必须满足一阶条件：  
+用 $\hat{\beta}$ 表示使其最大的参数值，称为最大似然估计值（MLE）。对 $L(\beta)  $ 取对数并关于 $\beta$ 求导后，我们可以证明该 MLE 必须满足一阶条件：
 $$
 \sumn  x_i  \{ y_i - \pi(x_{i}, \hat\beta)\} = 0.
 $$  
@@ -364,7 +364,7 @@ $$
 $$
 \sqrt{n}( \hat{\beta} -  \beta) \rightarrow \text{N}(0, V)
 $$
-其分布形式为，其中
+依分布收敛，其中
 $
 V = E [  \pi(x_{i},\beta) \{1-  \pi(x_{i},\beta)\} x x\tran   ].
 $
@@ -374,7 +374,7 @@ $$ 来近似表示 $\hat{\beta} $ 的协方差矩阵。
 %$$
 %n^{-1} \sumn \frac{ e^{x_i\tran \hat\beta} }{(1 + e^{x_i\tran \hat\beta})^2}  x_i x_i\tran.
 %$$
-在 \ri{R} 中，\ri{glm} 函数能够计算出最大似然估计值，并输出相应的协方差矩阵。我们采用 \ri{lalonde} 中的数据来演示逻辑回归的应用，该数据中的二元结果变量用于反映1978年的实际收入情况。
+在 \ri{R} 中，\ri{glm} 函数能够计算出最大似然估计值，并输出相应的协方差矩阵。我们采用 \ri{lalonde} 中的数据来演示逻辑回归的应用，该数据中的二元结果变量表示1978年的实际收入是否为正。
 
 
 
@@ -502,7 +502,7 @@ $$
 $$
 
 
-假设 $X_1$ 与 $X_2$ 正交，即 $X_1\tran X_2 = 0$。请证明：$\hat{\beta}_1$ 等于用 OLS 方法以 $X_1$ 对 $Y$ 进行回归所得的系数，而 $\hat{\beta}_2$ 等于用 OLS 方法以 $X_2$ 对 $Y$ 进行回归所得的系数。 
+假设 $X_1$ 与 $X_2$ 正交，即 $X_1\tran X_2 = 0$。请证明：$\hat{\beta}_1$ 等于用 OLS 方法将 $Y$ 对 $X_1$ 回归所得的系数，而 $\hat{\beta}_2$ 等于将 $Y$ 对 $X_2$ 回归所得的系数。
 
 
 
